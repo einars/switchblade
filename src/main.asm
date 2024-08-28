@@ -309,23 +309,23 @@ Joystuff_cont
                 ld (Ljoy_flag_001), a 
                 ld (Ljoy_flag_002), a 
                 ld a, (hl)
-                ld (SMC_joy_flag_003a), a
-                ld (SMC_joy_flag_003b), a
+                ld (joy_flag_3a), a
+                ld (joy_flag_3b), a
                 inc hl
                 ld a, (hl)
-                ld (Ljoy_flag_004), a
+                ld (joy_flag_4), a
                 inc hl
                 ld a, (hl)
-                ld (Ljoy_flag_005), a
+                ld (joy_flag_5), a
                 inc hl
                 ld a, (hl)
-                ld (Ljoy_flag_006), a
+                ld (joy_flag_6), a
                 inc hl
                 ld a, (hl)
-                ld (Ljoy_flag_007), a
+                ld (joy_flag_7), a
                 inc hl
                 ld a, (hl)
-                ld (Ljoy_flag_008), a
+                ld (joy_flag_8), a
                 inc hl
                 ld de, Joystick_fire
                 ld bc, 18 ; install small, dev-specific Joystick_fire routine
@@ -344,19 +344,19 @@ txt_joy
 
 joy_flags
                 ; joystick 1
-                db 0x01, 0x1e, 0x1f, 0x1d, 0x1c, 0x14, 0x15
+                db 0x01, 0x1e : rra : db 0x1d, 0x1c, 0x14, 0x15
                 ld a, 0xef : in a, (0xfe) : bit 0, a : ret ; routine, pushed into Joystick_fire
 
                 ; joystick 2
-                db 0x10, 0x0f, 0x00, 0x15, 0x14, 0x1c, 0x1d
+                db 0x10, 0x0f : nop : db 0x15, 0x14, 0x1c, 0x1d
                 ld a, 0xf7 : in a, (0xfe) : bit 4, a : ret ; routine, pushed into Joystick_fire
 
                 ; joystick 3
-                db 0x10, 0x0f, 0x00, 0x14, 0x15, 0x1c, 0x1d
+                db 0x10, 0x0f : nop : db 0x14, 0x15, 0x1c, 0x1d
                 in a, (0x1f) : cpl : bit 4, a : ret : nop
 
                 ; joystick 4
-                db 0x01, 0x1e, 0x1f, 0x15, 0x14, 0x1d, 0x1c
+                db 0x01, 0x1e : rra : db 0x15, 0x14, 0x1d, 0x1c
                 ld a, 0xf7 : in a, (0xfe) : or 0xef : rrca : rrca : rrca : ld c, a
                 ld a, 0xef : in a, (0xfe) : and c   : bit 0, a : ret
 
