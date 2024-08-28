@@ -455,20 +455,19 @@ Text:
                 ; either store 0 into SMC_print_1
                 ; or 0 into SMC_print_2, hmm
 
-Ent_2           ld bc, LetterGlyphs ; sic. possibly glyphs
+Ent_2:          ld bc, LetterGlyphs
                 push bc
                 ld b, (hl)
-
-; 8380
                 inc hl
                 ld c, (hl)
+                ; BC = coords
                 inc hl
                 ld a, (hl)
                 inc hl
-                ld (var_attrib), a
+                ld (attrib_dn), a
                 ld a, (hl)
                 inc hl
-                ld (SMC_print_4), a
+                ld (attrib_up), a
 
                 push hl
                 call Screen_addr
@@ -480,9 +479,9 @@ Ent_2           ld bc, LetterGlyphs ; sic. possibly glyphs
                 or a
                 jr nz, 1f
                 ; A = 0 -> text ends
-                dec a ; a = 0xff now
-                ld (var_attrib), a
-                ld (SMC_print_4), a
+                dec a ; a = 0xff now, reset all flags to Ff
+                ld (attrib_dn), a
+                ld (attrib_up), a
                 ld (SMC_print_2), a
                 ld (SMC_print_1), a
                 ret
@@ -509,6 +508,7 @@ Ent_2           ld bc, LetterGlyphs ; sic. possibly glyphs
                 jr 2b
 
 .handle_sub_20
+                ; chars < 20 are treated as that number of spaces
                 ld l, a
                 add hl, de
                 ex de, hl
@@ -556,9 +556,9 @@ Screen_addr_alt:
                 ld e, a
                 ret
 
-Char
+Char:    
                 push de
-                ld a, 0xff
+attrib_up+*     ld a, 0xff
                 call StoreAttrib
                 ld a, d
                 and 7
@@ -610,7 +610,7 @@ SMC_print_2+*   ld a, 0xff
                 inc d
                 djnz 3b
 
-var_attrib+*    ld a, 0xff
+attrib_dn+*     ld a, 0xff
                 call StoreAttrib
 
 quit            pop de
