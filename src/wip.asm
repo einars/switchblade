@@ -393,8 +393,23 @@ LetterGlyphs:
 
                 org 0x8300
                 db 0x4c, 0x44, 0x20, 0x49, 0x53, 0x20, 0x53, 0x41,   0x46, 0x45, 0x2c, 0xff, 0x06, 0x46, 0x4f, 0x52
-                db 0x20, 0x4e, 0x4f, 0x57, 0x2e, 0x2e, 0x2e, 0x2e,   0x2e, 0x00, 0x3e, 0x04, 0xcd, 0xc8, 0x66, 0x26
-                db 0x28, 0xcd, 0x29, 0x85, 0xfb, 0x06, 0x05, 0x76,   0x10, 0xfd, 0xc8, 0x25, 0x20, 0xf3, 0x25, 0xc9
+                db 0x20, 0x4e, 0x4f, 0x57, 0x2e, 0x2e, 0x2e, 0x2e,   0x2e, 0x00, 0x3e, 0x04, 0xcd, 0xc8, 0x66
+
+
+                org 0x831f
+Wait_fire_some_time:
+                ld h, 0x28
+2               call Joystick_read
+                ei
+                ld b, 5
+1               halt
+                djnz 1b
+                ret z
+                dec h
+                jr nz, 2b
+                dec h
+                ret
+
                 db 0x01, 0x00, 0x60, 0x0b, 0x78, 0xb1, 0x20, 0xfb,   0xc9
 
 
@@ -439,7 +454,7 @@ Clear_some_attrs:
 
                 org 0x8365
                 ld hl, L6657
-                call Ent_2
+                call String_alt
 
                 org 0x836b
                 ld hl, L6667
@@ -455,7 +470,7 @@ Text:
                 ; either store 0 into SMC_print_1
                 ; or 0 into SMC_print_2, hmm
 
-Ent_2:          ld bc, LetterGlyphs
+String_alt:     ld bc, LetterGlyphs
                 push bc
                 ld b, (hl)
                 inc hl
@@ -524,7 +539,7 @@ Screen_addr:
                 ld a, 8
                 add a, b
                 ld b, a ; y = y + 8
-                ld (Ent_2.next_line_coord), bc 
+                ld (String_alt.next_line_coord), bc 
                 pop bc
                 srl c
                 ld a, b
