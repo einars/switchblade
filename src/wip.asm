@@ -411,7 +411,14 @@ Wait_fire_custom:
                 dec h
                 ret
 
-                db 0x01, 0x00, 0x60, 0x0b, 0x78, 0xb1, 0x20, 0xfb,   0xc9
+Delay:          
+                ld bc, 0x6000
+Delay_custom:
+2               dec bc
+                ld a, b
+                or c
+                jr nz, 2b
+                ret
 
 
 

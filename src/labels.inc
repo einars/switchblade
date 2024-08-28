@@ -7,5 +7,8 @@ L6667 equ 0x6667
 
 ;X5dfb equ 0x5dfb
 X831f equ Wait_fire_some_time
+X8321 equ Wait_fire_custom
 X61e5 equ Print_something_custom
 
+X8330 equ Delay
+X8333 equ Delay_custom
