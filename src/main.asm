@@ -328,8 +328,7 @@ Joystuff_cont
                 ld (Ljoy_flag_008), a
                 inc hl
                 ld de, Joystick_fire
-                ld bc, 18 ; hmmmm, why so much? there seem to be only 14-byte blocks
-                ; possibly protek-cursor routine only?
+                ld bc, 18 ; install small, dev-specific Joystick_fire routine
                 ldir
                 ret
 
