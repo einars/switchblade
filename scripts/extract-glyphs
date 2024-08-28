@@ -1,0 +1,30 @@
+#!/usr/bin/env bb
+
+(def glyph-base (- 0x7be5 0x4000))
+
+(defn stripe [n mask]
+  (if (> (bit-and n mask) 0) "X" "-"))
+
+(defn bin-to-asm [file-name start-address]
+  (with-open [xin (io/input-stream file-name)]
+    (let [
+          xout (java.io.ByteArrayOutputStream.)
+          _ (io/copy xin xout)
+          bytes (.toByteArray xout)]
+
+      (doseq [i (range 0 0x3b)]
+        (printf "        ; %02x = \"%s\"\n" (+ 32 i) (char (+ 32 i)))
+        (doseq [c (range 0 8)]
+          (let [ch (+ 256 (aget bytes (+ glyph-base c (* i 8))))]
+            (printf "        dg %s%s%s%s%s%s%s%s\n"
+              (stripe ch 128)
+              (stripe ch 64)
+              (stripe ch 32)
+              (stripe ch 16)
+              (stripe ch 8)
+              (stripe ch 4)
+              (stripe ch 2)
+              (stripe ch 1))))
+        (printf "\n")))))
+
+(bin-to-asm (first *command-line-args*) (get *command-line-args* 2 16384))
