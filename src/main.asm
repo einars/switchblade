@@ -267,11 +267,9 @@ Blit_square_attributes:
                 djnz 1b
                 ret
 
+                assert ($ = 0x6225)
 
-
-                org 0x6225 + 15 + 15
-
-                ; intro tiles come here, 0x6313..0x6a03
+                ; intro gfx live here
                 include "intro.inc"
 
                 assert ($ = 0x6a7b)
