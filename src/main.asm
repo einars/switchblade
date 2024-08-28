@@ -35,7 +35,7 @@ Start:
                 db 0xcd, 0x5a, 0x83, 0xaf, 0x32, 0x5f, 0x84, 0xc3,   0xfe, 0x8d
 X5d4f equ 0x5d4f
 
-Entry:          call X6a7b
+Entry:          call Joystuff
                 call X5d4f
 
                 org 0x5d00
@@ -285,10 +285,11 @@ Entry:          call X6a7b
                 db 0x00, 0x00, 0x00, 0xe2, 0xf9, 0xf0, 0xe0, 0xc0,   0x00, 0x02, 0x15
 
 Joystuff:
+; print the joystick menu, wait for input and patch-up the joystick routines
 maybe_prepare_screen equ 0x8339
 print_text equ 0x836e
                 xor a
-                call maybe_prepare_screen
+                call Clear_screen
                 ld hl, txt_joy
                 call print_text
 
@@ -327,8 +328,8 @@ Joystuff_cont
                 ld a, (hl)
                 ld (joy_flag_8), a
                 inc hl
-                ld de, Joystick_fire
-                ld bc, 18 ; install small, dev-specific Joystick_fire routine
+                ld de, Joystick_read
+                ld bc, 18 ; install small, dev-specific Joystick_read routine
                 ldir
                 ret
 
@@ -344,19 +345,19 @@ txt_joy
 
 joy_flags
                 ; joystick 1
-                db 0x01, 0x1e : rra : db 0x1d, 0x1c, 0x14, 0x15
-                ld a, 0xef : in a, (0xfe) : bit 0, a : ret ; routine, pushed into Joystick_fire
+                db 0x01, 0x1e : rra : dec e : inc e : inc d : dec d
+                ld a, 0xef : in a, (0xfe) : bit 0, a : ret ; routine, pushed into Joystick_read
 
                 ; joystick 2
-                db 0x10, 0x0f : nop : db 0x15, 0x14, 0x1c, 0x1d
-                ld a, 0xf7 : in a, (0xfe) : bit 4, a : ret ; routine, pushed into Joystick_fire
+                db 0x10, 0x0f : nop : dec d : inc d : inc e : dec e
+                ld a, 0xf7 : in a, (0xfe) : bit 4, a : ret ; routine, pushed into Joystick_read
 
                 ; joystick 3
-                db 0x10, 0x0f : nop : db 0x14, 0x15, 0x1c, 0x1d
+                db 0x10, 0x0f : nop : inc d : dec d : inc e : dec e
                 in a, (0x1f) : cpl : bit 4, a : ret : nop
 
                 ; joystick 4
-                db 0x01, 0x1e : rra : db 0x15, 0x14, 0x1d, 0x1c
+                db 0x01, 0x1e : rra : dec d : inc d : dec e : inc e
                 ld a, 0xf7 : in a, (0xfe) : or 0xef : rrca : rrca : rrca : ld c, a
                 ld a, 0xef : in a, (0xfe) : and c   : bit 0, a : ret
 
