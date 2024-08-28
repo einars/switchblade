@@ -287,11 +287,11 @@ Entry:          call Joystuff
 Joystuff:
 ; print the joystick menu, wait for input and patch-up the joystick routines
 maybe_prepare_screen equ 0x8339
-print_text equ 0x836e
+
                 xor a
                 call Clear_screen
                 ld hl, txt_joy
-                call print_text
+                call Print.Text
 
                 ld de, 14
 2               ld a, 0xf7
@@ -334,7 +334,8 @@ Joystuff_cont
                 ret
 
 txt_joy
-                db "4", 0x0e, 0x07, 0x47, "1.JOYSTICK 1"
+                db 0x34, 0x0e, 0x07, 0x47 ; coords + attrs, or something
+                db "1.JOYSTICK 1"
                 db 0xff, 0xff
                 db "2.JOYSTICK 2"
                 db 0xff, 0xff
