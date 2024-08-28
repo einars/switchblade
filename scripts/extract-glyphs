@@ -2,9 +2,11 @@
 
 ;(def glyph-base (- 0x7be5 0x4000))
 ;(def n-glyphs 0x3b)
+;(def ascii-offset 32)
 
 (def glyph-base (- 0x6313 0x4000))
-(def n-glyphs 224)
+(def n-glyphs 0xed)
+(def ascii-offset 1)
 
 
 (defn stripe [n mask]
@@ -18,7 +20,7 @@
           bytes (.toByteArray xout)]
 
       (doseq [i (range 0 n-glyphs)]
-        (printf "        ; %02x\n" (+ 32 i))
+        (printf "        ; %02x\n" (+ ascii-offset i))
         (doseq [c (range 0 8)]
           (let [ch (+ 256 (aget bytes (+ glyph-base c (* i 8))))]
             (printf "        dg %s%s%s%s%s%s%s%s\n"

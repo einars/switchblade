@@ -2,33 +2,83 @@
 
                 module Intro
 
-                org 0x6313
-
-Tiles:          include "intro-tiles.inc"
-
-
-
                 org 0x5e4d
+
+BR equ 0xff
 
 Sprite_00:
                 db 0x98, 0x32; coords
-                db 0xce, 0xcf, 0xd0, 0xd1, 0xd2,    1, 0xff
-                db 0xd3, 0xd4, 0xd5, 0xd6, 0xd7, 0xd8, 0xff
-                db 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0x00
+                db 0xce, 0xcf, 0xd0, 0xd1, 0xd2,    1, BR
+                db 0xd3, 0xd4, 0xd5, 0xd6, 0xd7, 0xd8, BR
+                db 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0
 
                 db 0x60, 0x02, 0x07, 0x47
-                db "FOR 10000 YEARS HE SLEPT.", 0xff
-                db "HIS MIND FEEDING...", 0xff
-                db "ON THE NIGHTMARES OF THE WEAK.", 0x00
+                db "FOR 10000 YEARS HE SLEPT.", BR
+                db "HIS MIND FEEDING...", BR
+                db "ON THE NIGHTMARES OF THE WEAK.", 0
 
                 ; pause for fire
 
                 db 0x60, 0x02, 0x07, 0x47
-                db "                         ", 0xff
-                db "NOW HE HAS AWAKENED", 0xff
-                db "                              ", 0x00
+                db "                         ", BR
+                db "NOW HE HAS AWAKENED", BR
+                db "                              ", 0
 
-                ; 5f06
+                ; eye, frame 1
+                db 0x98, 0x34
+                db 0xcf, 0xd0, 0xd1, BR
+                db 0xdf, 0xe0, 0xe1, 0
 
+                ; eye, frame 2
+                db 0x98, 0x34
+                db 0xe2, 0xe3, 0xe4, BR
+                db 0xe5, 0xe6, 0xe7, 0
+
+                ; eye, frame 3
+                db 0x98, 0x34
+                db 0xe8, 0xe9, 0xea, BR
+                db 0xeb, 0xec, 0xed, 0
+
+                ; sword
+                db 0x20, 4
+                db 0x01, 0x02, 0x01, BR
+                db 0x03, 0x04, 0x05, BR
+                db 0x06, 0x07, 0x08, BR
+                db 0x09, 0x0a, 0x0b, BR
+                db 0x0c, 0x0d, 0x0e, BR
+                db 0x0f, 0x10, 0x11, BR
+                db 0x01, 0x12, 0x01, BR
+                db 0x01, 0x12, 0x01, BR
+                db 0x13, 0x14, 0x15, BR
+                db 0x16, 0x17, 0x18, BR
+                db 0x01, 0x19, 0x01, BR
+                db 0x01, 0x1a, 0x01, 0
+
+                db 0x40, 0x0e, 0x07, 0x47
+                db "AS THE NIGHT BLED CRIMSON", BR
+                db "THE FIREBLADE SHATTERED", BR
+                db "AND ITS POWER DIED.", 0
+
+                ; sword, shattered
+                db 0x20, 4
+                db 0x01, 0x02, 0x01, BR
+                db 0x03, 0x1b, 0x05, BR
+                db 0x06, 0x1c, 0x08, BR
+                db 0x09, 0x1d, 0x0b, BR
+                db 0x1e, 0x1f, 0x0e, BR
+                db 0x20, 0x21, 0x22, BR
+                db 0x23, 0x24, 0x25, BR
+                db 0x26, 0x27, 0x28, BR
+                db 0x29, 0x2a, 0x2b, BR
+                db 0x2c, 0x2d, 0x2e, BR
+                db 0x01, 0x2f, 0x01, BR
+                db 0x01, 0x30, 0x01, 0
+
+; 5fd2
+
+                org 0x6313
+Tiles:          include "intro-tiles.inc"
+                ; $ = 0x6a7b
+                ; 1896 bytes for the intro tileset
 
                 endmodule

@@ -1,4 +1,4 @@
-        ; 20
+        ; 01
         dg --------
         dg --------
         dg --------
@@ -8,7 +8,7 @@
         dg --------
         dg --------
 
-        ; 21
+        ; 02
         dg --------
         dg --------
         dg --------
@@ -18,7 +18,7 @@
         dg XXXXX-X-
         dg XXXXX-X-
 
-        ; 22
+        ; 03
         dg --------
         dg --------
         dg --------
@@ -28,7 +28,7 @@
         dg ------X-
         dg ------X-
 
-        ; 23
+        ; 04
         dg -XXX-X--
         dg --X-X---
         dg -XXX-X--
@@ -38,7 +38,7 @@
         dg -XXX-X--
         dg -XXX-X--
 
-        ; 24
+        ; 05
         dg --------
         dg --------
         dg --------
@@ -48,7 +48,7 @@
         dg X-------
         dg X-------
 
-        ; 25
+        ; 06
         dg ------X-
         dg ------X-
         dg ------X-
@@ -58,7 +58,7 @@
         dg -------X
         dg -----X--
 
-        ; 26
+        ; 07
         dg -XXX-X--
         dg --X-X---
         dg -XXX-X--
@@ -68,7 +68,7 @@
         dg XXXX-XXX
         dg XXXX-XX-
 
-        ; 27
+        ; 08
         dg X-------
         dg X-------
         dg X-------
@@ -78,7 +78,7 @@
         dg --------
         dg -X------
 
-        ; 28
+        ; 09
         dg -----XX-
         dg ------XX
         dg ------X-
@@ -88,7 +88,7 @@
         dg -----XXX
         dg -----XX-
 
-        ; 29
+        ; 0a
         dg -XXX-X--
         dg X-X-X-XX
         dg -XXX-X--
@@ -98,7 +98,7 @@
         dg XXXXXXXX
         dg --------
 
-        ; 2a
+        ; 0b
         dg XX------
         dg X-------
         dg X-------
@@ -108,7 +108,7 @@
         dg XX------
         dg XX------
 
-        ; 2b
+        ; 0c
         dg -----X--
         dg -----X--
         dg -----X--
@@ -118,7 +118,7 @@
         dg -----X--
         dg -------X
 
-        ; 2c
+        ; 0d
         dg -XXXXX--
         dg -XXXXX--
         dg -XXXXX--
@@ -128,7 +128,7 @@
         dg XXXXXXX-
         dg XXXXXXXX
 
-        ; 2d
+        ; 0e
         dg -X------
         dg -X------
         dg -X------
@@ -138,7 +138,7 @@
         dg -X------
         dg --------
 
-        ; 2e
+        ; 0f
         dg -------X
         dg ------XX
         dg -----XXX
@@ -148,7 +148,7 @@
         dg -------X
         dg -------X
 
-        ; 2f
+        ; 10
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -158,7 +158,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 30
+        ; 11
         dg --------
         dg X-------
         dg XX------
@@ -168,7 +168,7 @@
         dg --------
         dg --------
 
-        ; 31
+        ; 12
         dg XXXXXXX-
         dg XXXXXXX-
         dg XXXXXXX-
@@ -178,7 +178,7 @@
         dg XXXXXXX-
         dg XXXXXXX-
 
-        ; 32
+        ; 13
         dg --------
         dg -------X
         dg -------X
@@ -188,7 +188,7 @@
         dg -XXXXXXX
         dg ----XXXX
 
-        ; 33
+        ; 14
         dg XXXXXXX-
         dg XXXXXXXX
         dg XXXXXXXX
@@ -198,7 +198,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 34
+        ; 15
         dg --------
         dg --------
         dg --------
@@ -208,7 +208,7 @@
         dg XXXXXX--
         dg XXX-----
 
-        ; 35
+        ; 16
         dg -----XXX
         dg ------XX
         dg -------X
@@ -218,7 +218,7 @@
         dg --------
         dg --------
 
-        ; 36
+        ; 17
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -228,7 +228,7 @@
         dg -XXXXX--
         dg -XXXXX--
 
-        ; 37
+        ; 18
         dg XX------
         dg X-------
         dg --------
@@ -238,7 +238,7 @@
         dg --------
         dg --------
 
-        ; 38
+        ; 19
         dg -XXXXX--
         dg -XXXXX--
         dg -XXXXX--
@@ -248,7 +248,7 @@
         dg --XXX---
         dg ---X----
 
-        ; 39
+        ; 1a
         dg ---X----
         dg ---X----
         dg ---X----
@@ -258,7 +258,7 @@
         dg ---X----
         dg --------
 
-        ; 3a
+        ; 1b
         dg -XX--X--
         dg --X-X---
         dg -XXX-X--
@@ -268,7 +268,7 @@
         dg -XXX-X--
         dg -X-X-X--
 
-        ; 3b
+        ; 1c
         dg -XX--X--
         dg --X-X---
         dg -XXX-X--
@@ -278,7 +278,7 @@
         dg XXXX-XXX
         dg XXXX--X-
 
-        ; 3c
+        ; 1d
         dg -XX--X--
         dg X-X---XX
         dg -XXX-X--
@@ -288,7 +288,7 @@
         dg XXXXXXXX
         dg --------
 
-        ; 3d
+        ; 1e
         dg -----X--
         dg -----X--
         dg -----X--
@@ -298,7 +298,7 @@
         dg -----X--
         dg --------
 
-        ; 3e
+        ; 1f
         dg -XXXXX--
         dg -XXXXX--
         dg -XXXXX--
@@ -308,7 +308,7 @@
         dg -XX-XX--
         dg -XXX-X--
 
-        ; 3f
+        ; 20
         dg --------
         dg --------
         dg --------
@@ -318,7 +318,7 @@
         dg --------
         dg --------
 
-        ; 40
+        ; 21
         dg -XXXX---
         dg -XXX-X--
         dg -XXX-X--
@@ -328,7 +328,7 @@
         dg -XXXXX--
         dg -XXXXX--
 
-        ; 41
+        ; 22
         dg --------
         dg --------
         dg --------
@@ -338,7 +338,7 @@
         dg ---XX---
         dg ----X---
 
-        ; 42
+        ; 23
         dg -X------
         dg -XX-----
         dg -XX-----
@@ -348,7 +348,7 @@
         dg -XXXX---
         dg -XX-----
 
-        ; 43
+        ; 24
         dg -XXXXX--
         dg --XXXX--
         dg ---XX---
@@ -358,7 +358,7 @@
         dg --------
         dg --------
 
-        ; 44
+        ; 25
         dg --------
         dg --------
         dg --------
@@ -368,7 +368,7 @@
         dg X-------
         dg --------
 
-        ; 45
+        ; 26
         dg -XX-----
         dg -X------
         dg --------
@@ -378,7 +378,7 @@
         dg --------
         dg --------
 
-        ; 46
+        ; 27
         dg ------X-
         dg ------X-
         dg -----X--
@@ -388,7 +388,7 @@
         dg ----XXX-
         dg -----XX-
 
-        ; 47
+        ; 28
         dg --------
         dg --------
         dg --------
@@ -398,7 +398,7 @@
         dg --------
         dg --------
 
-        ; 48
+        ; 29
         dg --------
         dg ---X----
         dg ---XX---
@@ -408,7 +408,7 @@
         dg --------
         dg --------
 
-        ; 49
+        ; 2a
         dg -X---XX-
         dg -XX---X-
         dg -XX-----
@@ -418,7 +418,7 @@
         dg -XXXXX--
         dg -XXXXX--
 
-        ; 4a
+        ; 2b
         dg --------
         dg --X-----
         dg ---X----
@@ -428,7 +428,7 @@
         dg --------
         dg --------
 
-        ; 4b
+        ; 2c
         dg --X-----
         dg --XX----
         dg --XX----
@@ -438,7 +438,7 @@
         dg --------
         dg --------
 
-        ; 4c
+        ; 2d
         dg --XXXX--
         dg ---X----
         dg --------
@@ -448,7 +448,7 @@
         dg -XX-----
         dg -XXX----
 
-        ; 4d
+        ; 2e
         dg --------
         dg ----XX--
         dg ----XX--
@@ -458,7 +458,7 @@
         dg -----X--
         dg --------
 
-        ; 4e
+        ; 2f
         dg -XXXX---
         dg -XXXXX--
         dg -XXXXX--
@@ -468,7 +468,7 @@
         dg --XXX---
         dg --XXX---
 
-        ; 4f
+        ; 30
         dg --XXX---
         dg ---X----
         dg ---X----
@@ -478,7 +478,7 @@
         dg --------
         dg --------
 
-        ; 50
+        ; 31
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -488,7 +488,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 51
+        ; 32
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -498,7 +498,7 @@
         dg XXX-XXXX
         dg XXXXXXXX
 
-        ; 52
+        ; 33
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -508,7 +508,7 @@
         dg XXXXXX-X
         dg XXXXXXXX
 
-        ; 53
+        ; 34
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -518,7 +518,7 @@
         dg --------
         dg -XXXXXX-
 
-        ; 54
+        ; 35
         dg XXXXXXXX
         dg XXXXXXXX
         dg XX-X---X
@@ -528,7 +528,7 @@
         dg -------X
         dg --------
 
-        ; 55
+        ; 36
         dg XXXXXXXX
         dg XXXXXXXX
         dg -X-XXXXX
@@ -538,7 +538,7 @@
         dg -X------
         dg --------
 
-        ; 56
+        ; 37
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXX----
@@ -548,7 +548,7 @@
         dg -----X-X
         dg --------
 
-        ; 57
+        ; 38
         dg XXXXXXXX
         dg XXXXXXXX
         dg -XXXXXXX
@@ -558,7 +558,7 @@
         dg -X-X-X-X
         dg -------X
 
-        ; 58
+        ; 39
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -568,7 +568,7 @@
         dg -X-X-X-X
         dg X-X-X-X-
 
-        ; 59
+        ; 3a
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXX-X-X
@@ -578,7 +578,7 @@
         dg -X-X-X-X
         dg X-X-X-XX
 
-        ; 5a
+        ; 3b
         dg XX-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -588,7 +588,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 5b
+        ; 3c
         dg XX-XXXXX
         dg XXXXXXXX
         dg -X-X-X-X
@@ -598,7 +598,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 5c
+        ; 3d
         dg XXXXXXXX
         dg XXXXXXXX
         dg -XXXXXXX
@@ -608,7 +608,7 @@
         dg -X-X-XXX
         dg XXXXXXXX
 
-        ; 5d
+        ; 3e
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -618,7 +618,7 @@
         dg -XXXXXXX
         dg XXXXXXXX
 
-        ; 5e
+        ; 3f
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -628,7 +628,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 5f
+        ; 40
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -638,7 +638,7 @@
         dg -X-X-X-X
         dg XXXXXXX-
 
-        ; 60
+        ; 41
         dg -X-X-XXX
         dg XXXXXXXX
         dg -X-X-X-X
@@ -648,7 +648,7 @@
         dg -X-X-X-X
         dg X-X-X-X-
 
-        ; 61
+        ; 42
         dg XXXXXXXX
         dg XXXXXXXX
         dg -X-X-X-X
@@ -658,7 +658,7 @@
         dg ----XX--
         dg X-------
 
-        ; 62
+        ; 43
         dg XX-X-X-X
         dg XXXXXXXX
         dg --------
@@ -668,7 +668,7 @@
         dg --------
         dg --------
 
-        ; 63
+        ; 44
         dg -X-X-X-X
         dg XXXX----
         dg --------
@@ -678,7 +678,7 @@
         dg --------
         dg --------
 
-        ; 64
+        ; 45
         dg -X-X----
         dg --------
         dg --------
@@ -688,7 +688,7 @@
         dg --------
         dg --------
 
-        ; 65
+        ; 46
         dg -------X
         dg --------
         dg --------
@@ -698,7 +698,7 @@
         dg --------
         dg --------
 
-        ; 66
+        ; 47
         dg -X-X-X--
         dg ---XXXXX
         dg -------X
@@ -708,7 +708,7 @@
         dg --------
         dg --------
 
-        ; 67
+        ; 48
         dg -X-X-X-X
         dg X-XXXXXX
         dg -X-X-X-X
@@ -718,7 +718,7 @@
         dg -XXXXXXX
         dg --XXXXXX
 
-        ; 68
+        ; 49
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -728,7 +728,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 69
+        ; 4a
         dg -X-X-X-X
         dg XXXXXXXX
         dg -XXX-XXX
@@ -738,7 +738,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 6a
+        ; 4b
         dg -X-X-X-X
         dg XXXXXXXX
         dg XXXXXXXX
@@ -748,7 +748,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 6b
+        ; 4c
         dg XX-XXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -758,7 +758,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 6c
+        ; 4d
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X--
@@ -768,7 +768,7 @@
         dg XX-XXXXX
         dg XXXXXXXX
 
-        ; 6d
+        ; 4e
         dg -X-X----
         dg --------
         dg -----X-X
@@ -778,7 +778,7 @@
         dg XXXX----
         dg XXXX----
 
-        ; 6e
+        ; 4f
         dg --------
         dg --------
         dg -X-X----
@@ -788,7 +788,7 @@
         dg --------
         dg X-------
 
-        ; 6f
+        ; 50
         dg ---XXXXX
         dg -----XXX
         dg -------X
@@ -798,7 +798,7 @@
         dg --------
         dg --------
 
-        ; 70
+        ; 51
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -808,7 +808,7 @@
         dg -X-X-X-X
         dg --XXXXXX
 
-        ; 71
+        ; 52
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -818,7 +818,7 @@
         dg -XXXX-XX
         dg XXXXXXXX
 
-        ; 72
+        ; 53
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -828,7 +828,7 @@
         dg X-XXXX-X
         dg XXXXXXXX
 
-        ; 73
+        ; 54
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -838,7 +838,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 74
+        ; 55
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXX-XXX
@@ -848,7 +848,7 @@
         dg -X-X----
         dg XXX-----
 
-        ; 75
+        ; 56
         dg XX---X-X
         dg X--XXX--
         dg -X-X----
@@ -858,7 +858,7 @@
         dg --X---X-
         dg X---XX--
 
-        ; 76
+        ; 57
         dg --------
         dg --------
         dg --------
@@ -868,7 +868,7 @@
         dg -----X--
         dg ----X---
 
-        ; 77
+        ; 58
         dg --------
         dg --------
         dg --------
@@ -878,7 +878,7 @@
         dg --X----X
         dg --X----X
 
-        ; 78
+        ; 59
         dg --------
         dg --------
         dg -X------
@@ -888,7 +888,7 @@
         dg ----X---
         dg ----X---
 
-        ; 79
+        ; 5a
         dg --------
         dg --------
         dg --------
@@ -898,7 +898,7 @@
         dg XX------
         dg XX------
 
-        ; 7a
+        ; 5b
         dg ---X-X-X
         dg ---XXXXX
         dg -----X-X
@@ -908,7 +908,7 @@
         dg ---X---X
         dg ----X-X-
 
-        ; 7b
+        ; 5c
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -918,7 +918,7 @@
         dg -X-X-X-X
         dg X-X-XXXX
 
-        ; 7c
+        ; 5d
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -928,7 +928,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 7d
+        ; 5e
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -938,7 +938,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 7e
+        ; 5f
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -948,7 +948,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 7f
+        ; 60
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -958,7 +958,7 @@
         dg -XXXXXXX
         dg XXXXXXXX
 
-        ; 80
+        ; 61
         dg --------
         dg ----XX--
         dg -X-X---X
@@ -968,7 +968,7 @@
         dg -X-X-X--
         dg X-X-XX--
 
-        ; 81
+        ; 62
         dg ---X----
         dg X-XX----
         dg -X------
@@ -978,7 +978,7 @@
         dg --------
         dg --------
 
-        ; 82
+        ; 63
         dg --------
         dg --------
         dg -------X
@@ -988,7 +988,7 @@
         dg -X----X-
         dg X------X
 
-        ; 83
+        ; 64
         dg ----X---
         dg ----X---
         dg ----X---
@@ -998,7 +998,7 @@
         dg X---X---
         dg X----X--
 
-        ; 84
+        ; 65
         dg --X----X
         dg --X---X-
         dg ---X--X-
@@ -1008,7 +1008,7 @@
         dg -----X--
         dg X-X---XX
 
-        ; 85
+        ; 66
         dg ----X---
         dg ----X--X
         dg ----X--X
@@ -1018,7 +1018,7 @@
         dg X------X
         dg -X------
 
-        ; 86
+        ; 67
         dg XX--X---
         dg -X--XXX-
         dg -X---XX-
@@ -1028,7 +1028,7 @@
         dg -X--X-X-
         dg X-X--X--
 
-        ; 87
+        ; 68
         dg X-------
         dg XX-----X
         dg X-X----X
@@ -1038,7 +1038,7 @@
         dg --------
         dg --------
 
-        ; 88
+        ; 69
         dg --------
         dg --------
         dg --------
@@ -1048,7 +1048,7 @@
         dg ---XX--X
         dg -----X-X
 
-        ; 89
+        ; 6a
         dg -----X-X
         dg ----X-X-
         dg -----X-X
@@ -1058,7 +1058,7 @@
         dg --------
         dg XXXX----
 
-        ; 8a
+        ; 6b
         dg -X-X-X-X
         dg X-XXXXXX
         dg -X-X-X-X
@@ -1068,7 +1068,7 @@
         dg -X-XXXXX
         dg --XXXXXX
 
-        ; 8b
+        ; 6c
         dg -X-XXX-X
         dg XXXXXXXX
         dg -XXX-XXX
@@ -1078,7 +1078,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; 8c
+        ; 6d
         dg -X-X----
         dg XXXXX---
         dg -X-X---X
@@ -1088,7 +1088,7 @@
         dg XXX--X-X
         dg XXX-XXXX
 
-        ; 8d
+        ; 6e
         dg -X-----X
         dg XX-----X
         dg -X------
@@ -1098,7 +1098,7 @@
         dg -----X-X
         dg X---XXXX
 
-        ; 8e
+        ; 6f
         dg ------XX
         dg ----XXX-
         dg ---XX---
@@ -1108,7 +1108,7 @@
         dg ----XXX-
         dg ---XX--X
 
-        ; 8f
+        ; 70
         dg X----XXX
         dg X----XX-
         dg -X----X-
@@ -1118,7 +1118,7 @@
         dg -XXXX--X
         dg XXX--X--
 
-        ; 90
+        ; 71
         dg X-------
         dg -------X
         dg ----X---
@@ -1128,7 +1128,7 @@
         dg ----X-X-
         dg X--X-X-X
 
-        ; 91
+        ; 72
         dg X-------
         dg --------
         dg --------
@@ -1138,7 +1138,7 @@
         dg X-X-X---
         dg -X------
 
-        ; 92
+        ; 73
         dg -X------
         dg ---X-X-X
         dg X-X-----
@@ -1148,7 +1148,7 @@
         dg ------X-
         dg ------XX
 
-        ; 93
+        ; 74
         dg X-X-X-X-
         dg -X-X----
         dg ------X-
@@ -1158,7 +1158,7 @@
         dg --X-X-X-
         dg -X-X-X-X
 
-        ; 94
+        ; 75
         dg X-X-X-X-
         dg ---X-X-X
         dg X-X-X-X-
@@ -1168,7 +1168,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; 95
+        ; 76
         dg -------X
         dg --------
         dg X-------
@@ -1178,7 +1178,7 @@
         dg X-X---X-
         dg -X-X---X
 
-        ; 96
+        ; 77
         dg XXXXX---
         dg X----X--
         dg --X---X-
@@ -1188,7 +1188,7 @@
         dg ------X-
         dg -X-----X
 
-        ; 97
+        ; 78
         dg -X-XXXXX
         dg -XXXXXXX
         dg ---XXXXX
@@ -1198,7 +1198,7 @@
         dg ---X---X
         dg ---XXXXX
 
-        ; 98
+        ; 79
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXX-X
@@ -1208,7 +1208,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; 99
+        ; 7a
         dg XXXXXXXX
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1218,7 +1218,7 @@
         dg -X-X-X-X
         dg XXX-X-X-
 
-        ; 9a
+        ; 7b
         dg XXXXXXX-
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1228,7 +1228,7 @@
         dg -X------
         dg X--X-X-X
 
-        ; 9b
+        ; 7c
         dg XXXX-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1238,7 +1238,7 @@
         dg X-X----X
         dg -XX--X--
 
-        ; 9c
+        ; 7d
         dg -X--XXXX
         dg XXX-XXXX
         dg -X-X-X-X
@@ -1248,7 +1248,7 @@
         dg -X-X-X-X
         dg XXX-X-X-
 
-        ; 9d
+        ; 7e
         dg X---XXXX
         dg X---XXXX
         dg ---XXXXX
@@ -1258,7 +1258,7 @@
         dg -X-X-X-X
         dg X---XXX-
 
-        ; 9e
+        ; 7f
         dg ------XX
         dg X----XXX
         dg X---XX--
@@ -1268,7 +1268,7 @@
         dg -X---XXX
         dg X-X-X-X-
 
-        ; 9f
+        ; 80
         dg X-----XX
         dg -----X--
         dg ---XXXXX
@@ -1278,7 +1278,7 @@
         dg X-------
         dg --------
 
-        ; a0
+        ; 81
         dg --X-X-X-
         dg X--X-X-X
         dg X-X-----
@@ -1288,7 +1288,7 @@
         dg X-X-X-X-
         dg XX-X-X-X
 
-        ; a1
+        ; 82
         dg X-------
         dg -------X
         dg --------
@@ -1298,7 +1298,7 @@
         dg -XXXXXXX
         dg -X---X-X
 
-        ; a2
+        ; 83
         dg -XX---XX
         dg XX----X-
         dg -----XXX
@@ -1308,7 +1308,7 @@
         dg XX-X--X-
         dg -----X-X
 
-        ; a3
+        ; 84
         dg --X-X-X-
         dg -X-X-X--
         dg --X-----
@@ -1318,7 +1318,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; a4
+        ; 85
         dg X-X-X-X-
         dg -X-X-X-X
         dg X-X-X-X-
@@ -1328,7 +1328,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; a5
+        ; 86
         dg X-X-X---
         dg -X-X----
         dg X-X-X---
@@ -1338,7 +1338,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; a6
+        ; 87
         dg X-X-X---
         dg ---X-X--
         dg --X-X-X-
@@ -1348,7 +1348,7 @@
         dg X-------
         dg --------
 
-        ; a7
+        ; 88
         dg -----X-X
         dg -----XXX
         dg -------X
@@ -1358,7 +1358,7 @@
         dg -----X-X
         dg -----XXX
 
-        ; a8
+        ; 89
         dg -X-X-X-X
         dg XXXXXXX-
         dg -X-X-X-X
@@ -1368,7 +1368,7 @@
         dg -X-XXX-X
         dg -XXXX-XX
 
-        ; a9
+        ; 8a
         dg -X-X-X--
         dg X-X-X--X
         dg -X----XX
@@ -1378,7 +1378,7 @@
         dg XXXXXXXX
         dg XXXXXXX-
 
-        ; aa
+        ; 8b
         dg -X-XXXXX
         dg -XXXXXXX
         dg XXXXXXX-
@@ -1388,7 +1388,7 @@
         dg -XX---X-
         dg X-X----X
 
-        ; ab
+        ; 8c
         dg XX--X--X
         dg X--X-X--
         dg --X-X--X
@@ -1398,7 +1398,7 @@
         dg X-X-X---
         dg -X-X---X
 
-        ; ac
+        ; 8d
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1408,7 +1408,7 @@
         dg XXX-XXXX
         dg XXXXXXXX
 
-        ; ad
+        ; 8e
         dg -X-X-X-X
         dg XX--X-X-
         dg -X-X-X-X
@@ -1418,7 +1418,7 @@
         dg -X-X-X-X
         dg XXXXXXXX
 
-        ; ae
+        ; 8f
         dg -X------
         dg X-X-----
         dg -X------
@@ -1428,7 +1428,7 @@
         dg XXX-XX--
         dg XXXXXXX-
 
-        ; af
+        ; 90
         dg --------
         dg -------X
         dg -XX----X
@@ -1438,7 +1438,7 @@
         dg -X---X-X
         dg --XXX-X-
 
-        ; b0
+        ; 91
         dg -XX-X-X-
         dg -X-X-X-X
         dg -XX-X-X-
@@ -1448,7 +1448,7 @@
         dg -XX-X-X-
         dg -X-X-X-X
 
-        ; b1
+        ; 92
         dg X-X-X-X-
         dg -X-X-X-X
         dg X-X-X-X-
@@ -1458,7 +1458,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; b2
+        ; 93
         dg X-X-X-X-
         dg -X-X-X-X
         dg X-X-X-X-
@@ -1468,7 +1468,7 @@
         dg X-X-X--X
         dg -X-X--X-
 
-        ; b3
+        ; 94
         dg X-------
         dg --------
         dg X-------
@@ -1478,7 +1478,7 @@
         dg --------
         dg --------
 
-        ; b4
+        ; 95
         dg -------X
         dg --X---XX
         dg -------X
@@ -1488,7 +1488,7 @@
         dg ------XX
         dg --------
 
-        ; b5
+        ; 96
         dg -XXX-XXX
         dg XXX-XXXX
         dg -X-XXX-X
@@ -1498,7 +1498,7 @@
         dg ---X-X-X
         dg --X-X-X-
 
-        ; b6
+        ; 97
         dg XXXX-X-X
         dg XXX-X-X-
         dg XX-X----
@@ -1508,7 +1508,7 @@
         dg ---X-X-X
         dg -XXXXXXX
 
-        ; b7
+        ; 98
         dg -X------
         dg -----X--
         dg -X----XX
@@ -1518,7 +1518,7 @@
         dg XXXX----
         dg XXXX---X
 
-        ; b8
+        ; 99
         dg X-X---XX
         dg ---XXXXX
         dg XXXXXXXX
@@ -1528,7 +1528,7 @@
         dg X-X-XXXX
         dg -X-X-X-X
 
-        ; b9
+        ; 9a
         dg -----X-X
         dg X---X-XX
         dg XX---XXX
@@ -1538,7 +1538,7 @@
         dg XXX--XXX
         dg XXXX--XX
 
-        ; ba
+        ; 9b
         dg -XX-X-X-
         dg -X-X-X-X
         dg -X--X-X-
@@ -1548,7 +1548,7 @@
         dg X-XXX---
         dg XX---X-X
 
-        ; bb
+        ; 9c
         dg X-X-X-X-
         dg -X-X-X-X
         dg X-X-X-X-
@@ -1558,7 +1558,7 @@
         dg X---X-X-
         dg ---X-X-X
 
-        ; bc
+        ; 9d
         dg X-X-----
         dg -X-X-X--
         dg X-X-X---
@@ -1568,7 +1568,7 @@
         dg X-X-X-X-
         dg -X---X--
 
-        ; bd
+        ; 9e
         dg --------
         dg --------
         dg -----X--
@@ -1578,7 +1578,7 @@
         dg ---X---X
         dg ----X--X
 
-        ; be
+        ; 9f
         dg -X---X--
         dg ----X---
         dg -------X
@@ -1588,7 +1588,7 @@
         dg ---X-X-X
         dg X--XX-X-
 
-        ; bf
+        ; a0
         dg -X-XXXXX
         dg XXXX----
         dg -X-X----
@@ -1598,7 +1598,7 @@
         dg -X-X----
         dg X-XX----
 
-        ; c0
+        ; a1
         dg XXXX----
         dg ---XXXX-
         dg -----X-X
@@ -1608,7 +1608,7 @@
         dg -----XXX
         dg -----XXX
 
-        ; c1
+        ; a2
         dg --X---X-
         dg --------
         dg -X-X-XXX
@@ -1618,7 +1618,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; c2
+        ; a3
         dg XXX-XXXX
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1628,7 +1628,7 @@
         dg XX---XXX
         dg XX---XXX
 
-        ; c3
+        ; a4
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1638,7 +1638,7 @@
         dg XXXXXXXX
         dg XXX-X-X-
 
-        ; c4
+        ; a5
         dg -X-X-XXX
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1648,7 +1648,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; c5
+        ; a6
         dg -XXX--XX
         dg XXXXX--X
         dg -X-X---X
@@ -1658,7 +1658,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; c6
+        ; a7
         dg XXXXX---
         dg XXXXXX-X
         dg XXXXXXXX
@@ -1668,7 +1668,7 @@
         dg --XXXXXX
         dg X--XXXXX
 
-        ; c7
+        ; a8
         dg X-X-X-X-
         dg -X-X-X-X
         dg XXX-X-X-
@@ -1678,7 +1678,7 @@
         dg XXXXXXX-
         dg XXXXXXXX
 
-        ; c8
+        ; a9
         dg X-X-X-X-
         dg -X-X-X-X
         dg ----X-X-
@@ -1688,7 +1688,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; c9
+        ; aa
         dg X-X-X---
         dg -X-X-X--
         dg X-X-X---
@@ -1698,7 +1698,7 @@
         dg X---X-X-
         dg -------X
 
-        ; ca
+        ; ab
         dg --------
         dg -X------
         dg --------
@@ -1708,7 +1708,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; cb
+        ; ac
         dg -----X--
         dg X-----X-
         dg -X-----X
@@ -1718,7 +1718,7 @@
         dg -X------
         dg --------
 
-        ; cc
+        ; ad
         dg X--XXX-X
         dg -----XXX
         dg ------XX
@@ -1728,7 +1728,7 @@
         dg ----XX-X
         dg --XXX-XX
 
-        ; cd
+        ; ae
         dg -X-X----
         dg XXXX----
         dg -XX-----
@@ -1738,7 +1738,7 @@
         dg X-------
         dg X-------
 
-        ; ce
+        ; af
         dg XX-X-XX-
         dg -XXXXXXX
         dg -X-X-X-X
@@ -1748,7 +1748,7 @@
         dg --------
         dg --------
 
-        ; cf
+        ; b0
         dg XX---XXX
         dg XX---XXX
         dg -----X-X
@@ -1758,7 +1758,7 @@
         dg --------
         dg --------
 
-        ; d0
+        ; b1
         dg -X-X-X-X
         dg XXXXXXXX
         dg -XXXXX--
@@ -1768,7 +1768,7 @@
         dg --------
         dg --------
 
-        ; d1
+        ; b2
         dg -X-X-X-X
         dg XXXXXXXX
         dg -X-X-X-X
@@ -1778,7 +1778,7 @@
         dg --------
         dg --------
 
-        ; d2
+        ; b3
         dg -X-X-X-X
         dg XXXXX-X-
         dg XX-X-X-X
@@ -1788,7 +1788,7 @@
         dg --------
         dg --------
 
-        ; d3
+        ; b4
         dg -X--XXXX
         dg X-X--XXX
         dg -X-X--XX
@@ -1798,7 +1798,7 @@
         dg -------X
         dg --------
 
-        ; d4
+        ; b5
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -1808,7 +1808,7 @@
         dg --XXXXXX
         dg X--XXXXX
 
-        ; d5
+        ; b6
         dg X-X-X-X-
         dg -X---X-X
         dg X---X-X-
@@ -1818,7 +1818,7 @@
         dg X-X-X-X-
         dg XX-X-X-X
 
-        ; d6
+        ; b7
         dg X-X-X-X-
         dg -X-X-X--
         dg X-X-X---
@@ -1828,7 +1828,7 @@
         dg X-----X-
         dg -X------
 
-        ; d7
+        ; b8
         dg --X-X-X-
         dg -----X-X
         dg --X-X-X-
@@ -1838,7 +1838,7 @@
         dg X-X-X-X-
         dg -X-X-X-X
 
-        ; d8
+        ; b9
         dg X-X-X-X-
         dg -X-X-X-X
         dg X-X-X-X-
@@ -1848,7 +1848,7 @@
         dg X------X
         dg ------XX
 
-        ; d9
+        ; ba
         dg --------
         dg -------X
         dg ------X-
@@ -1858,7 +1858,7 @@
         dg X----X--
         dg ----X---
 
-        ; da
+        ; bb
         dg -XXX---X
         dg XXX---X-
         dg -X-----X
@@ -1868,7 +1868,7 @@
         dg -XXXXXXX
         dg XXXXXXXX
 
-        ; db
+        ; bc
         dg --------
         dg --------
         dg -XXX-X-X
@@ -1878,7 +1878,7 @@
         dg XXXXXXX-
         dg XXXXXX--
 
-        ; dc
+        ; bd
         dg -X--XXXX
         dg --X-XXXX
         dg --X--XXX
@@ -1888,7 +1888,7 @@
         dg ------X-
         dg -------X
 
-        ; dd
+        ; be
         dg XXX-X-X-
         dg XXXX-X-X
         dg XXXXX-X-
@@ -1898,7 +1898,7 @@
         dg -XXXXXXX
         dg ---XXXXX
 
-        ; de
+        ; bf
         dg X-X-X-X-
         dg -X-X-X-X
         dg X-X-X-X-
@@ -1908,7 +1908,7 @@
         dg XX------
         dg --------
 
-        ; df
+        ; c0
         dg X---X-X-
         dg -------X
         dg ----X-X-
@@ -1918,7 +1918,7 @@
         dg X-X-X---
         dg ---X----
 
-        ; e0
+        ; c1
         dg X-X-X---
         dg -X-X----
         dg X-X-----
@@ -1928,7 +1928,7 @@
         dg -----XXX
         dg ----XX--
 
-        ; e1
+        ; c2
         dg -----XX-
         dg ---XXX--
         dg --XX----
@@ -1938,7 +1938,7 @@
         dg ----XX--
         dg ---XX---
 
-        ; e2
+        ; c3
         dg ---X---X
         dg --X---XX
         dg -X---XXX
@@ -1948,7 +1948,7 @@
         dg -XXXXXXX
         dg X-XXXXXX
 
-        ; e3
+        ; c4
         dg XXXXXX--
         dg XXXXX---
         dg XXXX----
@@ -1958,7 +1958,7 @@
         dg X-------
         dg X-------
 
-        ; e4
+        ; c5
         dg -------X
         dg -------X
         dg ------XX
@@ -1968,7 +1968,7 @@
         dg -----XXX
         dg ----XXXX
 
-        ; e5
+        ; c6
         dg XX------
         dg --XXXXXX
         dg -------X
@@ -1978,7 +1978,7 @@
         dg ---X--XX
         dg --X-XXX-
 
-        ; e6
+        ; c7
         dg ------X-
         dg --------
         dg X-------
@@ -1988,7 +1988,7 @@
         dg --------
         dg ---X----
 
-        ; e7
+        ; c8
         dg X-X-----
         dg --------
         dg X-------
@@ -1998,7 +1998,7 @@
         dg ----XX--
         dg --XXX---
 
-        ; e8
+        ; c9
         dg ---XX---
         dg -XXX----
         dg XX-----X
@@ -2008,7 +2008,7 @@
         dg -X-X-X-X
         dg X-X-X-X-
 
-        ; e9
+        ; ca
         dg -XXX---X
         dg XXX---X-
         dg -X---X-X
@@ -2018,7 +2018,7 @@
         dg ---X-X-X
         dg ----X-X-
 
-        ; ea
+        ; cb
         dg -XXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -2028,7 +2028,7 @@
         dg XXXXXXXX
         dg X-XXXXX-
 
-        ; eb
+        ; cc
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXX-
@@ -2038,7 +2038,7 @@
         dg XX-X-X--
         dg X-X-X---
 
-        ; ec
+        ; cd
         dg -----XXX
         dg ----XXXX
         dg ---X-XXX
@@ -2048,7 +2048,7 @@
         dg ---XXXXX
         dg --X-XXXX
 
-        ; ed
+        ; ce
         dg -X-X-X--
         dg X-XXXXX-
         dg --X-XX-X
@@ -2058,7 +2058,7 @@
         dg -XXXX---
         dg --XXXX--
 
-        ; ee
+        ; cf
         dg -XXXXXXX
         dg XXX-X-X-
         dg -X------
@@ -2068,7 +2068,7 @@
         dg --XXXXXX
         dg -XXXXXXX
 
-        ; ef
+        ; d0
         dg XXXXXXXX
         dg X-X-XXXX
         dg -----X-X
@@ -2078,7 +2078,7 @@
         dg XXXXXXXX
         dg XXXXXXXX
 
-        ; f0
+        ; d1
         dg X-X-X-X-
         dg XXXXXXX-
         dg XXXXXXXX
@@ -2088,7 +2088,7 @@
         dg X-X---X-
         dg XXXX-X--
 
-        ; f1
+        ; d2
         dg --X-X-X-
         dg X----X--
         dg X-X-----
@@ -2098,7 +2098,7 @@
         dg XXXXX---
         dg X-XXXX--
 
-        ; f2
+        ; d3
         dg X-XXX---
         dg XX-X-XX-
         dg XX--XX-X
@@ -2108,7 +2108,7 @@
         dg XXX-X-XX
         dg -XXX-X-X
 
-        ; f3
+        ; d4
         dg --XXXXXX
         dg -X--XXXX
         dg --XX--XX
@@ -2118,7 +2118,7 @@
         dg XX-XX---
         dg XXXX-X-X
 
-        ; f4
+        ; d5
         dg XXXXXXXX
         dg XXXXXXXX
         dg XXXXXXXX
@@ -2128,7 +2128,7 @@
         dg X-X-X-X-
         dg --------
 
-        ; f5
+        ; d6
         dg XXXXX-X-
         dg XXXXXX-X
         dg XXXXXX--
@@ -2138,7 +2138,7 @@
         dg X-X---X-
         dg ---X-X-X
 
-        ; f6
+        ; d7
         dg -X-XX---
         dg --XX----
         dg ----X---
@@ -2148,7 +2148,7 @@
         dg XXX--X-X
         dg XX--X-X-
 
-        ; f7
+        ; d8
         dg --------
         dg --------
         dg --------
@@ -2158,7 +2158,7 @@
         dg -X------
         dg X-X-----
 
-        ; f8
+        ; d9
         dg X-XXX-X-
         dg -XXXXX-X
         dg --XXXXX-
@@ -2168,7 +2168,7 @@
         dg -X--X-X-
         dg X-X--X-X
 
-        ; f9
+        ; da
         dg XXXXXXX-
         dg -X-XXXXX
         dg --X-X-XX
@@ -2178,7 +2178,7 @@
         dg XXXXXXXX
         dg -X-XX-XX
 
-        ; fa
+        ; db
         dg X-X-X-X-
         dg XXXXXXXX
         dg XXXXXXXX
@@ -2188,7 +2188,7 @@
         dg XXXXXXXX
         dg -X-X-X-X
 
-        ; fb
+        ; dc
         dg X-X-XXXX
         dg XXXXXX-X
         dg XXXXX-X-
@@ -2198,7 +2198,7 @@
         dg XXXXX-X-
         dg -X-X-X--
 
-        ; fc
+        ; dd
         dg X--XXXXX
         dg --XXXXXX
         dg -XXXXXXX
@@ -2208,7 +2208,7 @@
         dg -XXXXXXX
         dg XXXXXXXX
 
-        ; fd
+        ; de
         dg -X-X----
         dg XXX-X---
         dg XXXX-X--
@@ -2218,7 +2218,7 @@
         dg XXXXXX-X
         dg XXXXX-X-
 
-        ; fe
+        ; df
         dg ----XXXX
         dg -X-----X
         dg --XX----
@@ -2228,7 +2228,7 @@
         dg XX-XX---
         dg XXXX-X-X
 
-        ; ff
+        ; e0
         dg XXXXXXXX
         dg XXXXXXXX
         dg ---XXXXX
@@ -2237,4 +2237,134 @@
         dg XXXXXXXX
         dg X-X-X-X-
         dg --------
+
+        ; e1
+        dg XXXXX-X-
+        dg XXXXXX-X
+        dg XXXX----
+        dg ------X-
+        dg ---XXX--
+        dg XXXXX---
+        dg X-X---X-
+        dg ---X-X-X
+
+        ; e2
+        dg -XXXXXXX
+        dg XXX-X-X-
+        dg -X------
+        dg -----X-X
+        dg --X-X-X-
+        dg -X-XXXXX
+        dg --XX----
+        dg --------
+
+        ; e3
+        dg XXXXXXXX
+        dg X-X-XXXX
+        dg -----X-X
+        dg -X-X----
+        dg X-X-X-X-
+        dg XXXXXX-X
+        dg -------X
+        dg --------
+
+        ; e4
+        dg X-X-X-X-
+        dg XXXXXXX-
+        dg XXXXXXXX
+        dg X-XXXXXX
+        dg --X-XXXX
+        dg -X--X-XX
+        dg X-X---X-
+        dg --XX-X--
+
+        ; e5
+        dg --------
+        dg -X------
+        dg --X-----
+        dg X--X----
+        dg -X--XXX-
+        dg X-X--X-X
+        dg XX-XX---
+        dg XXXX-X-X
+
+        ; e6
+        dg -------X
+        dg ------XX
+        dg ------XX
+        dg -------X
+        dg --------
+        dg XXXXXXXX
+        dg X-X-X-X-
+        dg --------
+
+        ; e7
+        dg X---X-X-
+        dg XXX--X-X
+        dg XXXX----
+        dg XXX---X-
+        dg ----XX--
+        dg XXXXX---
+        dg X-X---X-
+        dg ---X-X-X
+
+        ; e8
+        dg -XXXXXXX
+        dg XXX-X-X-
+        dg -X------
+        dg ----XXXX
+        dg --XX----
+        dg -X------
+        dg --------
+        dg --------
+
+        ; e9
+        dg XXXXXXXX
+        dg X-X-XXXX
+        dg -----X-X
+        dg XXXX----
+        dg ----XXX-
+        dg -------X
+        dg --XXXX--
+        dg --XXXXXX
+
+        ; ea
+        dg X-X-X-X-
+        dg XXXXXXX-
+        dg XXXXXXXX
+        dg X-XXXXXX
+        dg --X-XXXX
+        dg XX--X-XX
+        dg --XX--X-
+        dg X---XX--
+
+        ; eb
+        dg --------
+        dg --------
+        dg --------
+        dg X-------
+        dg -X------
+        dg X-X-----
+        dg XX-XX---
+        dg XXXX-X-X
+
+        ; ec
+        dg --XXXXXX
+        dg ---XXXXX
+        dg ---XXXXX
+        dg ----XXXX
+        dg -----XXX
+        dg --------
+        dg --------
+        dg --------
+
+        ; ed
+        dg XXX---X-
+        dg XXXXX--X
+        dg XXXX----
+        dg XXX-----
+        dg XX------
+        dg --------
+        dg ------X-
+        dg ---X-X-X
 

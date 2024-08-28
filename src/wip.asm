@@ -399,6 +399,7 @@ LetterGlyphs:
                 org 0x831f
 Wait_fire_some_time:
                 ld h, 0x28
+Wait_fire_custom:
 2               call Joystick_read
                 ei
                 ld b, 5
