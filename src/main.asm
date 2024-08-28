@@ -51,26 +51,28 @@ Intro_movie:
                 ld iy, Intro.Frame_00
                 ld de, 0x3090 ; coords
                 ld bc, 0x805 ; box 5x8
-                call Draw_intro_box ; and wait a bit for fire
+                call Draw_box_and_everything ; and wait a bit for fire
                 call Print_iy ; "now he has awakened"
-                call Draw_just_sprite ; and wait a miniscule amount
-                call Draw_just_sprite ; and wait a miniscule amount
+                call Draw_just_sprite ; and wait a miniscule amount: eye opening frame 1
+                call Draw_just_sprite ; and wait a miniscule amount: eye opening frame 2
 
                 ld a, 0x42     ; color.red + bg.black + bright
                 ld (0x5a9c), a ; red eye glows
-                call Draw_just_sprite
+                call Draw_just_sprite ; eye opening frame 3
                 call Wait_fire_some_time
+
                 ld a, 7
                 call Clear_screen
 
                 ld hl, Intro.Attr_sword_shiny
                 ld de, 0x5882 ; somewhere on screen
-blit_size+*     ld bc, 0x0503  ; 5x3 area
+                ld bc, 0x0503  ; 5x3 area
                 call Blit_square_attributes
 
                 ld de, 0x0008
                 ld bc, 0x0713
-                call Draw_intro_box
+                call Draw_box_and_everything ; shiny sword
+
                 ld a, 7
                 out (0xfe), a
 
@@ -81,9 +83,11 @@ blit_size+*     ld bc, 0x0503  ; 5x3 area
 
                 ld bc, 0x2000
                 call Delay_custom
+
                 ld a, 0
                 out (0xfe), a
-                call X5dd5
+
+                call Draw_sprite_and_text ; no border. sword shattered
 
                 ld a, 7
                 call Clear_screen
@@ -93,12 +97,12 @@ blit_size+*     ld bc, 0x0503  ; 5x3 area
                 ld bc, 0x0d10
                 call Blit_square_attributes
 
-                 ; Hiro border
+                ; Hiro
                 ld de, 0x0f00
                 ld bc, 0x120f
-                call Draw_intro_box
+                call Draw_box_and_everything ; hiro + "they newer thought he would return"
 
-                call X5dd8
+                call Draw_just_text ; I am hiro, the last of the bladeknights
 
                 ld h, 0x3c
                 call Wait_fire_custom
@@ -110,9 +114,12 @@ blit_size+*     ld bc, 0x0503  ; 5x3 area
 
 
 
-Draw_intro_box: call DrawBox
-X5dd5:          call Print_iy_with_alt_tileset
-X5dd8:          call Print_iy
+Draw_box_and_everything:
+                call DrawBox
+Draw_sprite_and_text:
+                call Print_iy_with_alt_tileset
+Draw_just_text:
+                call Print_iy
                 jp Wait_fire_some_time
 
 Draw_just_sprite:
@@ -345,20 +352,6 @@ joy_flags
                 db 0x01, 0x1e : rra : dec d : inc d : dec e : inc e
                 ld a, 0xf7 : in a, (0xfe) : or 0xef : rrca : rrca : rrca : ld c, a
                 ld a, 0xef : in a, (0xfe) : and c   : bit 0, a : ret
-
-                org 0x6b4d
-                db 0x00, 0x00, 0x00
-                db 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x50
-                db 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x02, 0x00,   0x04, 0x00, 0x04, 0x00, 0x05, 0x00, 0x07, 0x00
-                db 0x06, 0x00, 0x10, 0x00, 0x07, 0x00, 0x20, 0x00,   0x08, 0x00, 0x50, 0x00, 0x09, 0x00, 0x70, 0x00
-                db 0x00, 0x00, 0x00, 0x50, 0x00, 0x00, 0x01, 0x00,   0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x02, 0x50
-                db 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x03, 0x50,   0x00, 0x00, 0x50, 0x00, 0x00, 0x01, 0x00, 0x00
-                db 0x00, 0x05, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00,   0x00, 0x00, 0x00, 0x10, 0x9a, 0x82, 0x00, 0x00
-                db 0x9b, 0x86, 0x00, 0x00, 0x9c, 0x8a, 0x00, 0x00,   0x9d, 0x8e, 0x00, 0x00, 0x9e, 0x92, 0x00, 0x00
-                db 0x8b, 0xa2, 0x00, 0x00, 0x97, 0x96, 0x00, 0x00,   0x98, 0x9a, 0x00, 0x00, 0x99, 0x9e, 0x00, 0x00
-                db 0x9f, 0x00, 0x5b, 0x00, 0xa0, 0x00, 0x5d, 0x01,   0x00, 0x00, 0xac, 0x00, 0x5f, 0x02, 0xa4, 0x00
-                db 0x3d, 0x06, 0xad, 0xc2, 0x3f, 0x07, 0xa3, 0x00,   0x3a, 0x05, 0xa1, 0x00, 0x61, 0x03, 0xa2, 0x00
-                db 0x63, 0x04, 0xa5, 0x82, 0x00, 0x00, 0xaa, 0x00,   0x00, 0x00, 0xab, 0x00, 0x00, 0x00, 0x8d, 0x00
 
                 include "wip.asm"
 
