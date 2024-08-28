@@ -277,7 +277,6 @@ Blit_square_attributes:
                 assert ($ = 0x6a7b)
 Joystuff:
 ; print the joystick menu, wait for input and patch-up the joystick routines
-maybe_prepare_screen equ 0x8339
 
                 xor a
                 call Clear_screen
