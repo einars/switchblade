@@ -1,0 +1,15 @@
+* tape:stop nebreiko uz mākslīgajiem teipiem, tikai sys-load :(
+
+basic:
+x = peek 5c53h + 256 * peek 5c54
+x += 0x3c
+
+0x5ccb + 0x3c = 0x5d07 23815
+
+break 0xfff7 some loadings
+
+5cfa
+
+i = fe
+im2
+

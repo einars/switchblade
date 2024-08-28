@@ -1,0 +1,36 @@
+#!/usr/bin/env bb
+
+(defn bin-to-asm [file-name start-address]
+  (with-open [xin (io/input-stream file-name)]
+    (let [
+          xout (java.io.ByteArrayOutputStream.)
+          _ (io/copy xin xout)
+          bytes (.toByteArray xout)]
+
+      (let [addrs (range 0 (count bytes))]
+        (doseq [block (partition 256 addrs)]
+          (printf "    org 0x%04x\n" (+ (first block) start-address))
+          (doseq [line (partition 16 block)]
+            (printf "    db 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x,   0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x, 0x%02x\n"
+              (aget bytes (nth line 0))
+              (aget bytes (nth line 1))
+              (aget bytes (nth line 2))
+              (aget bytes (nth line 3))
+              (aget bytes (nth line 4))
+              (aget bytes (nth line 5))
+              (aget bytes (nth line 6))
+              (aget bytes (nth line 7))
+              (aget bytes (nth line 8))
+              (aget bytes (nth line 9))
+              (aget bytes (nth line 10))
+              (aget bytes (nth line 11))
+              (aget bytes (nth line 12))
+              (aget bytes (nth line 13))
+              (aget bytes (nth line 14))
+              (aget bytes (nth line 15))))
+          (printf "\n")
+          ))
+
+      )))
+
+(bin-to-asm (first *command-line-args*) (get *command-line-args* 2 16384))
