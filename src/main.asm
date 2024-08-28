@@ -295,7 +295,7 @@ Joystuff:
 Joystuff_cont
                 ld a, (hl)
                 inc hl
-                ld (Ljoy_flag_001), a 
+                ld (joy_flag_1), a 
                 ld (Ljoy_flag_002), a 
                 ld a, (hl)
                 ld (joy_flag_3a), a
