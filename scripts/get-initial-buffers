@@ -1,0 +1,21 @@
+#!/usr/bin/env bb
+
+(defn bin-to-asm [file-name]
+  (with-open [xin (io/input-stream file-name)]
+    (let [
+          xout (java.io.ByteArrayOutputStream.)
+          _ (io/copy xin xout)
+          bytes (.toByteArray xout)]
+
+      (doseq [a (range 0 10)]
+        (let [start-addr (+ 0x6b5c (* a 0x7e))
+              end-addr (+ start-addr 0x7e)
+
+              rr (range (- start-addr 0x4000) (- end-addr 0x4000))
+              buffer (mapv #(aget bytes %) rr)
+              chars (mapv #(format "0x%02x" %) buffer)
+              line (str/join ", " chars)]
+          (printf "        ; %04x\n", start-addr) 
+          (printf "        db %s\n" line) )))))
+
+(bin-to-asm (first *command-line-args*))
