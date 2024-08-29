@@ -1,12 +1,12 @@
 #!/usr/bin/env bb
 
-;(def glyph-base (- 0x7be5 0x4000))
-;(def n-glyphs 0x3b)
-;(def ascii-offset 32)
+(def glyph-base (- 0x7be5 0x4000))
+(def n-glyphs 0x8b)
+(def ascii-offset 32)
 
-(def glyph-base (- 0x6313 0x4000))
-(def n-glyphs 0xed)
-(def ascii-offset 1)
+;(def glyph-base (- 0x6313 0x4000))
+;(def n-glyphs 0xed)
+;(def ascii-offset 1)
 
 
 (defn stripe [n mask]

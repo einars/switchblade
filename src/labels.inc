@@ -2,7 +2,6 @@
 X6a7b equ 0x6a7b
 Ljoy_flag_002 equ 0x5c06 ; sic
 
-L6657 equ 0x6657
 L6667 equ 0x6667
 
 X831f equ Wait_fire_some_time
@@ -18,9 +17,6 @@ X853f equ 0x853f
 X8e77 equ 0x8e77
 
 
-; L8454 equ 0x8454
-;L845f equ int_flag
-;L8473 equ int_counter
 ;smc_L865b equ beep_dur0
 ;smc_L865d equ beep_dur1
 
@@ -37,20 +33,38 @@ L8454 equ maybe_sound_to_play
 ;L8454_is_ff equ 0x8634
 
 L6602 equ 0x6602
-L6645 equ 0x6645
-L6647 equ 0x6647
-L6648 equ 0x6648
 
-maybe_pause_flag equ 0x664c
-L664c equ maybe_pause_flag
-
-L6650 equ 0x6650
-L6651 equ 0x6651
-L6652 equ 0x6652
 L69e3 equ 0x69e3
 
 smc_L9ba3 equ 0x9ba3
 
 L6b5c equ 0x6b5c
 X70ef equ 0x70ef
-L5c4d equ 0x5c4d
+
+Pre_game_animations equ 0xa73e
+Xa73e equ Pre_game_animations
+
+
+; variables from after-table initializer:
+L69df equ 0x69df
+L5d02 equ 0x5d02
+L8452 equ 0x8452
+L8dfe equ 0x8dfe
+
+X5fc0 equ 0x5fc0
+Xa65d equ 0xa65d
+X95c3 equ 0x95c3
+Xffeb equ 0xffeb
+
+smc_L88ae equ 0x88ae
+smc_L845f equ 0x845f
+smc_L878f equ 0x878f
+
+; abstract addresses, not matching actual source
+L5fee equ 0x5fee ; V
+L5ff7 equ 0x5ff7 ; V
+
+L7f1d equ 0x7f1d
+L80eb equ 0x80eb
+
+L6bdd equ 0x6bdd ; V
