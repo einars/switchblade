@@ -40,6 +40,7 @@ Data_zfz equ 0x6082 ; V, marked
 ; vars in mach-zone, outside of some-initial-buffers
 L69e3 equ 0x69e3
 L69dd equ 0x69dd
+L69de equ 0x69de
 L69df equ 0x69df
 L6bdd equ 0x6bdd
 L6652 equ 0x6652
@@ -73,8 +74,6 @@ VQ66c8 equ 0x66c8
 VQ66bd equ 0x66bd
 VQ66b6 equ 0x66b6
 VQ6682 equ 0x6682
-
-L7afb equ 0x7afb
 
 L898c equ 0x898c
 
@@ -121,5 +120,9 @@ X8fdd equ 0x8fdd
 X9000 equ 0x9000
 
 smc_L7b63 equ 0x7b63
+smc_La56e equ 0xa56e
+smc_L89f6 equ 0x89f6
+
+X898c equ 0x898c
 
 J8330 equ 0x8330
