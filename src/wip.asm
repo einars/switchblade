@@ -1630,7 +1630,7 @@ Search_nonzero_at_30:
 
                 ; 8f3b
 Q8f3b:
-                call X8f75
+                call Q8f75
                 ld l, 1
                 ld a, (hl) ; a = mach[1]
                 ld de, 0
@@ -1669,24 +1669,131 @@ Q8f3b:
 
 
 
+Q8f75:         
+                push iy
+                pop hl
+
+                ld e, 0
+                ld l, 0x22
+                ld d, (hl) ; D = mach[22]
+                ld a, d
+                ld l, e
+                or a
+                jp m, 1f
+                neg
+                ld l, a    
+1               ld a, l  ; A = abs(mach[22])
+                ld l, 1
+                add a, (hl) ; A = abs(mach[22]) + mach[1]
+                call X8fdd
+                ld (smc_L8c76), a
+                ld (var_732a), bc
+                push bc
+                ld l, 0x21
+                ld a, (hl)
+                neg             ; a = - mach[21]
+                ld l, 0
+                add a, (hl)     
+                ld l, a         ; l = mach[0] - mach[21]
+                and 0xf8
+                cp 0xc8
+                jr c, .ok
+                ; a >= 0xc8? a = 0!
+                xor a
+.ok             ld (smc_L8b15), a
+                ld a, l
+                call X9000
+                add a, a
+                add a, a
+                add a, a
+                ld (smc_L8d27), a ; x9000(l).A * 8
+                ld (var_732c), bc
+                ld a, e
+                ld (L69dd), a
+                pop de
+                push hl
+
+                ld h, 0x70
+                ld l, c
+                srl l
+
+                ld a, e
+                srl a
+                srl a
+                add a, (hl) 
+                ld e, a
+
+                ld a, d
+                srl a
+                srl a
+                add a, (hl)
+                ld d, a     
+                ; D = [70XX(XX = C/2)] + D/4
+                ; E = [70XX(XX = C/2)] + E/4
+
+                ld (smc_La56e), DE
+                ld a, b
+                srl a
+                inc a
+                sub l
+                ld (L69de), a
+                pop hl
+                ret
+
+Q8fdd:
+                ld l, a
+                srl a
+                cp 0x4f
+                jr c, .ok1
+                set 7, e
+                xor a
+.ok1            ld c, a
+                
+                ld a, d
+                or a
+                jp p, .ok2
+                neg
+.ok2            add a, l
+                ld l, 0x15
+                add a, (hl) ; mach[15]
+                srl a
+                dec a       ; (n + mach[15]) / 2 - 1
+                cp 0x50
+                jr c, leave_this
+                set 6, e
+                ld a, 0x4f
+                jr leave_this
+
+Q9000:          rra
+                rra
+                rra
+                and 0x1f
+                cp 0x15
+                jr c, .ok
+                set 5, e
+                xor a
+.ok             ld c, a
+                ld a, l
+                ld l, 0x16
+                add a, (hl) ; mach[16]
+                dec a
+                rra
+                rra
+                rra
+                and 0x1f
+                cp 0x16
+                jr c, leave_this
+                set 4, e
+                ld a, 0x15
+leave_this      ld b, a
+                inc a
+                sub c
+                ret
+
+; 9023
 
 
-
-                ; 8f75
-                db 0xfd, 0xe5, 0xe1,   0x1e, 0x00, 0x2e, 0x22, 0x56, 0x7a, 0x6b, 0xb7
-                db 0xfa, 0x86, 0x8f, 0xed, 0x44, 0x6f, 0x7d, 0x2e,   0x01, 0x86, 0xcd, 0xdd, 0x8f, 0x32, 0x76, 0x8c
-                db 0xed, 0x43, 0x2a, 0x73, 0xc5, 0x2e, 0x21, 0x7e,   0xed, 0x44, 0x2e, 0x00, 0x86, 0x6f, 0xe6, 0xf8
-                db 0xfe, 0xc8, 0x38, 0x01, 0xaf, 0x32, 0x15, 0x8b,   0x7d, 0xcd, 0x00, 0x90, 0x87, 0x87, 0x87, 0x32
-                db 0x27, 0x8d, 0xed, 0x43, 0x2c, 0x73, 0x7b, 0x32,   0xdd, 0x69, 0xd1, 0xe5, 0x26, 0x70, 0x69, 0xcb
-                db 0x3d, 0x7b, 0xcb, 0x3f, 0xcb, 0x3f, 0x86, 0x5f,   0x7a, 0xcb, 0x3f, 0xcb, 0x3f, 0x86, 0x57, 0xed
-                db 0x53, 0x6e, 0xa5, 0x78, 0xcb, 0x3f, 0x3c, 0x95,   0x32, 0xde, 0x69, 0xe1, 0xc9, 0x6f, 0xcb, 0x3f
-                db 0xfe, 0x4f, 0x38, 0x03, 0xcb, 0xfb, 0xaf, 0x4f,   0x7a, 0xb7, 0xf2, 0xef, 0x8f, 0xed, 0x44, 0x85
-                db 0x2e, 0x15, 0x86, 0xcb, 0x3f, 0x3d, 0xfe, 0x50,   0x38, 0x25, 0xcb, 0xf3, 0x3e, 0x4f, 0x18, 0x1f
-
-                org 0x9000
-                db 0x1f, 0x1f, 0x1f, 0xe6, 0x1f, 0xfe, 0x15, 0x38,   0x03, 0xcb, 0xeb, 0xaf, 0x4f, 0x7d, 0x2e, 0x16
-                db 0x86, 0x3d, 0x1f, 0x1f, 0x1f, 0xe6, 0x1f, 0xfe,   0x16, 0x38, 0x04, 0xcb, 0xe3, 0x3e, 0x15, 0x47
-                db 0x3c, 0x91, 0xc9, 0x7a, 0xb7, 0x20, 0x07, 0xcd,   0xa7, 0x9c, 0xb7, 0xc2, 0x6c, 0x90, 0x01, 0x00
+                db 0x7a, 0xb7, 0x20, 0x07, 0xcd,   0xa7, 0x9c, 0xb7, 0xc2, 0x6c, 0x90, 0x01, 0x00
                 db 0x7b, 0x7a, 0xb7, 0x28, 0x0d, 0x01, 0x51, 0x7a,   0x2e, 0x24, 0x7e, 0xfe, 0x04, 0x38, 0x03, 0x01
                 db 0x7a, 0x7a, 0x2e, 0x30, 0xcd, 0x9c, 0x91, 0xc3,   0x25, 0x92, 0x7c, 0xfe, 0x5d, 0x20, 0x0f, 0x3a
                 db 0xdc, 0x69, 0x1e, 0x04, 0x2e, 0x02, 0xcb, 0x5e,   0xc2, 0x78, 0x90, 0x4f, 0x18, 0x03, 0x2e, 0x08
@@ -1814,7 +1921,7 @@ X955a:
                 cp 0xfa
                 jr z, 7f
 
-                call X8f75
+                call Q8f75
                 call Xa569
                 ld a, d
                 ret nz
