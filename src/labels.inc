@@ -75,7 +75,9 @@ VQ66bd equ 0x66bd
 VQ66b6 equ 0x66b6
 VQ6682 equ 0x6682
 
-L898c equ 0x898c
+; -- 
+
+X898c equ 0x898c
 
 Xa65d equ 0xa65d
 X8a73 equ 0x8a73
@@ -94,8 +96,6 @@ L8943 equ 0x8943
 X8f3b equ 0x8f3b
 La6ec equ 0xa6ec
 
-smc_L8c76 equ 0x8c76
-smc_L8d27 equ 0x8d27
 X8a79 equ 0x8a79
 X8c68 equ 0x8c68
 
@@ -105,6 +105,7 @@ X8855 equ 0x8855
 La59e equ 0xa59e
 Xa58a equ 0xa58a
 X9ba2 equ 0x9ba2
+X89b2 equ 0x89b2
 
 X8907 equ 0x8907
 X9a4b equ 0x9a4b
@@ -113,16 +114,16 @@ X8a76 equ 0x8a76
 
 J872b equ 0x872b
 
+smc_L7b63 equ 0x7b63
+smc_L89f6 equ 0x89f6
+smc_L8c76 equ 0x8c76
+smc_L8d27 equ 0x8d27
 smc_L9a59 equ 0x9a59
+smc_La56e equ 0xa56e
 
 Xa806 equ 0xa806
 X8fdd equ 0x8fdd
 X9000 equ 0x9000
-
-smc_L7b63 equ 0x7b63
-smc_La56e equ 0xa56e
-smc_L89f6 equ 0x89f6
-
-X898c equ 0x898c
+X89ce equ 0x89ce
 
 J8330 equ 0x8330

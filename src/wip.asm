@@ -1164,12 +1164,76 @@ Q8907:
                 djnz 1b
                 ret
 
-                ; 8943
-                db 0xe5, 0x26, 0x67, 0x7e, 0xe6,   0xfc, 0x67, 0x3a, 0xff, 0x6d, 0xa4, 0x20, 0x04
-                db 0x3e, 0x43, 0x18, 0x2a, 0x26, 0x6b, 0x7e, 0x25,   0xb7, 0x28, 0x0b, 0x47, 0x7e, 0xb7, 0x78, 0x28
-                db 0x1d, 0xcd, 0xb2, 0x89, 0x18, 0x1b, 0xb6, 0x20,   0x15, 0x3a, 0xf6, 0x89, 0x6f, 0x79, 0x14, 0x2d
-                db 0x28, 0x06, 0xc6, 0x06, 0xfe, 0x18, 0x20, 0xf6,   0x7d, 0x32, 0xf6, 0x89, 0x18, 0x03, 0xcd, 0xce
-                db 0x89, 0xe1, 0x2c, 0x0e, 0x00, 0x3a, 0xf6, 0x89,   0xb7, 0xc8, 0x18, 0xb7, 0xe5, 0x26, 0x69, 0x7e
+X8943:          ; used as a callback
+.all_over_again
+                push hl
+                ld h, 0x67
+                ld a, (hl) ; machA[L]
+                and 0xfc
+                ld h, a
+                ld a, (Buffer_yy + 0xff)
+                and h
+                jr nz, 1f
+
+                ld a, 0x43
+                jr 5f ; sic!!! somebody might mess this up
+.smc_reljump    equ $ - 1
+; smc_l8960
+
+1               ld h, 0x6b ; machE
+                ld a, (hl)
+                dec h
+                or a
+                jr z, 2f
+
+                ld b, a
+                ld a, (hl)
+                or a
+                ld a, b
+                jr z, 5f
+
+                call X89b2 ; sic!!! somebody might mess thisu up
+; smc_L8963 
+                jr .next
+
+2               or (hl)
+                jr nz, 5f
+
+                ld a, (smc_L89f6)
+                ld l, a
+                ld a, c
+
+3               inc d
+                dec l
+                jr z, 4f
+
+                add a, 6
+                cp 0x18
+                jr nz, 3b
+
+4               ld a, l
+                ld (smc_L89f6), a
+                jr .next
+
+5
+                call X89ce
+
+.next           pop hl
+                inc l
+                ld c, 0
+                ld a, (smc_L89f6)
+                or a
+                ret z
+                jr .all_over_again
+
+
+
+
+
+
+
+
+                db 0xe5, 0x26, 0x69, 0x7e
                 db 0x25, 0xb7, 0x28, 0x0b, 0x47, 0x7e, 0xb7, 0x78,   0x28, 0x0a, 0xcd, 0xb2, 0x89, 0x18, 0x08, 0xb6
                 db 0x20, 0x02, 0x3e, 0x43, 0xcd, 0xd2, 0x89, 0xe1,   0x2c, 0x0e, 0x00, 0x3a, 0xf6, 0x89, 0xb7, 0xc8
                 db 0x18, 0xda, 0x3a, 0xf6, 0x89, 0xe5, 0xd5, 0xc5,   0xf5, 0x7e, 0xcd, 0xce, 0x89, 0xf1, 0xc1, 0xd1
@@ -1300,12 +1364,12 @@ X8e2b:
                 cp 0xc8
                 jr c, .leave
 
-1               ld bc, L898c
+1               ld bc, X898c ; callback
                 call X8907
                 ld de, 0xa001
                 call X8a76
                 push bc
-                ld bc, L8943
+                ld bc, X8943 ; callback
                 call X8907
                 pop bc
                 rl c
