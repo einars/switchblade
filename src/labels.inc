@@ -37,9 +37,14 @@ L8683 equ 0x8683 ; some 12-byte table?
 
 Data_zfz equ 0x6082 ; V, marked
 
-; vars in mach-zone
+; vars in mach-zone, outside of some-initial-buffers
 L69e3 equ 0x69e3 ; machC[e3]
+L69dd equ 0x69dd ; V
 L69df equ 0x69df ; machC[df]
+L6bdd equ 0x6bdd ; V
+
+L5d42 equ 0x5d42
+L5d4a equ 0x5d4a
 
 smc_L9ba3 equ 0x9ba3
 
@@ -48,24 +53,19 @@ Pre_game_color_modes equ 0x66fa ; V
 smc_L845f equ int_enable
 
 VQ5fc0 equ 0x5fc0
+VQ5fee equ 0x5fee
 
 smc_L88ae equ 0x88ae
 smc_L878f equ 0x878f
 
-; abstract addresses, not matching actual source
-L5fee equ 0x5fee ; V
-L5ff7 equ 0x5ff7 ; V
 
 Vreset_attrs_8_bottoms equ 0x65ee ; V
 
-L80eb equ 0x80eb
+VQ5fcb equ 0x5fcb ; V
+VL65ca equ 0x65ca ; V, more buffers for Pre_game_animation
+VL65dc equ 0x65dc ; V
 
-X5fcb equ 0x5fcb ; V, marked
-L6bdd equ 0x6bdd ; V
-L65ed equ 0x65ed ; V
-L65dc equ 0x65dc ; V
-L69dd equ 0x69dd ; V
-L5c45 equ 0x5c45 ; V
+J5c45 equ 0x5c45 ; V
 X6682 equ 0x6682 ; V
 X66b6 equ 0x66b6 ; V
 
@@ -108,3 +108,6 @@ J872b equ 0x872b
 
 smc_L9a59 equ 0x9a59
 
+Xa806 equ 0xa806
+X8fdd equ 0x8fdd
+X9000 equ 0x9000

@@ -28,10 +28,13 @@ Start:
                 db "GGGGG"
 
                 org 0x5c42
-                db 0xcd, 0x1a, 0x83, 0x3e, 0xff, 0xcd,   0xc0, 0x5f, 0xcd, 0x06, 0xa8
+                db 0xcd, 0x1a, 0x83
+Q5c45:
+                ld a, 0xff
+                call VQ5fc0
+                
+                call Xa806
 
-
-                org 0x5c4d
 L5c4d
                 ld a, 0x80
 
@@ -108,7 +111,7 @@ do_stuff:       ld (L69df), bc
                 ld bc, 0x4804
                 ld de, 0x65ca
                 ld a, 0x24
-                call Xa65d
+                call Qa65d
 
                 ld a, 7
                 ld (mach0 + 2), a
