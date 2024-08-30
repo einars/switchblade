@@ -21,7 +21,6 @@ L6667 equ 0x6667
 X831f equ Wait_fire_some_time
 X8321 equ Wait_fire_custom
 X61e5 equ Print_something_custom
-L76d0 equ Pre_game_flags
 
 X8330 equ Delay
 X8333 equ Delay_custom
@@ -89,7 +88,8 @@ L65ed equ 0x65ed ; V
 L65dc equ 0x65dc ; V
 
 
-L7600 equ 0x7600
+L7600 equ Logo_ani_pt1
+
 X9b71 equ 0x9b71
 X8f3b equ 0x8f3b
 La6ec equ 0xa6ec
@@ -98,5 +98,4 @@ smc_L8c76 equ 0x8c76
 smc_L8d27 equ 0x8d27
 X8a79 equ 0x8a79
 X8c68 equ 0x8c68
-L76d1 equ 0x76d1
 
