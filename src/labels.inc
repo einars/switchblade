@@ -84,10 +84,14 @@ X5fcb equ 0x5fcb ; V, marked
 L6bdd equ 0x6bdd ; V
 L65ed equ 0x65ed ; V
 L65dc equ 0x65dc ; V
+L69dd equ 0x69dd ; V
 L5c45 equ 0x5c45 ; V
 X6682 equ 0x6682 ; V
 X66b6 equ 0x66b6 ; V
 
+L898c equ 0x898c
+
+X8a73 equ 0x8a73
 
 Xff01 equ 0xff01
 Xff64 equ 0xff64
@@ -95,6 +99,8 @@ Xff64 equ 0xff64
 L79ff equ 0x79ff
 
 L7600 equ Logo_ani_pt1
+
+L8943 equ 0x8943
 
 X8f3b equ 0x8f3b
 La6ec equ 0xa6ec
@@ -112,7 +118,14 @@ La59e equ 0xa59e
 Xa58a equ 0xa58a
 X9bb6 equ 0x9bb6
 X9ba2 equ 0x9ba2
-X8e2b equ 0x8e2b
+
+X8907 equ 0x8907
+X9a4b equ 0x9a4b
+X8e98 equ 0x8e98
+X8a76 equ 0x8a76
+
+J872b equ 0x872b
+
 
 smc_L9a59 equ 0x9a59
 

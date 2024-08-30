@@ -1210,13 +1210,46 @@ J8dfe:
 
                 jr .forever
 
-                ; 8e2b
-                db 0xe5, 0xc5, 0xcd, 0x4b, 0x9a
-                db 0xfd, 0xcb, 0x20, 0x46, 0x28, 0x3e, 0xfd, 0xcb,   0x20, 0x86, 0xcd, 0x3b, 0x8f, 0x2e, 0x1c, 0x7e
-                db 0xfe, 0x25, 0xca, 0x2b, 0x87, 0x3a, 0xdd, 0x69,   0xcd, 0x98, 0x8e, 0x28, 0x27, 0x2e, 0x00, 0x7e
-                db 0xfe, 0xa8, 0x38, 0x04, 0xfe, 0xc8, 0x38, 0x1c,   0x01, 0x8c, 0x89, 0xcd, 0x07, 0x89, 0x11, 0x01
-                db 0xa0, 0xcd, 0x76, 0x8a, 0xc5, 0x01, 0x43, 0x89,   0xcd, 0x07, 0x89, 0xc1, 0xcb, 0x11, 0xdc, 0x73
-                db 0x8a, 0xcd, 0x68, 0x8c, 0xc1, 0xe1, 0xc9
+X8e2b:       
+                push hl
+                push bc
+                call X9a4b
+                bit 0, (iy + 0x20)
+                jr z, .leave
+                res 0, (iy + 0x20)
+                call X8f3b
+                ld l, 0x1c
+                ld a, (hl) ; mach[1c]
+                cp 0x25
+                jp z, J872b
+                ld a, (L69dd)
+                call X8e98
+                jr z, .leave
+
+                ld l, 0
+                ld a, (hl)
+                cp 0xa8
+                jr c, 1f
+                cp 0xc8
+                jr c, .leave
+
+1               ld bc, L898c
+                call X8907
+                ld de, 0xa001
+                call X8a76
+                push bc
+                ld bc, L8943
+                call X8907
+                pop bc
+                rl c
+                call c, X8a73
+                call X8c68
+.leave          pop bc
+                pop hl
+                ret
+
+
+                org 0x8e77
 
                 ; 8e77
 Search_nonzero_in_mach0:
