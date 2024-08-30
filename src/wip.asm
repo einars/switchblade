@@ -2099,7 +2099,8 @@ Pre_game_animations:
                 ld hl, pregame_flag_02
                 ld a, (hl)
                 cp 0x1a
-                call z, Xif_something_1a
+                call z, Vreset_attrs_8_bottoms ; bottom screen gets white-on-black
+
                 cp 0x1b
                 jp z, La6ec
                 cp 0x0f
@@ -3726,7 +3727,7 @@ Bottom_row_attrs:
 
 Fill_bottom_row_attrs:
                 ld hl, Bottom_row_attrs
-                ld de, 0x5ae0 ; attrs_row(22)
+                ld de, 0x5ae0 ; attrs_row(23)
                 ld bc, 0x20
                 ldir
 

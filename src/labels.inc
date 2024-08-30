@@ -56,8 +56,7 @@ smc_L878f equ 0x878f
 L5fee equ 0x5fee ; V
 L5ff7 equ 0x5ff7 ; V
 
-Xif_something_1a equ 0x65ee ; V
-X65ee equ Xif_something_1a
+Vreset_attrs_8_bottoms equ 0x65ee ; V
 
 L80eb equ 0x80eb
 
