@@ -203,7 +203,7 @@
                 ld bc, 0x48f0
                 ld de, VL65a6
                 xor a
-                call Xa65d
+                call Qa65d
                 ex de, hl
                 ld l, 02
                 ld (hl), 0x81

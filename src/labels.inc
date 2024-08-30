@@ -77,8 +77,6 @@ VQ6682 equ 0x6682
 
 ; -- 
 
-Xa65d equ 0xa65d
-X8a73 equ 0x8a73
 X8333 equ 0x8333
 X97a3 equ 0x97a3
 
@@ -91,11 +89,10 @@ L7600 equ Logo_ani_pt1
 
 L8943 equ 0x8943
 
-X8f3b equ 0x8f3b
 La6ec equ 0xa6ec
 
-X8a79 equ 0x8a79
 X8c68 equ 0x8c68
+X8a90 equ 0x8a90
 
 X8f75 equ 0x8f75
 Xa569 equ 0xa569
@@ -108,13 +105,13 @@ X89b2 equ 0x89b2
 X8907 equ 0x8907
 X9a4b equ 0x9a4b
 X8e98 equ 0x8e98
-X8a76 equ 0x8a76
 
 J872b equ 0x872b
 
 smc_L7b63 equ 0x7b63
 
 smc_L89f6 equ needs_more_processing
+smc_L89f1 equ smc_processor
 
 smc_L8c13 equ 0x8c13
 smc_L8c1e equ 0x8c1e
@@ -130,6 +127,6 @@ X89ce equ 0x89ce
 
 J8330 equ 0x8330
 X8c0a equ 0x8c0a
-X8a06 equ 0x8a06
 X8bc8 equ 0x8bc8
 X8ea3 equ 0x8ea3
+

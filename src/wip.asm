@@ -1281,21 +1281,18 @@ smc_L89bb       equ $-2
                 call X89ce
                 ret
 
-; 89XX is messy
-
 _run_with_8c0a:
                 ld hl, X8c0a
                 jr L89d9
-
-; proper entry-ish
+; proper-ish entry
 Q89ce:          cp 0x4b
                 jr nc, _run_with_8c0a
 
-Q89d2           call X8a06
+Q89d2           call Q8a06
 Q89d5           ld a, b
                 ld hl, X8bc8
 
-L89d9           ld (smc_L89f1), hl
+L89d9           ld (smc_processor), hl
                 call X8ea3
 L89df           ld b, 0
                 add hl, bc
@@ -1307,7 +1304,7 @@ L89ec           ld b, 2
                 push de
                 push bc
                 call X8bc8 ; SMC!
-smc_L89f1       equ $-2
+smc_processor   equ $-2
                 pop bc
                 pop de
 needs_more_processing+* ld a, 0
@@ -1316,23 +1313,152 @@ needs_more_processing+* ld a, 0
                 ret z
                 inc d
                 ld a, c
-                cp 0x12
+                cp 0x12 ; enough processed per frame perhaps? needs_more_processing > 0 still
                 ret z
 
                 add a, 6
                 ld c, a
                 jr L89ec
 
-; 8a06
+Q8a06           ld b, a
+                cp 0x1b
+                ret c
+                ld h, 0x6c ; machF
+                ld a, (hl)
+                and 0xf
+                ret z
 
-                db 0x47, 0xfe,   0x1b, 0xd8, 0x26, 0x6c, 0x7e, 0xe6, 0x0f, 0xc8
-                db 0xf5, 0x3a, 0xf6, 0x89, 0xd5, 0xc5, 0xf5, 0xcd,   0xd5, 0x89, 0xf1, 0xc1, 0xd1, 0x32, 0xf6, 0x89
-                db 0xf1, 0xc6, 0x43, 0xe1, 0x21, 0x2f, 0x8a, 0x22,   0xf1, 0x89, 0xcd, 0xa3, 0x8e, 0x18, 0xb0, 0xeb
-                db 0x1a, 0x07, 0x07, 0x07, 0xa6, 0x77, 0x2c, 0x1a,   0x0f, 0x0f, 0xa6, 0x77, 0x2c, 0x1a, 0x13, 0xeb
-                db 0x4e, 0xeb, 0xcb, 0x11, 0x17, 0xa6, 0x77, 0x2c,   0x79, 0x07, 0x07, 0x07, 0xa6, 0x77, 0x2c, 0x79
-                db 0x0f, 0x0f, 0xa6, 0x77, 0x2c, 0x1a, 0x13, 0xeb,   0x4e, 0xeb, 0xcb, 0x11, 0x17, 0xcb, 0x11, 0x17
-                db 0xa6, 0x77, 0x2c, 0x79, 0x07, 0x07, 0x07, 0xa6,   0x77, 0x2c, 0x1a, 0xa6, 0x77, 0x2c, 0x13, 0x10
-                db 0xbf, 0xeb, 0xc9, 0x11, 0x80, 0x20, 0x01, 0x00,   0x0a, 0x21, 0x02, 0x5d, 0x7e, 0xb1, 0x4f, 0x7e
+                push af
+                ld a, (needs_more_processing)
+                push de
+                push bc
+                push af
+                call Q89d5
+                pop af
+                pop bc
+                pop de
+                ld (needs_more_processing), a
+                pop af
+                add a, 0x43
+                pop hl ; eat caller return address?!
+                ld hl, Major_mask_magic
+                ld (smc_processor), hl
+                call X8ea3
+                jr L89df
+
+
+Major_mask_magic:
+                ; HL -> DE, B bytes
+                ; in game happens suddenly, while moving falling down the elevator
+                ; HL = d7ac
+                ; DE = 5e6a (mach1[6a])
+                ; B = 2
+                ; *HL = 05_14_51_45_14_51_0a_aa DG .....X.X ...X.X.. .X.X...X .X...X.X 
+                ; *DE = 07 00 00 .....XXX ........ ........ ........ ........ ........
+
+Q8a2f           ex de, hl
+1               ld a, (de) ; *d7ac = 05 = .....1.1
+                rlca
+                rlca
+                rlca
+                and (hl)   
+                ld (hl), a ; ..1.1... & .....XXX = 0 (first byte) (mask << 3)
+
+                inc l
+                ld a, (de) ; .....1.1 still the same mask
+                rrca       
+                rrca
+                and (hl)   
+                ld (hl), a ; .1.1.... & (second byte) (mask >> 2)
+
+                inc l
+                ld a, (de) ; .....1.1 still the same mask
+                inc de
+
+                ex de, hl
+                ld c, (hl) ; ld c, (de) second mask byte, 14 = ...X.X..
+                ex de, hl
+
+                rl c       ; second mask byte
+                rla        ; first mask byte  (first+second <<0 1)
+                and (hl)   ; (third byte)
+
+                ld (hl), a
+                inc l
+
+                ld a, c   ; second mask byte <<c 1
+                rlca
+                rlca
+                rlca
+                and (hl)  ; second mask<<c 1 << 3  & fourth byte, wtf
+                ld (hl), a
+                inc l
+                ld a, c   ; second mask byte <<0 1
+                rrca
+                rrca
+                and (hl)
+                ld (hl), a
+                inc l
+                ld a, (de) ; still second mask byte
+                inc de
+
+                ex de, hl
+                ld c, (hl) ; third mask byte
+                ex de, hl
+                rl c
+                rla
+                rl c
+                rla
+                and (hl) ; second+third <<c 2
+
+                ld (hl), a
+                inc l
+                ld a, c
+                rlca
+                rlca
+                rlca
+                and (hl) ; third mask byte
+                ld (hl), a
+                inc l
+                ld a, (de)
+                and (hl)
+                ld (hl), a
+                inc l
+                inc de
+                ; DE = DE + 3
+                ; HL = HL + 8
+                djnz 1b
+
+                ex de, hl
+                ret
+
+Q8a73           ld de, 0x2080
+Q8a76           ld bc, 0x0a00
+Q8a79           ld hl, mach0 + 2
+
+.again          ld a, (hl)
+                or c
+                ld c, a
+                ld a, (hl)
+                and e
+                jr z, .skip
+
+                push hl
+                push de
+                push bc
+                call X8a90
+                pop bc
+                pop de
+                pop hl
+
+.skip           inc h
+                djnz .again
+                ret
+
+
+                ; 8a90
+                org 0x8a73
+                db 0x11, 0x80, 0x20, 0x01, 0x00,   0x0a, 0x21, 0x02, 0x5d, 0x7e, 0xb1, 0x4f, 0x7e
                 db 0xa3, 0x28, 0x09, 0xe5, 0xd5, 0xc5, 0xcd, 0x90,   0x8a, 0xc1, 0xd1, 0xe1, 0x24, 0x10, 0xed, 0xc9
                 db 0x7e, 0xa2, 0xc0, 0x16, 0x73, 0xcd, 0x27, 0x9a,   0xd0, 0x2e, 0x1c, 0x7e, 0xfe, 0x25, 0xc8, 0x2e
                 db 0x20, 0xcb, 0x4e, 0x28, 0x19, 0xcb, 0x8e, 0xcd,   0x95, 0x8e, 0x20, 0x20, 0x2e, 0x02, 0xaf, 0x77
@@ -1430,7 +1556,7 @@ X8e2b:
                 bit 0, (iy + 0x20)
                 jr z, .leave
                 res 0, (iy + 0x20)
-                call X8f3b
+                call Q8f3b
                 ld l, 0x1c
                 ld a, (hl) ; mach[1c]
                 cp 0x25
@@ -1449,13 +1575,13 @@ X8e2b:
 1               ld bc, Q898c ; callback
                 call Q8907
                 ld de, 0xa001
-                call X8a76
+                call Q8a76
                 push bc
                 ld bc, Q8943 ; callback
                 call Q8907
                 pop bc
                 rl c
-                call c, X8a73
+                call c, Q8a73
                 call X8c68
 .leave          pop bc
                 pop hl
@@ -2164,11 +2290,18 @@ Store_a_to_1a1d:
 
                 org 0xa65d
 Qa65d
+                ; something to do with logo animation
                 ; initially
                 ; hl = mach0
                 ; bc = 0x4804
                 ; de = VL65ca
                 ; a = 0x24
+                ;
+                ; or, from some mach-routine
+                ; hl = mach9?
+                ; bc = 0x48f0
+                ; de = VL65a6
+                ; a = 0
                 push af
                 push de
                 ld l, 0
@@ -2323,7 +2456,7 @@ Pre_game_animations:
                 inc l
                 ld d, (hl) ; de = mach[0x40:41], e.g 0008
                 call Q9b71
-                call X8f3b
+                call Q8f3b
                 ld a, (smc_L8c76)
                 ld c, a
                 ex de, hl
@@ -2350,7 +2483,7 @@ Pre_game_animations:
                 jr nz, 4b
 .smc_La7b5+*    ld b, 0
                 ld de, 0xa001
-                call X8a79
+                call Q8a79
                 call X8c68
                 ld hl, pregame_flag_02
                 ld a, (hl)
