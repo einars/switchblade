@@ -170,15 +170,20 @@ Clean_square_at_67xx:
                 db 0x0b, 0x15, 0xff, 0x04, 0x00, 0x28, 0xf2, 0x11,   0x06, 0x00, 0x04, 0x01, 0x28, 0x0e, 0x16, 0x03
                 db 0x00, 0x02, 0x00, 0x28, 0x13, 0x16, 0x04, 0x00,   0x02, 0x00, 0x28, 0x18, 0x16, 0x04, 0x00, 0x02
                 db 0x00, 0x28, 0x1d, 0x16, 0x04, 0x00, 0x02, 0x00,   0x28, 0x22, 0x16, 0x04, 0x00, 0x02, 0x00, 0x28
-                db 0x27, 0x16, 0x04, 0x00, 0x02, 0x00, 0x63, 0x67,   0x6a, 0x66, 0x5f, 0x5e, 0x6b, 0x61, 0x60, 0x62
-                db 0x69, 0x68, 0x64, 0x5d, 0x65, 0x61, 0x62, 0x63,   0x64, 0x65, 0x66, 0x67, 0x5d, 0x5e, 0x5f, 0x60
+                db 0x27, 0x16, 0x04, 0x00, 0x02, 0x00
+
+                org 0x76b6
+Pre_game_modes:
+                db 0x63, 0x67, 0x6a, 0x66, 0x5f, 0x5e, 0x6b, 0x61, 0x60, 0x62
+                db 0x69, 0x68, 0x64, 0x5d, 0x65, 0x61, 0x62, 0x63, 0x64, 0x65
+                db 0x66, 0x67, 0x5d, 0x5e, 0x5f, 0x60
 
                 org 0x76d0
 Pre_game_flags:
-                db 0xb6
-                db 0x00
-                db 0x7b
+                db 0xb6, 0
 
+
+                db 0x7b
                 db 0x5d
                 db 0x3a
                 db 0x08
@@ -1663,18 +1668,22 @@ Pre_game_animations:
                 ld l, a
                 cp 0xb9
                 jr c, 1f
+
                 push hl
                 call Joystick_read
                 ei
                 pop hl
                 ret z
+
+                ; 76b9 contains high address to something
+
 1               ld h, 0x76
                 ld h, (hl)
                 ld l, 0
                 push hl
-                pop iy ; [76xx] hi, 0 lo ->  IY
+                pop iy ; IY = machine-line @00
                 ld l, 0x3f
-                dec (hl) ; [76xx] hi, 0x3f lo
+                dec (hl) ; machine-line @0x3f
                 jr nz, 2f
                 ld a, 0x0b
                 ld (maybe_sound_to_play), a
@@ -1696,11 +1705,13 @@ Pre_game_animations:
                 ex de, hl
                 ld e, 0
                 jr nc, 3f
+
                 ld e, 8
 
 3               ld a, (smc_L8d27)
                 add a, e
-                ; fill gfx square A (width) x C (lines) at hl
+
+                ; now fill gfx square A (width) x C (lines) at hl with 0
 
 4               push hl
                 ld b, a
@@ -1713,7 +1724,7 @@ Pre_game_animations:
                 inc h
                 dec c
                 jr nz, 4b
-.smc_La7b5+*     ld b, 0
+.smc_La7b5+*    ld b, 0
                 ld de, 0xa001
                 call X8a79
                 call X8c68
