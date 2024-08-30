@@ -9,17 +9,6 @@
 
 
 
-X831f equ Wait_fire_some_time
-X8321 equ Wait_fire_custom
-X61e5 equ Print_something_custom
-L7f1d equ Data_yy_01
-
-X8330 equ Delay
-X8333 equ Delay_custom
-
-;smc_L865b equ beep_dur0
-;smc_L865d equ beep_dur1
-
 ; magic_vars im2_always
 L8557 equ mv1
 L8558 equ mv2
@@ -48,27 +37,17 @@ L8683 equ 0x8683 ; some 12-byte table?
 
 Data_zfz equ 0x6082 ; V, marked
 
-L8454 equ maybe_sound_to_play
-
-L69e3 equ 0x69e3
+; vars in mach-zone
+L69e3 equ 0x69e3 ; machC[e3]
+L69df equ 0x69df ; machC[df]
 
 smc_L9ba3 equ 0x9ba3
 
-X70ef equ 0x70ef
-
 Pre_game_color_modes equ 0x66fa ; V
-L66fa equ Pre_game_color_modes ; V
 
 smc_L845f equ int_enable
 
-; variables from after-table initializer:
-X5fc0 equ 0x5fc0 ; V, marked
-
-L69df equ 0x69df ; machC[df]
-L8452 equ 0x8452
-
-
-Xffeb equ 0xffeb
+VQ5fc0 equ 0x5fc0
 
 smc_L88ae equ 0x88ae
 smc_L878f equ 0x878f
@@ -127,8 +106,6 @@ X8e98 equ 0x8e98
 X8a76 equ 0x8a76
 
 J872b equ 0x872b
-
-X8e89 equ 0x8e89
 
 smc_L9a59 equ 0x9a59
 

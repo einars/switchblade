@@ -35,7 +35,7 @@ Start:
 L5c4d
                 ld a, 0x80
 
-                call X5fc0 ;;; relocated code from "some-initial-buffers.inc" 
+                call VQ5fc0
 
                 ; this will alternate between switchblade animation and highscores, and wait for the fire
                 call Pre_game_animations
@@ -115,13 +115,14 @@ do_stuff:       ld (L69df), bc
                 xor a
                 ld (smc_L88ae), a
                 call Clear_screen
+                
                 ld a, 2
-                ld (L8452), a
+                ld (var_8452), a
 
                 ld iy, 0x5d00
                 call X95c3
                 call Print.Write_sys_top_bottom
-                call Xffeb
+                call Fill_bottom_row_attrs
 
                 ; fill screen with white-on-black, or bright/black-on-cyan?
                 ld a, 0x46
