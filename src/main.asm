@@ -111,7 +111,7 @@ do_stuff:       ld (L69df), bc
                 call Xa65d
 
                 ld a, 7
-                ld (L5d02), a
+                ld (mach0 + 2), a
                 xor a
                 ld (smc_L88ae), a
                 call Clear_screen
