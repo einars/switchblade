@@ -130,7 +130,7 @@ do_stuff:       ld (L69df), bc
 2               call Clear_some_attrs
                 xor a
                 ld (int_enable), a
-                jp L8dfe
+                jp J8dfe
 
 
 

@@ -62,9 +62,8 @@ smc_L845f equ int_enable
 ; variables from after-table initializer:
 X5fc0 equ 0x5fc0 ; V, marked
 
-L69df equ 0x69df
+L69df equ 0x69df ; machC[df]
 L8452 equ 0x8452
-L8dfe equ 0x8dfe
 
 
 Xffeb equ 0xffeb
@@ -81,11 +80,19 @@ X65ee equ Xif_something_1a
 
 L80eb equ 0x80eb
 
-X5fcb equ 0x5fcb ; V
+X5fcb equ 0x5fcb ; V, marked
 L6bdd equ 0x6bdd ; V
 L65ed equ 0x65ed ; V
 L65dc equ 0x65dc ; V
+L5c45 equ 0x5c45 ; V
+X6682 equ 0x6682 ; V
+X66b6 equ 0x66b6 ; V
 
+
+Xff01 equ 0xff01
+Xff64 equ 0xff64
+
+L79ff equ 0x79ff
 
 L7600 equ Logo_ani_pt1
 
@@ -105,6 +112,7 @@ La59e equ 0xa59e
 Xa58a equ 0xa58a
 X9bb6 equ 0x9bb6
 X9ba2 equ 0x9ba2
+X8e2b equ 0x8e2b
 
 smc_L9a59 equ 0x9a59
 
