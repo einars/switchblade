@@ -1147,9 +1147,9 @@ Q8907:
                 push de
                 push bc
 .smc_L892e+*    ld a, 0
-                ld (smc_L89f6), a
+                ld (needs_more_processing), a
 
-                call X898c ; smc! call address overridden
+                call Q898c ; smc! call address overridden
 .callback       equ $-2
                 pop bc
                 pop de
@@ -1164,7 +1164,10 @@ Q8907:
                 djnz 1b
                 ret
 
-X8943:          ; used as a callback
+
+
+
+Q8943:          ; used as a callback
 .all_over_again
                 push hl
                 ld h, 0x67
@@ -1177,8 +1180,7 @@ X8943:          ; used as a callback
 
                 ld a, 0x43
                 jr 5f ; sic!!! somebody might mess this up
-.smc_reljump    equ $ - 1
-; smc_l8960
+; smc_l8960 equ $ - 1
 
 1               ld h, 0x6b ; machE
                 ld a, (hl)
@@ -1193,13 +1195,13 @@ X8943:          ; used as a callback
                 jr z, 5f
 
                 call X89b2 ; sic!!! somebody might mess thisu up
-; smc_L8963 
+; smc_L8963 equ $ - 2
                 jr .next
 
 2               or (hl)
                 jr nz, 5f
 
-                ld a, (smc_L89f6)
+                ld a, (needs_more_processing)
                 ld l, a
                 ld a, c
 
@@ -1212,7 +1214,7 @@ X8943:          ; used as a callback
                 jr nz, 3b
 
 4               ld a, l
-                ld (smc_L89f6), a
+                ld (needs_more_processing), a
                 jr .next
 
 5
@@ -1221,7 +1223,7 @@ X8943:          ; used as a callback
 .next           pop hl
                 inc l
                 ld c, 0
-                ld a, (smc_L89f6)
+                ld a, (needs_more_processing)
                 or a
                 ret z
                 jr .all_over_again
@@ -1229,21 +1231,101 @@ X8943:          ; used as a callback
 
 
 
+Q898c:
+.all_over_again
+                push hl
+                ld h, 0x69 ; machC
+                ld a, (hl)
+                dec h
+                or a
+                jr z, 1f
+
+                ld b, a
+                ld a, (hl)
+                or a
+                ld a, b
+                jr z, .do_call
+
+                call X89b2
+                jr .next
+
+1               or (hl)
+                jr nz, .do_call
+                ld a, 0x43
+.do_call        call Q89d2
+.next           pop hl
+                inc l
+                ld c, 0
+                ld a, (needs_more_processing)
+                or a
+                ret z
+                jr .all_over_again
 
 
+                ; 89b2
+Q89b2:
+                ld a, (needs_more_processing)
+                push hl
+                push de
+                push bc
+                push af
+                ld a, (hl)
+                call X89ce ; sic: changes
+smc_L89bb       equ $-2
+                pop af
+                pop bc
+                pop de
+                pop hl
+                ld (needs_more_processing), a
+                ld a, b
+                call X89ce
+                ret
 
+; 89XX is messy
 
-                db 0xe5, 0x26, 0x69, 0x7e
-                db 0x25, 0xb7, 0x28, 0x0b, 0x47, 0x7e, 0xb7, 0x78,   0x28, 0x0a, 0xcd, 0xb2, 0x89, 0x18, 0x08, 0xb6
-                db 0x20, 0x02, 0x3e, 0x43, 0xcd, 0xd2, 0x89, 0xe1,   0x2c, 0x0e, 0x00, 0x3a, 0xf6, 0x89, 0xb7, 0xc8
-                db 0x18, 0xda, 0x3a, 0xf6, 0x89, 0xe5, 0xd5, 0xc5,   0xf5, 0x7e, 0xcd, 0xce, 0x89, 0xf1, 0xc1, 0xd1
-                db 0xe1, 0x32, 0xf6, 0x89, 0x78, 0xcd, 0xce, 0x89,   0xc9, 0x21, 0x0a, 0x8c, 0x18, 0x0b, 0xfe, 0x4b
-                db 0x30, 0xf7, 0xcd, 0x06, 0x8a, 0x78, 0x21, 0xc8,   0x8b, 0x22, 0xf1, 0x89, 0xcd, 0xa3, 0x8e, 0x06
-                db 0x00, 0x09, 0x3e, 0x50, 0x32, 0x1e, 0x8c, 0x3e,   0x0e, 0x32, 0x13, 0x8c, 0x06, 0x02, 0xd5, 0xc5
-                db 0xcd, 0xc8, 0x8b, 0xc1, 0xd1, 0x3e, 0x00, 0x3d,   0x32, 0xf6, 0x89, 0xc8, 0x14, 0x79, 0xfe, 0x12
+_run_with_8c0a:
+                ld hl, X8c0a
+                jr L89d9
 
-                org 0x8a00
-                db 0xc8, 0xc6, 0x06, 0x4f, 0x18, 0xe6, 0x47, 0xfe,   0x1b, 0xd8, 0x26, 0x6c, 0x7e, 0xe6, 0x0f, 0xc8
+; proper entry-ish
+Q89ce:          cp 0x4b
+                jr nc, _run_with_8c0a
+
+Q89d2           call X8a06
+Q89d5           ld a, b
+                ld hl, X8bc8
+
+L89d9           ld (smc_L89f1), hl
+                call X8ea3
+L89df           ld b, 0
+                add hl, bc
+                ld a, 0x50
+                ld (smc_L8c1e), a
+                ld a, 0x0e
+                ld (smc_L8c13), a
+L89ec           ld b, 2
+                push de
+                push bc
+                call X8bc8 ; SMC!
+smc_L89f1       equ $-2
+                pop bc
+                pop de
+needs_more_processing+* ld a, 0
+                dec a
+                ld (needs_more_processing), a
+                ret z
+                inc d
+                ld a, c
+                cp 0x12
+                ret z
+
+                add a, 6
+                ld c, a
+                jr L89ec
+
+; 8a06
+
+                db 0x47, 0xfe,   0x1b, 0xd8, 0x26, 0x6c, 0x7e, 0xe6, 0x0f, 0xc8
                 db 0xf5, 0x3a, 0xf6, 0x89, 0xd5, 0xc5, 0xf5, 0xcd,   0xd5, 0x89, 0xf1, 0xc1, 0xd1, 0x32, 0xf6, 0x89
                 db 0xf1, 0xc6, 0x43, 0xe1, 0x21, 0x2f, 0x8a, 0x22,   0xf1, 0x89, 0xcd, 0xa3, 0x8e, 0x18, 0xb0, 0xeb
                 db 0x1a, 0x07, 0x07, 0x07, 0xa6, 0x77, 0x2c, 0x1a,   0x0f, 0x0f, 0xa6, 0x77, 0x2c, 0x1a, 0x13, 0xeb
@@ -1364,13 +1446,13 @@ X8e2b:
                 cp 0xc8
                 jr c, .leave
 
-1               ld bc, X898c ; callback
-                call X8907
+1               ld bc, Q898c ; callback
+                call Q8907
                 ld de, 0xa001
                 call X8a76
                 push bc
-                ld bc, X8943 ; callback
-                call X8907
+                ld bc, Q8943 ; callback
+                call Q8907
                 pop bc
                 rl c
                 call c, X8a73
