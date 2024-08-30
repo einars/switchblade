@@ -38,13 +38,15 @@ L8683 equ 0x8683 ; some 12-byte table?
 Data_zfz equ 0x6082 ; V, marked
 
 ; vars in mach-zone, outside of some-initial-buffers
-L69e3 equ 0x69e3 ; machC[e3]
-L69dd equ 0x69dd ; V
-L69df equ 0x69df ; machC[df]
-L6bdd equ 0x6bdd ; V
-
+L69e3 equ 0x69e3
+L69dd equ 0x69dd
+L69df equ 0x69df
+L6bdd equ 0x6bdd
+L6652 equ 0x6652
 L5d42 equ 0x5d42
 L5d4a equ 0x5d4a
+L6640 equ 0x6640
+L664c equ 0x664c
 
 smc_L9ba3 equ 0x9ba3
 
@@ -61,19 +63,25 @@ smc_L878f equ 0x878f
 
 Vreset_attrs_8_bottoms equ 0x65ee ; V
 
-VQ5fcb equ 0x5fcb ; V
-VL65ca equ 0x65ca ; V, more buffers for Pre_game_animation
-VL65dc equ 0x65dc ; V
-
-J5c45 equ 0x5c45 ; V
-X6682 equ 0x6682 ; V
-X66b6 equ 0x66b6 ; V
+; v-overrides with correct addreses 
+; (in code they are marked as .private labels)
+VQ5fcb equ 0x5fcb
+VL65ca equ 0x65ca
+VL65dc equ 0x65dc
+VL65a6 equ 0x65a6
+VQ66c8 equ 0x66c8 
+VQ66bd equ 0x66bd
+VQ66b6 equ 0x66b6
+VQ6682 equ 0x6682
 
 L7afb equ 0x7afb
 
 L898c equ 0x898c
 
+Xa65d equ 0xa65d
 X8a73 equ 0x8a73
+X8333 equ 0x8333
+X97a3 equ 0x97a3
 
 Xff01 equ 0xff01
 Xff64 equ 0xff64
@@ -111,3 +119,7 @@ smc_L9a59 equ 0x9a59
 Xa806 equ 0xa806
 X8fdd equ 0x8fdd
 X9000 equ 0x9000
+
+smc_L7b63 equ 0x7b63
+
+J8330 equ 0x8330

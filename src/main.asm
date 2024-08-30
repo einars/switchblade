@@ -35,7 +35,7 @@ Q5c45:
                 
                 call Xa806
 
-L5c4d
+J5c4d
                 ld a, 0x80
 
                 call VQ5fc0
@@ -224,7 +224,7 @@ Entry:          call Joystuff
                 ; 5d46
                 ld bc, 0x24dc ; last 36 bytes of each 6-line; 24+dc = 100
                 call Clean_square_at_67xx
-                jp L5c4d
+                jp J5c4d
 
                 ; 5d4f
 
