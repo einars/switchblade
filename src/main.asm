@@ -35,7 +35,7 @@ Start:
 L5c4d
                 ld a, 0x80
 
-                call X5fc0 ;;; something moved into here. from 6c96
+                call X5fc0 ;;; relocated code from "some-initial-buffers.inc" 
 
                 ; this will alternate between switchblade animation and highscores, and wait for the fire
                 call Pre_game_animations
@@ -97,7 +97,7 @@ do_stuff:       ld (L69df), bc
                 ld bc, 0x38
                 ldir
 
-                ld hl, 0x76d8
+                ld hl, Some_6_bools
                 ld b, 6
 
 1               ld (hl), 1
@@ -129,7 +129,7 @@ do_stuff:       ld (L69df), bc
                 ld a, 7
 2               call Clear_some_attrs
                 xor a
-                ld (smc_L845f), a
+                ld (int_enable), a
                 jp L8dfe
 
 
@@ -218,7 +218,7 @@ Entry:          call Joystuff
                 jr nz, 5b
 
                 ; 5d46
-                ld bc, 0x24dc
+                ld bc, 0x24dc ; last 36 bytes of each 6-line; 24+dc = 100
                 call Clean_square_at_67xx
                 jp L5c4d
 
