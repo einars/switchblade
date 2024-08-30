@@ -46,6 +46,8 @@ machF equ 0x6c00
 
 L8683 equ 0x8683 ; some 12-byte table?
 
+Data_zfz equ 0x6082 ; V, marked
+
 L8454 equ maybe_sound_to_play
 
 L69e3 equ 0x69e3
@@ -89,6 +91,8 @@ L5c45 equ 0x5c45 ; V
 X6682 equ 0x6682 ; V
 X66b6 equ 0x66b6 ; V
 
+L7afb equ 0x7afb
+
 L898c equ 0x898c
 
 X8a73 equ 0x8a73
@@ -110,13 +114,11 @@ smc_L8d27 equ 0x8d27
 X8a79 equ 0x8a79
 X8c68 equ 0x8c68
 
-Xa6d8 equ 0xa6d8
 X8f75 equ 0x8f75
 Xa569 equ 0xa569
 X8855 equ 0x8855
 La59e equ 0xa59e
 Xa58a equ 0xa58a
-X9bb6 equ 0x9bb6
 X9ba2 equ 0x9ba2
 
 X8907 equ 0x8907
@@ -126,6 +128,7 @@ X8a76 equ 0x8a76
 
 J872b equ 0x872b
 
+X8e89 equ 0x8e89
 
 smc_L9a59 equ 0x9a59
 

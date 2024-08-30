@@ -1588,10 +1588,11 @@ X9b71:
                 ld (hl), a ; mach[21] = E / 4
                 ld l, 0x22
                 ld (hl), d ; mach[22] = D
-                call X9bb6
-                ld a, (int_enable)
+                call Q9bb6
+                ld a, (int_enable) ; game started perhaps
                 or a
                 ret nz
+
                 ld l, 0x1c
                 ld a, (hl)
                 cp 0x24   
@@ -1609,17 +1610,115 @@ X9b71:
 
                 ; 9ba2
                 db 0x3e, 0x00, 0xb7, 0xc0, 0x2e, 0x23,   0x7e, 0xfe, 0x26, 0x28, 0x03, 0xfe, 0x28, 0xc0
-                db 0x3e, 0x07, 0x32, 0x54, 0x84, 0xc9, 0x2e, 0x20,   0xcb, 0xc6, 0xcd, 0x89, 0x8e, 0xc0, 0x2e, 0x20
-                db 0xcb, 0x86, 0x2e, 0x10, 0xcb, 0x7e, 0xc0, 0xcb,   0x76, 0x28, 0x04, 0xcb, 0xfe, 0xcb, 0xb6, 0x2e
-                db 0x20, 0xcb, 0xc6, 0xaf, 0x2e, 0x06, 0xb6, 0x28,   0x48, 0x2e, 0x02, 0xcb, 0x4e, 0x20, 0x47, 0xcb
-                db 0x96, 0xcb, 0x5e, 0x20, 0x24, 0x2e, 0x0c, 0x7e,   0x2e, 0x00, 0xcb, 0x15, 0x30, 0x01, 0x17, 0xcd
-                db 0x32, 0x9c, 0x2e, 0x05, 0x5e, 0x2c, 0x56, 0x1a,   0x4f, 0x2e, 0x25, 0x7e, 0xb9, 0x38, 0x02, 0xaf
+                db 0x3e, 0x07, 0x32, 0x54, 0x84, 0xc9
 
-                org 0x9c00
-                db 0x77, 0x3c, 0x83, 0x5f, 0x1a, 0x2e, 0x23, 0x77,   0xc9, 0x3e, 0x04, 0xcd, 0x32, 0x9c, 0x11, 0xfb
-                db 0x7a, 0x0e, 0x04, 0x2e, 0x00, 0x7e, 0x1f, 0x1f,   0xe6, 0x0f, 0x91, 0xf2, 0x1a, 0x9c, 0x81, 0x18
-                db 0xe0, 0x2e, 0x0c, 0x7e, 0x18, 0x02, 0x3e, 0x01,   0xcd, 0x32, 0x9c, 0x2e, 0x0a, 0x7e, 0x2e, 0x23
-                db 0x77, 0xc9, 0x2e, 0x1a, 0x77, 0x2e, 0x1d, 0x77,   0xc9, 0x2e, 0x24, 0x7e, 0xb7, 0xc8, 0x36, 0x00
+Q9bb6:
+                ld l, 0x20
+                set 0, (hl); mach[20].0 = on
+                call X8e89
+                ret nz
+
+                ld l, 0x20
+                res 0, (hl) ; mach[20].0 = off
+                ld l, 0x10
+                bit 7, (hl)
+                ret nz      ; if mach[10].7 on then leave
+
+                bit 6, (hl)
+                jr z, 1f
+
+                ; if mach[10].6 on:
+                set 7, (hl) ; mach[10].7 = on
+                res 6, (hl) ; mach[10].6 = off
+
+1               ld l, 0x20
+                set 0, (hl) ; mach[20].0 = on
+                xor a
+                ld l, 6
+                or (hl)
+                jr z, 6f ; jump if mach[6] == 0
+
+                ld l, 2
+                bit 1, (hl)
+                jr nz, 7f ; jump if mach[2].1 on
+
+                res 2, (hl) ; mach[2].2 = off
+                bit 3, (hl)
+                jr nz, 4f   ; jump if mach[2].3 on
+
+                ld l, 0x0c
+                ld a, (hl)
+
+smc_L9be8+*     ld l, 0
+                rl l
+                jr nc, 2f
+                rla
+2               call Store_a_to_1a1d
+                ld l, 5
+                ld e, (hl)
+                inc l
+                ld d, (hl) ; de = mach[5:6]
+                ld a, (de)
+                ld c, a    ; c = [ mach[5:6] ]
+
+                ld l, 0x25
+                ld a, (hl)
+                cp c
+                jr c, 3f   
+
+                ; if mach[25] > c then mach[25] = 0
+                xor a
+                ld (hl), a
+
+3               inc a
+                add a, e
+                ld e, a
+                ld a, (de) 
+                ld l, 0x23
+                ld (hl), a; mach[23] = [ mach[5:6] + mach[25] + 1 ]
+                ret
+
+4               ; if mach[2].3 on
+                ld a, 4
+                call Store_a_to_1a1d
+                ld de, L7afb
+                ld c, 4
+                ld l, 0
+                ld a, (hl)
+                rra
+                rra
+                and 0x0f  ; A = (mach[0] >> 2) & 0f
+.sub_more       sub c     
+                jp p, .sub_more
+                add a, c
+                ; A = A % 4? rly?
+                jr 3b     
+
+6               ld l, 0x0c
+                ld a, (hl)
+                jr 8f
+
+7               ld a, 1
+8               call Store_a_to_1a1d
+                ld l, 0xa
+                ld a, (hl)
+                ld l, 0x23
+                ld (hl), a ; mach[23] = mach[A]
+                ret
+
+
+Store_a_to_1a1d:
+                ld l, 0x1a
+                ld (hl), a
+                ld l, 0x1d
+                ld (hl), a
+                ret
+
+
+
+                org 0x9c39
+                ; 9c32
+                db 0x2e, 0x24, 0x7e, 0xb7, 0xc8, 0x36, 0x00
                 db 0x2e, 0x25, 0x36, 0x00, 0x11, 0x00, 0x00, 0xc3,   0x7a, 0x9b, 0x7b, 0x17, 0x30, 0x21, 0x16, 0x00
                 db 0xcd, 0xf1, 0x9d, 0x3e, 0x10, 0x86, 0x2c, 0x66,   0x24, 0x24, 0x6f, 0xcd, 0xb5, 0x8e, 0x6f, 0x26
                 db 0x6a, 0x7e, 0xfd, 0xe5, 0xe1, 0xfe, 0x53, 0xc2,   0x56, 0x9b, 0x1e, 0x00, 0xc3, 0x56, 0x9b, 0xd5
@@ -1823,10 +1922,12 @@ Xa65d
                 ld e, 3   ; de = &mach[3]
                 pop hl    ; hl = orig de
                 ld bc, 0x12
-                ldir      ; mach[0x03..0x0f] = from orig-de (0x65dc if coming from pre-game-animations)
+                ldir      ; mach[0x03..0x0f] = from orig-de (0x65dc)
                 dec hl
                 ld a, (hl)
-                call Xa6d8
+
+                call Move_zfz_5b_to_de
+
                 ld a, 1
                 ld (de), a
                 inc e
@@ -1864,8 +1965,28 @@ Xa65d
                 db 0x2e, 0x3d, 0x7e, 0x36, 0x00, 0xed, 0x44,   0x2e, 0x01, 0x86, 0x77, 0x2e, 0x3c, 0x7e, 0x18
                 db 0x1f, 0x2e, 0x01, 0x7e, 0x2e, 0x3d, 0x77, 0x2e,   0x1b, 0x7e, 0x17, 0x2e, 0x01, 0x30, 0x04, 0x0a
                 db 0x03, 0x18, 0x02, 0x03, 0x0a, 0x5f, 0x86, 0x2e,   0x3d, 0x73, 0x2e, 0x01, 0x77, 0x03, 0x0a, 0x03
-                db 0x2e, 0x14, 0x77, 0xe5, 0xeb, 0x13, 0x18, 0x01,   0xe5, 0xc5, 0x21, 0x82, 0x60, 0x01, 0x05, 0x00
-                db 0xb7, 0x28, 0x04, 0x09, 0x3d, 0x20, 0xfc, 0xed,   0xb0, 0xc1, 0xe1, 0xc9, 0x06, 0x28, 0xc5, 0xcd
+                db 0x2e, 0x14, 0x77, 0xe5, 0xeb, 0x13, 0x18, 0x01
+
+Move_zfz_5b_to_de:
+                ; move-Ath-5-byte-block-to-DE
+                ; 13 11 F 12 F 13 11 15 13 D 14 14 D 10 17 
+                ; E C D B 11 16 16 16 16 16 16
+                push hl
+                push bc
+                ld hl, Data_zfz
+                ld bc, 5
+                or a
+                jr z, .go
+1               add hl, bc
+                dec a
+                jr nz, 1b
+.go             ldir
+                pop bc
+                pop hl
+                ret
+
+; a6ec
+                db 0x06, 0x28, 0xc5, 0xcd
                 db 0x29, 0x85, 0xfb, 0x26, 0x01, 0xcd, 0x21, 0x83,   0xc1, 0xc8, 0x10, 0xf2, 0xaf, 0xcd, 0x39, 0x83
 
                 org 0xa700
@@ -1999,7 +2120,7 @@ Pre_game_animations:
                 ld hl, L65dc
                 ex de, hl
                 ; eg: HL = 5d00, DE = 65dc
-                ; setup_mach_stuff on HL line
+                ; setup_mach_stuff on HL mach
                 call Xa65d
                 pop de
                 pop hl
