@@ -15,7 +15,6 @@
         ; 64xx
         ; 65xx
         ; 66xx
-        ; Buffer_xx 6700:
         ; 67xx
         ; 68xx
         ; 69xx
@@ -36,36 +35,40 @@
 
 ; 6c58 -> 5f82
         db 0xf3, 0x5e, 0xfe, 0x01, 0x50, 0x00, 0x07, 0xeb, 0x5e, 0xfc, 0x01, 0x48, 0x03, 0x08, 0xde, 0x5e, 0xfe, 0x01, 0x50, 0x03, 0x07, 0xe3, 0x5e, 0xfa, 0x01, 0x2f, 0x03, 0x09, 0xed, 0x5e, 0xfe, 0x01, 0x50, 0x01, 0x07, 0xe7, 0x5e, 0xfe, 0x01, 0x50, 0x03, 0x07, 0xf0, 0x01, 0xd9, 0x29, 0xdc, 0x24, 0xe1, 0x1f, 0xd0, 0x10, 0xd0, 0x30, 0xff, 0x20, 0xf0, 0x10, 0xf0, 0x20, 0xf0, 0x10
-            ; virtual org 5fc0
-.VL5fc0     ld (L8452), a
+            ; 5fc0
+            ; mve data from a) 7f1d and b) 80eb intto Buffer_yy (or back, depending on smc), 0x90 bytes each
+.VX5fc0     ld (L8452), a
             ld hl, L6bdd
             ld a, (hl)
             cp 0x7b
             ret nz
             dec (hl)
+
+.VX5fcb:
             ld a, 0xff
             ld (smc_L878f), a
             ld a, 0xeb ; ex de, hl
             jr 1f
 
 .VL5fd4     xor a
+            ; store either ex de, hl, or nop
 1           ld (L5fee), a
             ld (L5ff7), a
-            ld hl, L7f1d
+            ld hl, Data_yy_01
             ld de, Buffer_yy + 256
             ld b, 0x60
             call L5fee
-            ld hl, L80eb
+            ld hl, txt_square ; !!!
             ld de, Buffer_yy
             ld b, 0x90
-.VL5fee     nop
+.VL5fee     nop                 ; or ex de, hl
 2           ld a, (hl)
             ld (de), a
             ld (hl), 0
             inc hl
             inc de
             djnz 2b
-.VL5ff7     nop
+.VL5ff7     nop                 ; or ex de, hl
             ret
             nop : nop : nop : nop : nop : nop : nop
 

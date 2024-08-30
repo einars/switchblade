@@ -1,6 +1,3 @@
-;Buffer_xx       equ 0x6700
-                ; 6700 .. 6cff
-                ; some 6x256 visual buffer?
 ;Buffer_yy       equ 0x6d00
                 ; 6d00..6eff
                 ; some other buffer
@@ -15,6 +12,7 @@
 X831f equ Wait_fire_some_time
 X8321 equ Wait_fire_custom
 X61e5 equ Print_something_custom
+L7f1d equ Data_yy_01
 
 X8330 equ Delay
 X8333 equ Delay_custom
@@ -62,11 +60,13 @@ L66fa equ Pre_game_color_modes ; V
 smc_L845f equ int_enable
 
 ; variables from after-table initializer:
+X5fc0 equ 0x5fc0 ; V, marked
+
 L69df equ 0x69df
 L8452 equ 0x8452
 L8dfe equ 0x8dfe
 
-X5fc0 equ 0x5fc0
+
 Xffeb equ 0xffeb
 
 smc_L88ae equ 0x88ae
@@ -79,9 +79,9 @@ L5ff7 equ 0x5ff7 ; V
 Xif_something_1a equ 0x65ee ; V
 X65ee equ Xif_something_1a
 
-L7f1d equ 0x7f1d
 L80eb equ 0x80eb
 
+X5fcb equ 0x5fcb ; V
 L6bdd equ 0x6bdd ; V
 L65ed equ 0x65ed ; V
 L65dc equ 0x65dc ; V
@@ -99,7 +99,6 @@ X8c68 equ 0x8c68
 
 Xa6d8 equ 0xa6d8
 X8f75 equ 0x8f75
-X5fcb equ 0x5fcb ; V
 Xa569 equ 0xa569
 X8855 equ 0x8855
 La59e equ 0xa59e
