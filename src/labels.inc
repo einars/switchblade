@@ -123,7 +123,6 @@ smc_La56f equ 0xa56f
 
 Xa806 equ 0xa806
 X8fdd equ 0x8fdd
-X9000 equ 0x9000
 X89ce equ 0x89ce
 
 J8330 equ 0x8330

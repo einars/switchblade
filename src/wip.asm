@@ -1644,7 +1644,7 @@ Q8f3b:
                 ld l, 0
                 ld a, (hl)
                 ld l, a    ; HL = &mach[ mach[0] ]
-                call X9000
+                call Q9000
 
                 ld l, 0x2f
                 ld (hl), a ; mach[2f] = 9000(...).A
@@ -1702,11 +1702,11 @@ Q8f75:
                 xor a
 .ok             ld (smc_L8b15), a
                 ld a, l
-                call X9000
+                call Q9000
                 add a, a
                 add a, a
                 add a, a
-                ld (smc_L8d27), a ; x9000(l).A * 8
+                ld (smc_L8d27), a ; Q9000(l).A * 8
                 ld (var_732c), bc
                 ld a, e
                 ld (L69dd), a
