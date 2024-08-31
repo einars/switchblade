@@ -49,6 +49,9 @@ L5d4a equ 0x5d4a
 L6640 equ 0x6640
 L664c equ 0x664c
 
+; used in Pipelogo, afterwards reset w/automasks
+L6f08 equ 0x6f08
+
 smc_L9ba3 equ 0x9ba3
 
 Pre_game_color_modes equ 0x66fa ; V
@@ -109,14 +112,10 @@ J872b equ 0x872b
 
 smc_L7b63 equ 0x7b63
 
-smc_L89f6 equ needs_more_processing
-smc_L89f1 equ smc_processor
-
 smc_L8b15 equ 0x8b15
 smc_L8c13 equ 0x8c13
 smc_L8c1e equ 0x8c1e
 smc_L8c76 equ 0x8c76
-smc_L8d27 equ 0x8d27
 smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
