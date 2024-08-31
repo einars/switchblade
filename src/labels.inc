@@ -121,6 +121,8 @@ smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
 
+Q8cad equ Draw_line
+
 Xa806 equ 0xa806
 X89ce equ 0x89ce
 
@@ -128,7 +130,6 @@ J8330 equ 0x8330
 X8c0a equ 0x8c0a
 X8bc8 equ 0x8bc8
 X8ea3 equ 0x8ea3
-X8828 equ 0x8828
 X8cad equ 0x8cad
 X8cd9 equ 0x8cd9
 X8ce5 equ 0x8ce5

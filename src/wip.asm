@@ -106,11 +106,11 @@ Clean_square_at_67xx:
                 db 0x01, 0xc1, 0x13, 0xd4, 0x14, 0xd3, 0x54, 0x41,   0x14, 0x92, 0xd4, 0x01, 0x81, 0xc1, 0x81, 0x81
                 db 0x01, 0x41, 0x93, 0x01, 0x92, 0x81, 0xc1, 0x93,   0x01, 0x53
 
-var_732a:       db 0x00
+logo_col_ish:       db 0x00
 
                 db 0x00
 
-var_732c:       db 0x00
+logo_row_ish:       db 0x00
 
                 org 0x732d
 
@@ -581,6 +581,8 @@ Screen_addr:
 
 ;X83e6:
 Screen_addr_alt:
+                ; screen addr of BC (B — char-row, 0..23, C — char-column, 0..32)
+                ; 0-th row is actually first char-row
                 inc b
                 ld d, 0
                 ld a, b
@@ -1104,10 +1106,52 @@ choose_dur1:
                 org 0x8800
                 db 0x19, 0xeb, 0xc9, 0x7b, 0x11, 0x00, 0x14, 0x18,   0x01, 0x1c, 0x92, 0x30, 0xfc, 0x82, 0xcb, 0x23
                 db 0xf5, 0x87, 0x87, 0x32, 0x2a, 0x73, 0xf1, 0x43,   0x5f, 0xcb, 0x3f, 0x83, 0x4f, 0x3e, 0x01, 0xa3
-                db 0x32, 0x79, 0x88, 0xcd, 0xe6, 0x83, 0x1c, 0xc9,   0xcb, 0x3f, 0xcb, 0x3f, 0x43, 0x5f, 0xcb, 0x3f
-                db 0x83, 0x4f, 0xcd, 0xe6, 0x83, 0x7b, 0xe6, 0xe0,   0x47, 0x3a, 0x2a, 0x73, 0xe6, 0x07, 0xc6, 0xf5
-                db 0x6f, 0x26, 0xfd, 0x3a, 0x2a, 0x73, 0xe6, 0xf8,   0x0f, 0x0f, 0x4f, 0x0f, 0x81, 0x86, 0xb0, 0x5f
-                db 0x1c, 0xc9, 0x3a, 0xff, 0x6d, 0xe6, 0xfc, 0x4f,   0x06, 0xdc, 0x2e, 0x00, 0xe5, 0xc5, 0xcd, 0x67
+                db 0x32, 0x79, 0x88, 0xcd, 0xe6, 0x83, 0x1c, 0xc9
+
+
+Get_some_screen_addr:
+                ; WHAT IS THIS FFS
+                ; say:
+                ; A = 1b, E = 0x00 ==> DE = 402b
+                ; A = 1b, E = 0x02 ==> DE = 406b
+                ; A = 1b, E = 0x03 ==> DE = 408b
+                ; A = 1b, E = 0x04 ==> DE = 40ab
+                ; A = 00, E = 0x06 ==> DE = 40e1
+                ; logo_col_ish = 1b (=A)
+                srl a
+                srl a
+                ld b, e ; B = E
+                ld e, a
+                srl a
+                add a, e
+                ld c, a ; C = floor(A / 3)
+
+                call Print.Screen_addr_alt ; in - BC as coords, out — DE
+                ; BC = 0x0009 -> DE = 0x4029
+                ld a, e
+                and 0xe0
+                ld b, a ; 29 -> 20
+                ld a, (logo_col_ish)
+                and 7
+                add a, 0xf5
+                ld l, a ; 1b -> f8
+                ld h, 0xfd ; hl = fdf8: Remainder_table_div3
+                ld a, (logo_col_ish)
+                and 0xf8
+                rrca
+                rrca
+                ld c, a
+                rrca
+                add a, c   
+                add a, (hl)  ; round(A / 3)
+                or b
+                ld e, a
+                inc e
+                ret
+
+
+                ; 8852
+                db  0x3a, 0xff, 0x6d, 0xe6, 0xfc, 0x4f,   0x06, 0xdc, 0x2e, 0x00, 0xe5, 0xc5, 0xcd, 0x67
                 db 0x88, 0xc1, 0xe1, 0x2c, 0x10, 0xf6, 0xc9, 0x79,   0x26, 0x67, 0x5d, 0xa6, 0x20, 0x2e, 0x3a, 0xff
                 db 0x6d, 0xa6, 0xc0, 0x5d, 0xcd, 0x03, 0x88, 0xeb,   0x3e, 0x00, 0x11, 0x00, 0xf0, 0xb7, 0x20, 0x03
                 db 0x11, 0x0f, 0x00, 0xcd, 0x8d, 0x88, 0x3e, 0x20,   0x85, 0x6f, 0x38, 0x01, 0x61, 0x4c, 0x06, 0x08
@@ -1129,7 +1173,7 @@ Q8907:
                 ld l, a
                 ld a, (L69de)
                 ld b, a
-                ld a, (var_732a)
+                ld a, (logo_col_ish)
                 and 3
                 add a, a
                 add a, a
@@ -1497,11 +1541,12 @@ Q8a79           ld hl, mach0 + 2
 
 
 Q8c68:
-                ld a, (var_732c)
+                ; intro time func
+                ld a, (logo_row_ish)
                 ld e, a
-                ld a, (var_732a)
+                ld a, (logo_col_ish)
 
-                call X8828
+                call Get_some_screen_addr ; in A + E, A — col-ish (div 3, etc), E — row
 
                 ld h, 0x5d
 smc_L8c75+*     ld bc, 0x004a
@@ -1512,14 +1557,16 @@ smc_L8c75+*     ld bc, 0x004a
                 jr z, 3f
                 ld l, 0x16
 
+                ; A = bytes_to_move to screen
+
 2               dec l
                 dec l
                 dec a
                 jr nz, 2b ; L = 0x16 - 2*A
 
                 ld a, l
-                ld (L8cb9), a
-                ld hl, X8cad
+                ld (Draw_line.smc_reljump), a ; sets the number of LDI operations
+                ld hl, Draw_line
 
 3               ld (.smc_callback), HL
                 ld a, (smc_L8d27)
@@ -1529,12 +1576,14 @@ smc_L8c75+*     ld bc, 0x004a
                 and 0x1f
                 ld b, a
 
-                ld hl, Mask_table + 8 ; 0x6f08
+                ld hl, 0x6f08 ; not yet mask table, something else
 
 .loop           ld c, d
                 push bc
+
+.smc_callback   equ $+1
                 call 0 ; sic: smc obvs
-.smc_callback   equ $-2
+
                 ld a, e
                 add a, 0x20
                 ld e, a
@@ -1544,11 +1593,46 @@ smc_L8c75+*     ld bc, 0x004a
 .next           djnz .loop
                 ret
 
-                ; 8cad
-                db  0x01, 0xff, 0x08
-                db 0xd5, 0x1a, 0xe6, 0x00, 0xb6, 0x12, 0x23, 0x13,   0x18, 0x14, 0xed, 0xa0, 0xed, 0xa0, 0xed, 0xa0
-                db 0xed, 0xa0, 0xed, 0xa0, 0xed, 0xa0, 0xed, 0xa0,   0xed, 0xa0, 0xed, 0xa0, 0xed, 0xa0, 0x1a, 0xe6
-                db 0x00, 0xb6, 0x12, 0x23, 0xd1, 0x14, 0x10, 0xd8,   0xc9, 0x06, 0x08, 0x1a, 0xe6, 0x00, 0xb6, 0x12
+Draw_line:
+                ; height = 1 char / 8 lines
+                ; masked at the beginning / end character
+                ; via .mask_1 and .mask_2
+                ld bc, 0x08ff
+
+.loop           push de
+                ld a, (de)
+.mask_1+*       and 0
+                or (hl)
+                ld (de), a
+                inc hl
+                inc de
+.smc_reljump    equ $+1
+                jr .move_0
+                ldi
+                ldi
+                ldi
+                ldi
+                ldi
+                ldi
+                ldi
+                ldi
+                ldi
+                ldi
+.move_0         ld a, (de)
+.mask_2         and 0
+                or (hl)
+                ld (de), a
+                inc hl
+                pop de
+                inc d
+                djnz .loop
+                ret
+; 8cd9
+
+
+
+
+                db 0x06, 0x08, 0x1a, 0xe6, 0x00, 0xb6, 0x12
                 db 0x23, 0x14, 0x10, 0xf7, 0xc9, 0xd5, 0x69, 0xe5,   0x3a, 0x2a, 0x73, 0xe6, 0x07, 0x6f, 0x87, 0x85
                 db 0xc6, 0x98, 0x6f, 0x26, 0xfd, 0x5e, 0x2c, 0x56,   0x2c, 0x7e, 0xed, 0x53, 0x2d, 0x8d, 0x32, 0xb3
 
@@ -1708,7 +1792,7 @@ Q8f3b:
                 ld (hl), a ; mach[20] = (mach[20] & 0F) | E
 
                 ld de, L5d4a
-                ld a, (var_732c)
+                ld a, (logo_row_ish)
                 rra
                 jr nc, 1f
                 ld e, 0x42 ; L5d42
@@ -1735,7 +1819,7 @@ Q8f75:
                 add a, (hl) ; A = abs(mach[22]) + mach[1]
                 call Q8fdd
                 ld (smc_L8c76), a
-                ld (var_732a), bc
+                ld (logo_col_ish), bc
                 push bc
                 ld l, 0x21
                 ld a, (hl)
@@ -1755,7 +1839,7 @@ Q8f75:
                 add a, a
                 add a, a
                 ld (smc_L8d27), a ; Q9000(l).A * 8
-                ld (var_732c), bc
+                ld (logo_row_ish), bc
                 ld a, e
                 ld (L69dd), a
                 pop de
@@ -4242,7 +4326,11 @@ Pre_game_animations:
                 db 0x8d, 0x3f, 0x7f, 0x8d, 0x07, 0x81, 0x8d, 0x00,   0x88, 0x8d, 0x1f, 0x8e, 0x8d, 0x03, 0x9a, 0x8d
                 db 0x7f, 0xa2, 0x8d, 0x0f, 0xa7, 0x8d, 0x01, 0xb7,   0x8d, 0x3f, 0xbe, 0x8d, 0x07, 0xc0, 0x8d, 0x00
                 db 0xc7, 0x8d, 0x1f, 0xcd, 0x8d, 0x03, 0xd9, 0x8d,   0x7f, 0xe1, 0x8d, 0x0f, 0xe6, 0x8d, 0x01, 0xf6
-                db 0x8d, 0x3f, 0xfd, 0x8d, 0x07, 0x00, 0x00, 0x00,   0x01, 0x01, 0x01, 0x02, 0x02
+                db 0x8d, 0x3f, 0xfd, 0x8d, 0x07
+
+Div3_helper_table:
+                ; see Q8828, remainders to help divide by 3
+                db 0, 0, 0, 1, 1, 1, 2, 2
 
                 org 0xfdfd
                 jp IM2_handler
