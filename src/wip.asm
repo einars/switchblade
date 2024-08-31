@@ -1110,8 +1110,11 @@ choose_dur1:
 
 
 Get_some_screen_addr:
+                ; E = row
+                ; A = logo_col_ish = kinda column
+
                 ; WHAT IS THIS FFS
-                ; say:
+                ; e.g:
                 ; A = 1b, E = 0x00 ==> DE = 402b
                 ; A = 1b, E = 0x02 ==> DE = 406b
                 ; A = 1b, E = 0x03 ==> DE = 408b
@@ -1124,7 +1127,7 @@ Get_some_screen_addr:
                 ld e, a
                 srl a
                 add a, e
-                ld c, a ; C = floor(A / 3)
+                ld c, a ; C = approx(A / 3)
 
                 call Print.Screen_addr_alt ; in - BC as coords, out — DE
                 ; BC = 0x0009 -> DE = 0x4029
@@ -1552,7 +1555,7 @@ Q8c68:
 smc_L8c75+*     ld bc, 0x004a
                 call X8ce5
 
-                ld hl, X8cd9
+                ld hl, Blit_char
                 dec a
                 jr z, 3f
                 ld l, 0x16
@@ -1565,8 +1568,8 @@ smc_L8c75+*     ld bc, 0x004a
                 jr nz, 2b ; L = 0x16 - 2*A
 
                 ld a, l
-                ld (Draw_line.smc_reljump), a ; sets the number of LDI operations
-                ld hl, Draw_line
+                ld (Blit_line.smc_reljump), a ; sets the number of LDI operations
+                ld hl, Blit_line
 
 3               ld (.smc_callback), HL
                 ld a, (smc_L8d27)
@@ -1593,7 +1596,7 @@ smc_L8c75+*     ld bc, 0x004a
 .next           djnz .loop
                 ret
 
-Draw_line:
+Blit_line:
                 ; height = 1 char / 8 lines
                 ; masked at the beginning / end character
                 ; via .mask_1 and .mask_2
@@ -1627,13 +1630,22 @@ Draw_line:
                 inc d
                 djnz .loop
                 ret
-; 8cd9
+
+
+Blit_char:
+                ld b, 8
+.loop           ld a, (de)
+.mask+*         and 0
+                or (hl)
+                ld (de), a
+                inc hl
+                inc d
+                djnz .loop
+                ret
 
 
 
-
-                db 0x06, 0x08, 0x1a, 0xe6, 0x00, 0xb6, 0x12
-                db 0x23, 0x14, 0x10, 0xf7, 0xc9, 0xd5, 0x69, 0xe5,   0x3a, 0x2a, 0x73, 0xe6, 0x07, 0x6f, 0x87, 0x85
+                db 0xd5, 0x69, 0xe5,   0x3a, 0x2a, 0x73, 0xe6, 0x07, 0x6f, 0x87, 0x85
                 db 0xc6, 0x98, 0x6f, 0x26, 0xfd, 0x5e, 0x2c, 0x56,   0x2c, 0x7e, 0xed, 0x53, 0x2d, 0x8d, 0x32, 0xb3
 
                 org 0x8d00
