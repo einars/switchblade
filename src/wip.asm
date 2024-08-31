@@ -1557,11 +1557,9 @@ Pipedream_runner:
                 call Pipedream
 
                 ld hl, Blit_char
-                dec a
+                dec a ; A = bytes_to_move to screen. 1? Blit_char, otherwise, Blit_line
                 jr z, 3f
                 ld l, 0x16
-
-                ; A = bytes_to_move to screen
 
 2               dec l
                 dec l
@@ -1572,7 +1570,7 @@ Pipedream_runner:
                 ld (Blit_line.smc_reljump), a ; sets the number of LDI operations
                 ld hl, Blit_line
 
-3               ld (.smc_callback), HL
+3               ld (.cb_char_or_line), HL
                 ld a, (Pipedream.var_x)
                 rra
                 rra
@@ -1580,13 +1578,13 @@ Pipedream_runner:
                 and 0x1f
                 ld b, a
 
-                ld hl, 0x6f08 ; not yet mask table, something else
+                ld hl, L6f08
 
 .loop           ld c, d
                 push bc
 
-.smc_callback   equ $+1
-                call 0 ; sic: smc obvs
+.cb_char_or_line equ $+1
+                call 0 ; sic: smc obvs. Either Blit_char or Blit_line
 
                 ld a, e
                 add a, 0x20
