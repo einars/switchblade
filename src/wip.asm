@@ -1184,7 +1184,7 @@ Q8907:
                 srl a
                 add a, c
                 ld c, a
-                ld a, (smc_L8c76)
+                ld a, (Pipedream_runner.pipe_b_param)
                 ld de, (var_74ba)
 
                 ld (.smc_L892e), a
@@ -1543,7 +1543,7 @@ Q8a79           ld hl, mach0 + 2
                 db 0x5e, 0x1a, 0x77, 0x2d, 0x10, 0xfa, 0x18, 0xa7
 
 
-Q8c68:
+Pipedream_runner:
                 ; intro time func
                 ld a, (logo_row_ish)
                 ld e, a
@@ -1552,7 +1552,8 @@ Q8c68:
                 call Get_some_screen_addr ; in A + E, A — col-ish (div 3, etc), E — row
 
                 ld h, 0x5d
-smc_L8c75+*     ld bc, 0x004a
+                ld bc, 0x004a ; smc B
+.pipe_b_param   equ $-1
                 call Pipedream
 
                 ld hl, Blit_char
@@ -1665,7 +1666,7 @@ Pipedream:
                 ld d, (hl)
                 inc l
                 ld a, (hl)
-                ld (.smc_L8d2d), de
+                ld (.callback), de
                 ld (Blit_line.mask_1), a
 
                 push af
@@ -1706,7 +1707,7 @@ Pipedream:
                 push hl
                 xor a
                 push bc
-.smc_L8d2d      equ $+1
+.callback       equ $+1
                 call 0
                 ld (bc), a
                 inc bc
@@ -1803,7 +1804,7 @@ X8e2b:
                 pop bc
                 rl c
                 call c, Q8a73
-                call X8c68
+                call Pipedream_runner
 .leave          pop bc
                 pop hl
                 ret
@@ -1907,7 +1908,7 @@ Q8f75:
                 ld l, 1
                 add a, (hl) ; A = abs(mach[22]) + mach[1]
                 call Q8fdd
-                ld (smc_L8c76), a
+                ld (Pipedream_runner.pipe_b_param), a
                 ld (logo_col_ish), bc
                 push bc
                 ld l, 0x21
@@ -2785,7 +2786,7 @@ Pre_game_animations:
                 ld d, (hl) ; de = mach[0x40:41], e.g 0008
                 call Q9b71
                 call Q8f3b
-                ld a, (smc_L8c76)
+                ld a, (Pipedream_runner.pipe_b_param)
                 ld c, a
                 ex de, hl
                 ld e, 0
@@ -2812,7 +2813,7 @@ Pre_game_animations:
 .smc_La7b5+*    ld b, 0
                 ld de, 0xa001
                 call Q8a79
-                call Q8c68 ; this actually outputs something on screen
+                call Pipedream_runner
                 ld hl, pregame_flag_02
                 ld a, (hl)
                 cp 0x1a

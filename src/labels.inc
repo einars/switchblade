@@ -115,7 +115,7 @@ smc_L7b63 equ 0x7b63
 smc_L8b15 equ 0x8b15
 smc_L8c13 equ 0x8c13
 smc_L8c1e equ 0x8c1e
-smc_L8c76 equ 0x8c76
+smc_L8c76 equ Pipedream_runner.pipe_b_param
 smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
