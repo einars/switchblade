@@ -4,7 +4,6 @@
 
                 org 0x5e4d
 
-BR equ 0xff
 ____ equ 0x01
 
 

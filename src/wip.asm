@@ -372,7 +372,6 @@ txt_no_placeholder:
 
                 org 0x8119
 Hiscores:
-BR equ 0xff
                 db 0x14, 0x14, 0x07, 0x47
                 db "00100400", 4, "JEFF C    ", BR, BR
                 db "00094010", 4, "LINDA     ", BR, BR
@@ -1241,7 +1240,7 @@ Q8943:          ; used as a callback
                 ld a, b
                 jr z, 5f
 
-                call X89b2 ; sic!!! somebody might mess thisu up
+                call Q89b2 ; sic!!! somebody might mess thisu up
 ; smc_L8963 equ $ - 2
                 jr .next
 
@@ -1265,7 +1264,7 @@ Q8943:          ; used as a callback
                 jr .next
 
 5
-                call X89ce
+                call Q89ce
 
 .next           pop hl
                 inc l
@@ -1293,7 +1292,7 @@ Q898c:
                 ld a, b
                 jr z, .do_call
 
-                call X89b2
+                call Q89b2
                 jr .next
 
 1               or (hl)
@@ -1317,7 +1316,7 @@ Q89b2:
                 push bc
                 push af
                 ld a, (hl)
-                call X89ce ; sic: changes
+                call Q89ce ; sic: changes
 smc_L89bb       equ $-2
                 pop af
                 pop bc
@@ -1325,7 +1324,7 @@ smc_L89bb       equ $-2
                 pop hl
                 ld (needs_more_processing), a
                 ld a, b
-                call X89ce
+                call Q89ce
                 ret
 
 _run_with_8c0a:
@@ -1394,6 +1393,7 @@ Q8a06           ld b, a
                 jr L89df
 
 
+                org 0x8a2f
 Major_mask_magic:
                 ; HL -> DE, B bytes
                 ; in game happens suddenly, while moving falling down the elevator
@@ -1403,7 +1403,7 @@ Major_mask_magic:
                 ; *HL = 05_14_51_45_14_51_0a_aa DG .....X.X ...X.X.. .X.X...X .X...X.X 
                 ; *DE = 07 00 00 .....XXX ........ ........ ........ ........ ........
 
-Q8a2f           ex de, hl
+                ex de, hl
 1               ld a, (de) ; *d7ac = 05 = .....1.1
                 rlca
                 rlca
@@ -1493,7 +1493,7 @@ Q8a79           ld hl, mach0 + 2
                 push hl
                 push de
                 push bc
-                call X8a90
+                call Q8a90
                 pop bc
                 pop de
                 pop hl
@@ -1501,6 +1501,7 @@ Q8a79           ld hl, mach0 + 2
 .skip           inc h
                 djnz .again
                 ret
+                
 
 Q8a90:
                 ld a, (hl)
@@ -1653,7 +1654,7 @@ Q8a90:
                 call X8c51
                 pop bc
                 pop hl
-.param_de       ld de, 0xffff
+.param_de+*     ld de, 0xffff ; SMC
                 add hl, de
                 pop de
                 inc d

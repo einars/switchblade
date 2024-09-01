@@ -149,7 +149,7 @@
 
 ; 6fca -> 6682
 .VQ6682
-                ld a, (L6652)
+                ld a, (U10)
                 or a
                 jr nz, .leave
                 call Joystick_read
@@ -170,10 +170,10 @@
                 djnz .halt
                 jr nz, .wait_more
                 ld bc, 0x4000
-                call X8333
+                call Delay_custom
 
 .leave          xor a
-                ld (L664c), a
+                ld (Upause), a
                 ret
 
 .VQ66b6         call VQ66c8
@@ -212,12 +212,12 @@
                 ld a, (L6640)
                 cp 2
                 jr nz, 2b
-                jp J8330
+                jp Delay
 
 .VL66f7
                 db 0x07, 0x47, 0x46
 
 .VPre_game_color_modes:
-.VL66fa
+                ; 66fa
                 ; the "switchblade" logo loops through these colors, 66fa..66ff
                 db 0x07, 0x46, 0x05, 0x47, 0x06, 0x45

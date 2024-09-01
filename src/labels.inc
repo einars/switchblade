@@ -10,10 +10,12 @@
 
 
 ; magic_vars im2_always
-L8557 equ mv1
-L8558 equ mv2
-L8559 equ mv3
-L855a equ mv4
+; L8557 equ mv1
+; L8558 equ mv2
+; L8559 equ mv3
+; L855a equ mv4
+
+BR equ 0xff
 
 mach0 equ 0x5d00
 mach1 equ 0x5e00
@@ -24,7 +26,7 @@ mach5 equ 0x6200
 mach6 equ 0x6300
 mach7 equ 0x6400
 mach8 equ 0x6500
-mach9 equ 0x6600
+mach9 equ 0x6600 ; 6642 — userdata
 machA equ 0x6700
 ;
 machB equ 0x6800
@@ -44,11 +46,9 @@ L69dd equ 0x69dd
 L69de equ 0x69de
 L69df equ 0x69df
 L6bdd equ 0x6bdd
-L6652 equ 0x6652
 L5d42 equ 0x5d42
 L5d4a equ 0x5d4a
 L6640 equ 0x6640
-L664c equ 0x664c
 
 
 ; used in Pipelogo, afterwards reset w/automasks
@@ -57,8 +57,6 @@ L6f08 equ 0x6f08
 smc_L9ba3 equ 0x9ba3
 
 Pre_game_color_modes equ 0x66fa ; V
-
-smc_L845f equ int_enable
 
 VQ5fc0 equ 0x5fc0
 VQ5fee equ 0x5fee
@@ -82,7 +80,6 @@ VQ6682 equ 0x6682
 
 ; -- 
 
-X8333 equ 0x8333
 X97a3 equ 0x97a3
 
 Xff01 equ 0xff01
@@ -90,13 +87,8 @@ Xff64 equ 0xff64
 
 L79ff equ 0x79ff
 
-L7600 equ Logo_ani_pt1
-
-L8943 equ 0x8943
-
 La6ec equ 0xa6ec
 
-X8c68 equ 0x8c68
 X9a27 equ 0x9a27
 X8e95 equ 0x8e95
 
@@ -105,9 +97,7 @@ X8855 equ 0x8855
 La59e equ 0xa59e
 Xa58a equ 0xa58a
 X9ba2 equ 0x9ba2
-X89b2 equ 0x89b2
 
-X8907 equ 0x8907
 X9a4b equ 0x9a4b
 X8e98 equ 0x8e98
 
@@ -115,13 +105,13 @@ J872b equ 0x872b
 
 smc_L7b63 equ 0x7b63
 
-smc_L8b15 equ Q8a90.param_1 ; 0x8b15
-smc_L8b61 equ Q8a90.param_de ; 0x8b61
+;smc_L8b15 equ Q8a90.param_1 ; 0x8b15
+;smc_L8b61 equ Q8a90.param_de ; 0x8b61
+;smc_L8c76 equ Drawing_routine.pipe_b_param
 
 smc_L8b6b equ 0x8b6b
 smc_L8c13 equ 0x8c13
 smc_L8c1e equ 0x8c1e
-smc_L8c76 equ Drawing_routine.pipe_b_param
 smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
@@ -132,24 +122,13 @@ smc_L8b86 equ 0x8b86 ; 5d + column
 smc_L8b88 equ 0x8b88 ; 5d + column
 
 
-Q8cad equ Blit_line
-Q8cd9 equ Blit_char
-
-
 Xa806 equ 0xa806
-X89ce equ 0x89ce
 
-J8330 equ 0x8330
 X8c0a equ 0x8c0a
 X8bc8 equ 0x8bc8
 X8ea3 equ 0x8ea3
-X8cad equ 0x8cad
-X8cd9 equ 0x8cd9
-X8ce5 equ 0x8ce5
-L8cb9 equ 0x8cb9
 
 Xa59b equ 0xa59b
 X8edd equ 0x8edd
-X8a90 equ 0x8a90
 X8b6a equ 0x8b6a
 X8c51 equ 0x8c51

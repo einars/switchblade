@@ -1,0 +1,14 @@
+#!/usr/bin/env bb
+
+(defn symbolize [accu line]
+  (let [[name _ addr] (str/split line #" ")
+        name (str/replace name #":" "")]
+
+    (when-let [dup-name (get accu addr)]
+      (prn addr [name dup-name]))
+
+    (assoc accu addr name)))
+
+(reduce symbolize {} (->
+                       (slurp "/proj/zx/switchlade/build/switchblade.sym")
+                       (str/split #"\n")))

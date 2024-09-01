@@ -8,6 +8,7 @@ sjasmplus \
   --syntax=ab \
   --outprefix=build/ \
   --nologo \
+  --sym=build/switchblade.sym \
   -Wno-sna48 \
   src/main.asm
 
