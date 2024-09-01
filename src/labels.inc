@@ -38,6 +38,7 @@ L8683 equ 0x8683 ; some 12-byte table?
 Data_zfz equ 0x6082 ; V, marked
 
 ; vars in mach-zone, outside of some-initial-buffers
+L68db equ 0x68db ; some buffer written to by 8a90
 L69e3 equ 0x69e3
 L69dd equ 0x69dd
 L69de equ 0x69de
@@ -48,6 +49,7 @@ L5d42 equ 0x5d42
 L5d4a equ 0x5d4a
 L6640 equ 0x6640
 L664c equ 0x664c
+
 
 ; used in Pipelogo, afterwards reset w/automasks
 L6f08 equ 0x6f08
@@ -95,7 +97,8 @@ L8943 equ 0x8943
 La6ec equ 0xa6ec
 
 X8c68 equ 0x8c68
-X8a90 equ 0x8a90
+X9a27 equ 0x9a27
+X8e95 equ 0x8e95
 
 Xa569 equ 0xa569
 X8855 equ 0x8855
@@ -112,13 +115,22 @@ J872b equ 0x872b
 
 smc_L7b63 equ 0x7b63
 
-smc_L8b15 equ 0x8b15
+smc_L8b15 equ Q8a90.param_1 ; 0x8b15
+smc_L8b61 equ Q8a90.param_de ; 0x8b61
+
+smc_L8b6b equ 0x8b6b
 smc_L8c13 equ 0x8c13
 smc_L8c1e equ 0x8c1e
-smc_L8c76 equ Pipedream_runner.pipe_b_param
+smc_L8c76 equ Drawing_routine.pipe_b_param
 smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
+
+; X8b6a:
+smc_L8b85 equ 0x8b85 ; 5d + column
+smc_L8b86 equ 0x8b86 ; 5d + column
+smc_L8b88 equ 0x8b88 ; 5d + column
+
 
 Q8cad equ Blit_line
 Q8cd9 equ Blit_char
@@ -136,3 +148,8 @@ X8cd9 equ 0x8cd9
 X8ce5 equ 0x8ce5
 L8cb9 equ 0x8cb9
 
+Xa59b equ 0xa59b
+X8edd equ 0x8edd
+X8a90 equ 0x8a90
+X8b6a equ 0x8b6a
+X8c51 equ 0x8c51

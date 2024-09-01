@@ -4,12 +4,11 @@ set -o pipefail -o errexit -o nounset
 
 cd "$(dirname "$0")/.."
 
-compiler='/proj/zx/0-sjasmplus/build/sjasmplus'
-
-$compiler \
+sjasmplus \
   --syntax=ab \
   --outprefix=build/ \
   --nologo \
+  -Wno-sna48 \
   src/main.asm
 
 ./scripts/verify.sh

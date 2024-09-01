@@ -1184,7 +1184,7 @@ Q8907:
                 srl a
                 add a, c
                 ld c, a
-                ld a, (Pipedream_runner.pipe_b_param)
+                ld a, (Drawing_routine.pipe_b_param)
                 ld de, (var_74ba)
 
                 ld (.smc_L892e), a
@@ -1502,27 +1502,168 @@ Q8a79           ld hl, mach0 + 2
                 djnz .again
                 ret
 
+Q8a90:
+                ld a, (hl)
+                and d
+                ret nz
 
-                ; 8a90
-                org 0x8a73
-                db 0x11, 0x80, 0x20, 0x01, 0x00,   0x0a, 0x21, 0x02, 0x5d, 0x7e, 0xb1, 0x4f, 0x7e
-                db 0xa3, 0x28, 0x09, 0xe5, 0xd5, 0xc5, 0xcd, 0x90,   0x8a, 0xc1, 0xd1, 0xe1, 0x24, 0x10, 0xed, 0xc9
-                db 0x7e, 0xa2, 0xc0, 0x16, 0x73, 0xcd, 0x27, 0x9a,   0xd0, 0x2e, 0x1c, 0x7e, 0xfe, 0x25, 0xc8, 0x2e
-                db 0x20, 0xcb, 0x4e, 0x28, 0x19, 0xcb, 0x8e, 0xcd,   0x95, 0x8e, 0x20, 0x20, 0x2e, 0x02, 0xaf, 0x77
-                db 0x2e, 0x29, 0xb6, 0xc8, 0x21, 0xdb, 0x68, 0x85,   0x6f, 0x36, 0x00, 0xc3, 0x9b, 0xa5, 0xcd, 0x95
-                db 0x8e, 0xc8, 0x2e, 0x00, 0x7e, 0xfe, 0xa0, 0x38,   0x03, 0xfe, 0xc8, 0xd8, 0xed, 0x4b, 0x2a, 0x73
-                db 0x2e, 0x2a, 0x79, 0x96, 0xed, 0x44, 0xf2, 0xda,   0x8a, 0xaf, 0x5f, 0xc6, 0x5d, 0x32, 0x86, 0x8b
-                db 0x2e, 0x20, 0x7e, 0x17, 0x30, 0x12, 0x2e, 0x01,   0x7e, 0xed, 0x44, 0xcb, 0x3f, 0x6f, 0x79, 0xb7
-                db 0x28, 0x03, 0x85, 0x18, 0x0b, 0x7d, 0x18, 0x08,   0x2e, 0x2a, 0x79, 0x96, 0xf2, 0x00, 0x8b, 0xaf
+                ld d, 0x73
+                call X9a27
+                ret nc
 
-                org 0x8b00
-                db 0x4f, 0x2e, 0x2b, 0x78, 0x96, 0xed, 0x44, 0xfa,   0x0b, 0x8b, 0xaf, 0x6f, 0x3a, 0x76, 0x8c, 0x85
-                db 0x93, 0x32, 0x88, 0x8b, 0x3e, 0x00, 0x2e, 0x00,   0x96, 0xed, 0x44, 0xc6, 0x4a, 0x32, 0x85, 0x8b
-                db 0xe5, 0x2e, 0x18, 0x5e, 0x2c, 0x56, 0xd5, 0xdd,   0xe1, 0x2e, 0x23, 0x5e, 0x2e, 0x17, 0x66, 0xcd
-                db 0xdd, 0x8e, 0xeb, 0xdd, 0x19, 0xe1, 0x2e, 0x1b,   0xcb, 0x7e, 0x20, 0x11, 0x79, 0xb7, 0xcd, 0x6a
-                db 0x8b, 0xd5, 0xc5, 0xcd, 0x0a, 0x8c, 0xc1, 0xd1,   0x14, 0x0d, 0x20, 0xf5, 0xc9, 0x0c, 0x59, 0x2e
-                db 0x15, 0x7e, 0xcb, 0x3f, 0x93, 0xcd, 0x6a, 0x8b,   0xd5, 0xe5, 0xc5, 0xcd, 0x51, 0x8c, 0xc1, 0xe1
-                db 0x11, 0xff, 0xff, 0x19, 0xd1, 0x14, 0x0d, 0x20,   0xef, 0xc9, 0x08, 0x2e, 0x16, 0x7e, 0x0f, 0x0f
+                ld l, 0x1c
+                ld a, (hl) 
+                cp 0x25
+                ret z           ; return if mach[1c] == 25
+                ld l, 0x20
+                bit 1, (hl)     ; mach[20].1
+                jr z, 1f
+
+                res 1, (hl)     ; mach[20].1 = off
+                call X8e95
+                jr nz, 2f
+
+                ld l, 2
+                xor a
+                ld (hl), a      ; mach[2] = 0
+                ld l, 0x29
+                or (hl)
+                ret z           ; return if mach[29] = 0
+
+                ld hl, L68db    ; [68db + mach[29]] = 0 — some buffer
+                add a, l
+                ld l, a
+                ld (hl), 0
+                jp Xa59b
+
+1               call X8e95
+                ret z
+
+                ld l, 0
+                ld a, (hl)
+                cp 0xa0
+                jr c, 2f       ; mach[0] < 0x0a?
+                cp 0xc8
+                ret c          ; return if mach[0] in range [0x0a...0xc7] inclusive
+
+2               ld bc, (logo_col_ish)
+                ld l, 0x2a
+                ld a, c
+                sub (hl)
+                neg ; (mach[2a] - C)
+                jp p, .set_e    ; E = mach[2a] - C if >= 0     ; C — logo-col-ish
+                xor a           ;                  else E = 0
+
+.set_e          ld e, a
+
+                add a, 0x5d
+                ld (smc_L8b86), a ; smc = E + 0x5d ; offset in buffer
+
+                ld l, 0x20
+                ld a, (hl)
+                rla
+                jr nc, 5f       ; if mach[20] & 1 == 0 then :5
+
+                ld l, 1
+                ld a, (hl)
+                neg
+                srl a
+                ld l, a
+                ld a, c
+                or a
+                jr z, 4f
+                add a, l        ; C = C - mach[1] / 2 if C > 0
+                jr .set_c
+4               ld a, l         ;                     else C = - mach[1] / 2 
+                                ;                     (same shit, useless branch?)
+                jr .set_c       
+
+
+5               ld l, 0x2a
+                ld a, c
+                sub (hl)
+                jp p, .set_c    ;; C = C - mach[2a] if >= 0
+                xor a           ;;                  else C = 0
+
+.set_c          ld c, a         ;;  C.
+
+                ld l, 0x2b
+                ld a, b
+                sub (hl)
+                neg             ;; mach[2b] - B
+                jp m, 7f
+                xor a           
+7               ld l, a      ;; L = mach[2b] > B ? 0 : mach[2b] - B ; 0 or negative
+                ld a, (Drawing_routine.pipe_b_param)
+                add a, l
+                sub e
+                ld (smc_L8b88), a ; SMC = pipe_b_param + (mach[2b] - B || 0) - (mach[2a] - C || 0)
+.param_1+*      ld a, 0
+                ld l, 0
+                sub (hl)
+                neg
+                add a, 0x4a
+                ld (smc_L8b85), a
+
+                push hl
+                ld l, 0x18
+                ld e, (hl)
+                inc l
+                ld d, (hl)
+                push de
+                pop ix          ; IX = mach[18:19]
+                ld l, 0x23
+                ld e, (hl)      ; E = mach[23]
+                ld l, 0x17
+                ld h, (hl)      ; H = mach[17]
+                call X8edd
+                ex de, hl
+                add ix, de
+                pop hl
+                ld l, 0x1b
+                bit 7, (hl)
+                jr nz, .alt_mode ; mach[1b].7 on?
+
+                ld a, c         ; if mach[1b].7 off
+                or a
+                call X8b6a
+
+                ; C times
+.loop1          push de
+                push bc
+                call X8c0a
+                pop bc
+                pop de
+                inc d
+                dec c
+                jr nz, .loop1
+                ret
+
+.alt_mode       inc c           ; if mach[1b].7 on
+                ld e, c
+                ld l, 0x15
+                ld a, (hl)
+                srl a
+                sub e
+                call X8b6a
+
+.loop2          push de
+                push hl
+                push bc
+                call X8c51
+                pop bc
+                pop hl
+.param_de       ld de, 0xffff
+                add hl, de
+                pop de
+                inc d
+                dec c
+                jr nz, .loop2
+                ret
+
+                ; 8b6a
+
+                db 0x08, 0x2e, 0x16, 0x7e, 0x0f, 0x0f
                 db 0x47, 0x5f, 0x0f, 0x83, 0x5f, 0xed, 0x44, 0x32,   0x61, 0x8b, 0x08, 0x28, 0x07, 0x67, 0xcd, 0xdd
                 db 0x8e, 0xeb, 0xdd, 0x19, 0x11, 0x00, 0x00, 0x0e,   0x00, 0x3e, 0x4a, 0x93, 0x3d, 0xf2, 0xb7, 0x8b
                 db 0x3e, 0x50, 0x2e, 0x00, 0x32, 0x1e, 0x8c, 0x78,   0x87, 0x87, 0xcb, 0x18, 0xd6, 0x02, 0x95, 0xf5
@@ -1543,205 +1684,10 @@ Q8a79           ld hl, mach0 + 2
                 db 0x5e, 0x1a, 0x77, 0x2d, 0x10, 0xfa, 0x18, 0xa7
 
 
-Pipedream_runner:
-                ; intro time func
-                ld a, (logo_row_ish)
-                ld e, a
-                ld a, (logo_col_ish)
 
-                call Get_some_screen_addr ; in A + E, A — col-ish (div 3, etc), E — row
+                include "drawing.inc"
 
-                ld h, 0x5d
-                ld bc, 0x004a ; smc B
-.pipe_b_param   equ $-1
-                call Pipedream
-
-                ld hl, Blit_char
-                dec a ; A = bytes_to_move to screen. 1? Blit_char, otherwise, Blit_line
-                jr z, 3f
-                ld l, 0x16
-
-2               dec l
-                dec l
-                dec a
-                jr nz, 2b ; L = 0x16 - 2*A
-
-                ld a, l
-                ld (Blit_line.smc_reljump), a ; sets the number of LDI operations
-                ld hl, Blit_line
-
-3               ld (.cb_char_or_line), HL
-                ld a, (Pipedream.var_x)
-                rra
-                rra
-                rra
-                and 0x1f
-                ld b, a
-
-                ld hl, L6f08
-
-.loop           ld c, d
-                push bc
-
-.cb_char_or_line equ $+1
-                call 0 ; sic: smc obvs. Either Blit_char or Blit_line
-
-                ld a, e
-                add a, 0x20
-                ld e, a
-                pop bc
-                jr c, .next
-                ld d, c
-.next           djnz .loop
-                ret
-
-Blit_line:
-                ; height = 1 char / 8 lines
-                ; masked at the beginning / end character
-                ; via .mask_1 and .mask_2
-                ld bc, 0x08ff
-
-.loop           push de
-                ld a, (de)
-.mask_1+*       and 0
-                or (hl)
-                ld (de), a
-                inc hl
-                inc de
-.smc_reljump    equ $+1
-                jr .move_0
-                ldi
-                ldi
-                ldi
-                ldi
-                ldi
-                ldi
-                ldi
-                ldi
-                ldi
-                ldi
-.move_0         ld a, (de)
-.mask_2+*       and 0
-                or (hl)
-                ld (de), a
-                inc hl
-                pop de
-                inc d
-                djnz .loop
-                ret
-
-
-Blit_char:
-                ld b, 8
-.loop           ld a, (de)
-.mask+*         and 0
-                or (hl)
-                ld (de), a
-                inc hl
-                inc d
-                djnz .loop
-                ret
-
-; 8ce5
-
-Pipedream:
-                push de
-                ld l, c
-                push hl
-                ld a, (logo_col_ish)
-                and 7
-
-                ld l, a
-                add a, a
-                add a, l
-                add a, 0x98
-                ld l, a ; 0x98 + (logo_col_ish & 7) * 3
-                ld h, 0xfd
-
-                ; Q8ce5_table_1
-                ld e, (hl)
-                inc l
-                ld d, (hl)
-                inc l
-                ld a, (hl)
-                ld (.callback), de
-                ld (Blit_line.mask_1), a
-
-                push af
-
-                ld de, 0x13
-                add hl, de
-
-                ld a, b
-                add a, a
-                add a, b
-                ld e, a
-
-                add hl, de ; &entry_last_byte + 0x13 + N*3
-
-                ld e, (hl)
-                inc l
-                ld d, (hl) ; DE will get patched w/return?!
-                inc l
-                ld a, (hl)
-                ex de, hl
-                ld (.store_addr), hl
-                ld (Blit_line.mask_2), a
-
-                pop bc
-                or b
-
-                ld (Blit_char.mask), a ; mask_1 | mask_2
-
-                ld a, (hl)
-                ld (hl), 0xc9 ; HMMM: temporarily override .store_addr with RET, then restore
-                ld (.store_val), a
-
-                ld bc, L6f08
-                pop hl
-
-.var_x+*        ld a, 0
-.loop           push af
-                push hl
-                xor a
-                push bc
-.callback       equ $+1
-                call 0
-                ld (bc), a
-                inc bc
-                pop de
-                pop hl
-                pop af
-                inc l
-                dec a
-                jr nz, .loop
-
-                ld l, c
-                ld h, b
-                or a
-                sbc hl, de
-                ld a, l
-
-.store_addr+*   ld hl, 0
-.store_val+*    ld (hl), 0
-                pop de
-                ret
-
-                ; 8d45
-
-                db 0x7e, 0x0f, 0x0f,   0x0f, 0x24, 0x5f, 0x7e, 0x07, 0x07, 0xb3, 0x24
-                db 0x16, 0x00, 0x5e, 0xcb, 0x3b, 0xcb, 0x1a, 0xb3,   0x02, 0x03, 0x7a, 0x24, 0x5f, 0x7e, 0x0f, 0x0f
-                db 0x0f, 0x0f, 0xb3, 0x24, 0x5f, 0x7e, 0x07, 0xb3,   0x24, 0x16, 0x00, 0x5e, 0xcb, 0x3b, 0xcb, 0x1a
-                db 0xcb, 0x3b, 0xcb, 0x1a, 0xb3, 0x02, 0x03, 0x7a,   0x24, 0x5f, 0x7e, 0x07, 0x07, 0x07, 0xb3, 0x24
-                db 0xb6, 0x02, 0x03, 0x24, 0x7e, 0x0f, 0x0f, 0x0f,   0x24, 0x5f, 0x7e, 0x07, 0x07, 0xb3, 0x24, 0x16
-                db 0x00, 0x5e, 0xcb, 0x3b, 0xcb, 0x1a, 0xb3, 0x02,   0x03, 0x7a, 0x24, 0x5f, 0x7e, 0x0f, 0x0f, 0x0f
-                db 0x0f, 0xb3, 0x24, 0x5f, 0x7e, 0x07, 0xb3, 0x24,   0x16, 0x00, 0x5e, 0xcb, 0x3b, 0xcb, 0x1a, 0xcb
-                db 0x3b, 0xcb, 0x1a, 0xb3, 0x02, 0x03, 0x7a, 0x24,   0x5f, 0x7e, 0x07, 0x07, 0x07, 0xb3, 0x24, 0xb6
-                db 0x02, 0x03, 0x24, 0x7e, 0x0f, 0x0f, 0x0f, 0x24,   0x5f, 0x7e, 0x07, 0x07, 0xb3, 0x24, 0x16, 0x00
-                db 0x5e, 0xcb, 0x3b, 0xcb, 0x1a, 0xb3, 0x02, 0x03,   0x7a, 0x24, 0x5f, 0x7e, 0x0f, 0x0f, 0x0f, 0x0f
-                db 0xb3, 0x24, 0x5f, 0x7e, 0x07, 0xb3, 0x24, 0x16,   0x00, 0x5e, 0xcb, 0x3b, 0xcb, 0x1a, 0xcb, 0x3b
-                db 0xcb, 0x1a, 0xb3, 0x02, 0x03, 0x7a, 0x24, 0x5f,   0x7e, 0x07, 0x07, 0x07, 0xb3, 0x24
-
+                org 0x8dfe
 J8dfe:
 .forever
                 ld sp, 0x5c00
@@ -1802,7 +1748,7 @@ X8e2b:
                 pop bc
                 rl c
                 call c, Q8a73
-                call Pipedream_runner
+                call Drawing_routine
 .leave          pop bc
                 pop hl
                 ret
@@ -1906,7 +1852,7 @@ Q8f75:
                 ld l, 1
                 add a, (hl) ; A = abs(mach[22]) + mach[1]
                 call Q8fdd
-                ld (Pipedream_runner.pipe_b_param), a
+                ld (Drawing_routine.pipe_b_param), a
                 ld (logo_col_ish), bc
                 push bc
                 ld l, 0x21
@@ -1920,13 +1866,13 @@ Q8f75:
                 jr c, .ok
                 ; a >= 0xc8? a = 0!
                 xor a
-.ok             ld (smc_L8b15), a
+.ok             ld (Q8a90.param_1), a
                 ld a, l
                 call Q9000
                 add a, a
                 add a, a
                 add a, a
-                ld (Pipedream.var_x), a ; Q9000(l).A * 8
+                ld (Patch_and_blit.n_lines), a ; Q9000(l).A * 8
                 ld (logo_row_ish), bc
                 ld a, e
                 ld (L69dd), a
@@ -2784,7 +2730,7 @@ Pre_game_animations:
                 ld d, (hl) ; de = mach[0x40:41], e.g 0008
                 call Q9b71
                 call Q8f3b
-                ld a, (Pipedream_runner.pipe_b_param)
+                ld a, (Drawing_routine.pipe_b_param)
                 ld c, a
                 ex de, hl
                 ld e, 0
@@ -2792,7 +2738,7 @@ Pre_game_animations:
 
                 ld e, 8
 
-3               ld a, (Pipedream.var_x)
+3               ld a, (Patch_and_blit.n_lines)
                 add a, e
 
                 ; now fill gfx square A (width) x C (lines) at hl with 0
@@ -2811,7 +2757,7 @@ Pre_game_animations:
 .smc_La7b5+*    ld b, 0
                 ld de, 0xa001
                 call Q8a79
-                call Pipedream_runner
+                call Drawing_routine
                 ld hl, pregame_flag_02
                 ld a, (hl)
                 cp 0x1a
@@ -4411,41 +4357,12 @@ Pre_game_animations:
                 db 0xf7, 0xdf, 0x7d, 0xf7, 0xdf, 0x7d, 0xf7, 0xa0
 
                 ; 0xfd98
-.Pipes
-                db 0x45, 0x8d, 0x00
-                db 0x4a, 0x8d, 0xe0
-                db 0x50, 0x8d, 0xfc
-                db 0x5c, 0x8d, 0x80
-                db 0x64, 0x8d, 0xf0
-                db 0x69, 0x8d, 0xfe
-                db 0x79, 0x8d, 0xc0
-                db 0x80, 0x8d, 0xf8
-                db 0x49, 0x8d, 0x1f
-                db 0x4f, 0x8d, 0x03
-                db 0x5b, 0x8d, 0x7f
-                db 0x63, 0x8d, 0x0f
-                db 0x68, 0x8d, 0x01
-                db 0x78, 0x8d, 0x3f
-                db 0x7f, 0x8d, 0x07
-                db 0x81, 0x8d, 0x00
-                db 0x88, 0x8d, 0x1f
-                db 0x8e, 0x8d, 0x03
-                db 0x9a, 0x8d, 0x7f
-                db 0xa2, 0x8d, 0x0f
-                db 0xa7, 0x8d, 0x01
-                db 0xb7, 0x8d, 0x3f
-                db 0xbe, 0x8d, 0x07
-                db 0xc0, 0x8d, 0x00
-                db 0xc7, 0x8d, 0x1f
-                db 0xcd, 0x8d, 0x03
-                db 0xd9, 0x8d, 0x7f
-                db 0xe1, 0x8d, 0x0f
-                db 0xe6, 0x8d, 0x01
-                db 0xf6, 0x8d, 0x3f
-                db 0xfd, 0x8d, 0x07
 
+                ;db drawing.Blitter_patches
+
+                org 0xfdf5
 Div3_helper_table:
-                ; see Q8828, remainders to help divide by 3
+                ; see Get_some_screen_addr, remainders to help divide by 3
                 db 0, 0, 0, 1, 1, 1, 2, 2
 
                 org 0xfdfd

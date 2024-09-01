@@ -536,3 +536,4 @@ joy_flags
                 include "wip.asm"
 
 	savesna "switchblade.sna", Start
+	;savebin "switchblade.bin", 0x5b00, 0xa500
