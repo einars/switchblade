@@ -159,36 +159,38 @@ X98b6:
                 ld l, (hl)
                 ld h, 0x5a
                 ld (hl), a
-                ld hl, 0x5c3d
+
+                ld hl, ggggg
                 ld de, 0x5ae9
-                call X99d9
+                call .compare_5
                 jr nz, 1f
-                ld hl, 0x5c38
+                ld hl, bbbbbggggg
                 ldir
                 ld hl, U0b
                 ld a, 1
                 ld (L79ff), a
                 add a, (hl)
                 daa
-                ld (hl), a
+                ld (hl), a ; get extra life as EXTRA is full?
                 ld b, 1
-                ld de, L6664
-                jr X9a11
+                ld de, Ulives_ascii
+                jr BCD_to_ASCII
 
-1               ld hl, 0x5c3d
+1               ld hl, ggggg
                 ld de, 0x5af2
-                call .entry_99d9
+                call .compare_5
                 ret nz
 
-                ld hl, 0x5c38
+                ld hl, bbbbbggggg
                 ldir
                 ld a, 2
                 ld (L79ff), a
 
+                ; BONUS full
                 ld e, 0xc2
                 jr X99e7
 
-.entry_99d9
+.compare_5      ; compare 5 bytes
                 ld bc, 0x505
                 push de
 .lp             ld a, (de)

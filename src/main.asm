@@ -22,9 +22,11 @@ Start:
                 ; real userdata will be stored at
 
 
-                ; these are yet unknown
                 org 0x5c38
+bbbbbggggg:
+                ; perhaps EXTRA and BONUS attributes
                 db "BBBBB"
+ggggg:
                 db "GGGGG"
 
                 org 0x5c42

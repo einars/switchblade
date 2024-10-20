@@ -82,12 +82,9 @@ X97a3 equ Set_bit5_of_10h
 
 ; -- 
 
-L6664 equ 0x6664
-
-
 Xff64 equ 0xff64
 
-L79ff equ 0x79ff
+L79ff equ 0x79ff ; modified when extra or bonus full?
 
 La6ec equ 0xa6ec
 
@@ -137,9 +134,6 @@ X8b6a equ 0x8b6a
 X8c51 equ 0x8c51
 X98f3 equ 0x98f3
 
-X99e7 equ 0x99e7
 X965f equ 0x965f
 L651e equ 0x651e
 Xa65d equ 0xa65d
-X99d9 equ 0x99d9
-X9a11 equ 0x9a11

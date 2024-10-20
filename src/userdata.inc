@@ -63,12 +63,13 @@ Usword_parts_printed equ 0x664f
 Ueither_3210    equ 0x6650 ; perhaps hit mode (depending on U03, fire duration)
 U0f             equ 0x6651
 U10             equ 0x6652
-U11             equ 0x6653
-U12             equ 0x6654
-U13             equ 0x6655
-U14             equ 0x6656
-Uscore_text     equ 0x6657
-                ; ...
-Uscore          equ 0x665b
-Ulives          equ 0x6664
+Uscore_bcd      equ 0x6653 ; 4 bytes
+Uscore_text     equ 0x6657 ; printable text starts here — 4 bytes print header
+                ; db 0, 0, 7, 0x47
+Uscore_ascii    equ 0x665b
+                ; db ?,?,?,?,?,?,?,?, 8 bytes ASCII
+                ; db 7 — tab
+Ulives_ascii    equ 0x6664
+                ; db ?, ?
+                ; db 0 — finish
 Ubottom_text    equ 0x6667

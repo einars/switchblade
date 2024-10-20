@@ -1722,7 +1722,7 @@ J8dfe:
                 call c, VQ6682
                 ld a, (L79ff)
                 or a
-                call nz, VQ66b6
+                call nz, VQ66b6 ; probably EXTRA or BONUS full effect
                 call Update_top_and_bottom
                 call Xff64
 
@@ -2201,14 +2201,70 @@ Set_bit5_of_10h:
 
                 include "x98b6.inc"
 
-                org 0x99e7
-                db 0xc5,   0xd5, 0xe5, 0x16, 0x5d, 0x1a, 0x1c, 0x1c, 0x1c
-                db 0xfd, 0x77, 0x39, 0x21, 0x56, 0x66, 0xaf, 0x06,   0x03, 0x1a, 0x8e, 0x27, 0x77, 0x2d, 0x1d, 0x10
+X99e7:
+                
+                push bc
+                push de
+                push hl
+                ld d, 0x5d
+                ; takes score from mach0[ mach0[e] + 3 : ... ]
+                ld a, (de)
+                inc e
+                inc e
+                inc e
+                ld (iy + 0x39), a
+                ld hl, Uscore_bcd + 3
+                xor a
 
-                org 0x9a00
-                db 0xf8, 0x78, 0x8e, 0x27, 0x77, 0x06, 0x04, 0x11,   0x5b, 0x66, 0xcd, 0x11, 0x9a, 0xe1, 0xd1, 0xc1
-                db 0xc9, 0x7e, 0x1f, 0x1f, 0x1f, 0x1f, 0xe6, 0x0f,   0xc6, 0x30, 0x12, 0x13, 0x7e, 0xe6, 0x0f, 0xc6
-                db 0x30, 0x12, 0x13, 0x23, 0x10, 0xeb, 0xc9, 0x2e,   0x2b, 0x1e, 0x2a, 0x1a, 0x3d, 0xfa, 0x32, 0x9a
+                ld b, 3
+1               ld a, (de)
+                adc a, (hl)
+                daa
+                ld (hl), a
+                dec l
+                dec e
+                djnz 1b
+
+                ld a, b
+                adc a, (hl)
+                daa
+                ld (hl), a
+
+                ld b, 4
+                ld de, Uscore_ascii
+                call BCD_to_ASCII
+                pop hl
+                pop de
+                pop bc
+                ret
+
+BCD_to_ASCII:
+                ; BCD->ASCII B bytes from HL to DE
+.loop           ld a, (hl)
+                rra
+                rra
+                rra
+                rra
+                and 0xf
+                add a, 0x30 ;  upper BCD char
+                ld (de), a
+                inc de
+                ld a, (hl)
+                and 0x0f
+                add a, 0x30
+                ld (de), a
+                inc de
+                inc hl
+                djnz .loop
+                ret
+
+
+
+
+                org 0x9a27
+
+
+                db 0x2e,   0x2b, 0x1e, 0x2a, 0x1a, 0x3d, 0xfa, 0x32, 0x9a
                 db 0xbe, 0xd0, 0x7b, 0x5d, 0x6f, 0x1a, 0xbe, 0x38,   0x10, 0x2e, 0x2d, 0x1e, 0x2c, 0x1a, 0x3d, 0xfa
                 db 0x44, 0x9a, 0xbe, 0xd0, 0x7b, 0x5d, 0x6f, 0x1a,   0xbe, 0x3f, 0xc9, 0x2e, 0x00, 0xe5, 0xfd, 0xe1
                 db 0x3e, 0xaa, 0x07, 0x32, 0x51, 0x9a, 0x38, 0x0c,   0x3e, 0x00, 0xb7, 0x28, 0x0c, 0x16, 0x60, 0xcd
