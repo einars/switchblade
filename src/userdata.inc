@@ -9,12 +9,12 @@ T04             db 0x01
 T05             db 0x00
 Tjoy_flag       db 0x01 ; joy_flag_002
 T07             db 0x00
-T08             db 0x01
+T07_printed     db 0x01
 T09             db 0x00
 Tpause          db 0x00
 T0b             db 0x05
-T0c             db 0x00
-T0d             db 0x01
+Tsword_parts    db 0x00
+Tsword_parts_printed db 0x01
 Teither_3210    db 0x00
 T0f             db 0x00
 T10             db 0x00
@@ -53,8 +53,8 @@ U03             equ 0x6645 ; perhaps fire duration
 U04             equ 0x6646
 U05             equ 0x6647
 Ujoy_flag       equ 0x6648
-U07             equ 0x6649
-U08             equ 0x664a
+Umaybe_is_alive equ 0x6649 ; perhaps is_alive?
+U07_printed     equ 0x664a
 U09             equ 0x664b
 Upause          equ 0x664c
 U0b             equ 0x664d

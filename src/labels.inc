@@ -82,8 +82,9 @@ X97a3 equ Set_bit5_of_10h
 
 ; -- 
 
+L6664 equ 0x6664
 
-Xff01 equ 0xff01
+
 Xff64 equ 0xff64
 
 L79ff equ 0x79ff
@@ -92,6 +93,7 @@ La6ec equ 0xa6ec
 
 X9a27 equ 0x9a27
 X8e95 equ 0x8e95
+Xa652 equ 0xa652
 
 Xa569 equ 0xa569
 X8855 equ 0x8855
@@ -134,3 +136,10 @@ X8edd equ 0x8edd
 X8b6a equ 0x8b6a
 X8c51 equ 0x8c51
 X98f3 equ 0x98f3
+
+X99e7 equ 0x99e7
+X965f equ 0x965f
+L651e equ 0x651e
+Xa65d equ 0xa65d
+X99d9 equ 0x99d9
+X9a11 equ 0x9a11
