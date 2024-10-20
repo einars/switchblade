@@ -58,8 +58,8 @@ U08             equ 0x664a
 U09             equ 0x664b
 Upause          equ 0x664c
 U0b             equ 0x664d
-U0c             equ 0x664e
-U0d             equ 0x664f
+Usword_parts    equ 0x664e
+Usword_parts_printed equ 0x664f
 Ueither_3210    equ 0x6650 ; perhaps hit mode (depending on U03, fire duration)
 U0f             equ 0x6651
 U10             equ 0x6652

@@ -36,7 +36,7 @@
 ; 6c58 -> 5f82
         db 0xf3, 0x5e, 0xfe, 0x01, 0x50, 0x00, 0x07, 0xeb, 0x5e, 0xfc, 0x01, 0x48, 0x03, 0x08, 0xde, 0x5e, 0xfe, 0x01, 0x50, 0x03, 0x07, 0xe3, 0x5e, 0xfa, 0x01, 0x2f, 0x03, 0x09, 0xed, 0x5e, 0xfe, 0x01, 0x50, 0x01, 0x07, 0xe7, 0x5e, 0xfe, 0x01, 0x50, 0x03, 0x07, 0xf0, 0x01, 0xd9, 0x29, 0xdc, 0x24, 0xe1, 0x1f, 0xd0, 0x10, 0xd0, 0x30, 0xff, 0x20, 0xf0, 0x10, 0xf0, 0x20, 0xf0, 0x10
             ; 5fc0
-            ; mve data from a) data_yy_01 and b) txt_square intto Buffer_yy (or back, depending on smc), 0x90 bytes each
+            ; mve data from a) Sword_states (?!) and b) txt_square intto Buffer_yy (or back, depending on smc), 0x90 bytes each
 .VQ5fc0     ld (var_8452), a
             ld hl, L6bdd
             ld a, (hl)
@@ -54,7 +54,7 @@
             ; store either ex de, hl, or nop
 1           ld (0x5fee), a ; VQ5fee
             ld (0x5ff7), a ; VQ5ff7
-            ld hl, Data_yy_01
+            ld hl, Sword_states
             ld de, Buffer_yy + 256
             ld b, 0x60
             call VQ5fee
@@ -190,11 +190,11 @@
                 ret
 
 .VQ66c8         push af
-                ld hl, mach9 + 2
+                ld hl, mach9 + 2 ; +2
                 ld a, (hl)
                 rra
                 jr nc, 1f
-                call X97a3
+                call Set_bit5_of_10h
                 call VQ66bd
 
 1               pop af

@@ -78,9 +78,10 @@ VQ66bd equ 0x66bd
 VQ66b6 equ 0x66b6
 VQ6682 equ 0x6682
 
+X97a3 equ Set_bit5_of_10h
+
 ; -- 
 
-X97a3 equ 0x97a3
 
 Xff01 equ 0xff01
 Xff64 equ 0xff64
@@ -132,3 +133,4 @@ Xa59b equ 0xa59b
 X8edd equ 0x8edd
 X8b6a equ 0x8b6a
 X8c51 equ 0x8c51
+X98f3 equ 0x98f3
