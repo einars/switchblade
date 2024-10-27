@@ -52,7 +52,7 @@ X98b6:
                 ret
 
 .entry_9908     ld e, a
-                call X99e7
+                call Add_score
                 ; SWORD FOUND
                 push hl
                 call X965f
@@ -76,7 +76,7 @@ X98b6:
 
                 ld e, 0x82
 .leave_with_e
-                jp X99e7
+                jp Add_score
 
 .handle_19
                 ld hl, U05
@@ -188,7 +188,7 @@ X98b6:
 
                 ; BONUS full
                 ld e, 0xc2
-                jr X99e7
+                jr Add_score
 
 .compare_5      ; compare 5 bytes
                 ld bc, 0x505
@@ -201,6 +201,4 @@ X98b6:
                 djnz .lp
 .lp_done        pop de
                 ret
-
-; 99e7
 
