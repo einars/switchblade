@@ -85,7 +85,7 @@ X98b6:
                 cp 0x11
                 ret nc
                 ld (hl), a
-                ld (U03), a ; perhaps fire duration
+                ld (Uhit_power), a
                 ret
 
 .handle_1a
@@ -100,7 +100,7 @@ X98b6:
 .handle_1c
                 ld a, 0
                 ld (U05), a
-                ld (U03), a
+                ld (Uhit_power), a
                 jr .done_8e
 
 .handle_1d
@@ -111,7 +111,7 @@ X98b6:
                 jr .leave_with_e
 
 .handle_1e      ld a, 0x20
-                ld (U00), a
+                ld (Uenergy), a
                 ret
 
 .entry_995c

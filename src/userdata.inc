@@ -46,11 +46,11 @@ Tbottom_text
                 org 0x6642
                 ; initially filled with random stuff from intro tiles
 Userdata:
-U00             equ 0x6642
-U01             equ 0x6643
+Uenergy         equ 0x6642
+Uenergy_printed equ 0x6643
 U02             equ 0x6644
-U03             equ 0x6645 ; perhaps fire duration
-U04             equ 0x6646
+Uhit_power       equ 0x6645 ; fire duration
+Uhit_power_printed equ 0x6646
 U05             equ 0x6647
 Ujoy_flag       equ 0x6648
 Umaybe_is_alive equ 0x6649 ; perhaps is_alive?
@@ -58,7 +58,7 @@ U07_printed     equ 0x664a
 U09             equ 0x664b
 Upause          equ 0x664c
 U0b             equ 0x664d
-Usword_parts    equ 0x664e
+Usword_parts    equ 0x664e ; N of sword parts found
 Usword_parts_printed equ 0x664f
 Ueither_3210    equ 0x6650 ; perhaps hit mode (depending on U03, fire duration)
 U0f             equ 0x6651

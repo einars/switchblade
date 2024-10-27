@@ -798,7 +798,7 @@ int_fire_pressed ; or maybe released
                 ret z
 
                 ld a, (U05)
-                ld hl, U03
+                ld hl, Uhit_power
                 ld c, (hl)
                 ld (hl), a
                 call Search_nonzero_in_mach0
@@ -810,7 +810,7 @@ int_fire_pressed ; or maybe released
                 ld a, c
                 ld (L69e3), a
 
-                ; Ueithar_3210 = depending on [U03]:
+                ; Ueithar_3210 = depending on [Uhit_power]:
                 ; 19+:   3
                 ; 9..18: 2
                 ; 0..8:  1
@@ -1724,7 +1724,7 @@ J8dfe:
                 or a
                 call nz, VQ66b6 ; probably EXTRA or BONUS full effect
                 call Update_top_and_bottom
-                call Xff64
+                call Update_hit_and_energy_display
 
                 jr .forever
 
@@ -4487,6 +4487,7 @@ Update_top_and_bottom:
 
 .skip_rolling_magic
                 call Print.Write_sys_bottom
+
 8               ld hl, Usword_parts
                 ld a, (hl)
                 inc hl
@@ -4496,6 +4497,7 @@ Update_top_and_bottom:
                 or a
                 ret z
 
+                ; draw sword
                 ld a, (Usword_parts)
                 ld b, a
                 ld a, 5
@@ -4513,14 +4515,95 @@ Update_top_and_bottom:
                 jp Print.String_alt
 
 
-                org 0xff64
-                db 0x21, 0x45, 0x66, 0x7e,   0x23, 0xbe, 0x28, 0x06, 0x11, 0xf8, 0x51, 0xcd
-                db 0x7c, 0xff, 0x21, 0x42, 0x66, 0x7e, 0x23, 0xbe,   0xc8, 0x11, 0xe0, 0x51, 0x77, 0x3e, 0xff, 0x32
-                db 0xc2, 0xff, 0x0e, 0xbb, 0x7e, 0xfe, 0x20, 0x28,   0x1a, 0x0e, 0xc3, 0xb7, 0x28, 0x15, 0xe6, 0x03
-                db 0x01, 0xb7, 0xff, 0x81, 0x4f, 0x0a, 0x32, 0xc2,   0xff, 0x7e, 0xcb, 0x3f, 0xcb, 0x3f, 0x4f, 0x3e
-                db 0xc2, 0x91, 0x4f, 0x26, 0xff, 0x69, 0x06, 0x06,   0xe5, 0xd5, 0xc5, 0x01, 0x08, 0x00, 0xed, 0xb0
-                db 0xc1, 0xd1, 0xe1, 0x14, 0x10, 0xf2, 0xc9, 0x55,   0xd5, 0xf5, 0xfd, 0xff, 0xff, 0xff, 0xff, 0xff
-                db 0xff, 0xff, 0xff, 0x55, 0x55, 0x55, 0x55, 0x55,   0x55, 0x55, 0x55
+Update_hit_and_energy_display:
+                ; update some attributes if Uhit_power or Uenergy changed
+                ld hl, Uhit_power
+                ld a, (hl)
+                inc hl
+                cp (hl)
+                jr z, 1f
+
+                ld de, 0x51f8 ; fire_power bar screen address
+                call .draw_bar_at_de
+
+1               ld hl, Uenergy
+                ld a, (hl)
+                inc hl
+                cp (hl)
+                ret z ; no change in Uenergy
+
+                ld de, 0x51e0 ; energy bar screen address
+
+
+.draw_bar_at_de
+                ld (hl), a
+
+                ld a, 0xff
+                ld (bar_end_ptr), a
+
+                ld c, 0xbb
+                ld a, (hl)
+                cp 0x20
+                jr z, 2f
+                ld c, 0xc3
+                or a
+                jr z, 2f
+                and 3
+                ld bc, bar_patterns
+                add a, c
+                ld c, a
+                ld a, (bc)
+                ld (bar_end_ptr), a ; patterns
+
+                ld a, (hl)
+                srl a
+                srl a
+                ld c, a
+                ld a, 0xc2
+                sub c
+                ld c, a ; c = 0xc2 - (*hl / 4)
+2               ld h, 0xff
+                ld l, c
+                ld b, 6
+
+                ; display the correct number of bars on screen
+                ; some amount of 11111111s, bar end, some amount of 01010101s
+.loop           push hl
+                push de
+                push bc
+                ld bc, 8
+                ldir
+                pop bc
+                pop de
+                pop hl
+                inc d
+                djnz .loop
+
+                ret
+
+                org 0xffb7
+bar_patterns    db 0b01010101
+                db 0b11010101
+                db 0b11110101
+                db 0b11111101
+
+                ; some offset 8 bytes from this will bet displayed as an energy/power bar
+                db 0b11111111
+                db 0b11111111
+                db 0b11111111
+                db 0b11111111
+                db 0b11111111
+                db 0b11111111
+                db 0b11111111
+bar_end_ptr     db 0b11111111 ; replaced with the actual pattern
+                db 0b01010101
+                db 0b01010101
+                db 0b01010101
+                db 0b01010101
+                db 0b01010101
+                db 0b01010101
+                db 0b01010101
+                db 0b01010101
 
 Bottom_row_attrs:
                 db 0x4f, 0x4f, 0x4f, 0x4f, 0x4f, 0x4f, 0x4f, 0x4f, 0x00, 0x42, 0x42, 0x42, 0x42, 0x42, 0x44, 0x07, 0x07, 0x44, 0x42, 0x42, 0x42, 0x42, 0x42, 0x00, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
