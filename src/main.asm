@@ -19,12 +19,11 @@ Start:
 
                 include "userdata.inc"
                 ; userdata template goes here, 5c00..5c37
-                ; real userdata will be stored at
 
 
                 org 0x5c38
 bbbbbggggg:
-                ; perhaps EXTRA and BONUS attributes
+                ; possibly EXTRA and BONUS attributes
                 db "BBBBB"
 ggggg:
                 db "GGGGG"
@@ -35,7 +34,7 @@ Q5c45:
                 ld a, 0xff
                 call VQ5fc0
                 
-                call Xa806
+                call Store_high_score
 
 J5c4d
                 ld a, 0x80

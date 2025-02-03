@@ -358,8 +358,8 @@ txt_no_placeholder:
 Hiscore_entry_size equ 0x1d
 Hiscores:
                 db 0x14, 0x14, 0x07, 0x47
+Hiscores_first_score equ $
                 db "00100400"
-Hiscores_first_score_endptr equ $
                 db 4, "JEFF C    ", BR, BR
                 db "00094010", 4, "LINDA     ", BR, BR
                 db "00089050", 4, "SIMES     ", BR, BR
@@ -405,8 +405,14 @@ unref_Sloppy:
 
                 org 0x82be
 
-                db 0x96, 0x14
-                db 0x07, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0x00, 0x00, 0x00, 0x00, 0x00, 0xa0, 0x12, 0x07
+                db 0x96, 0x14, 0x07, 0x04
+
+name_buffer:    ; 10 bytes of name, possibly
+                db 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0x00, 0x00, 0x00, 0x00
+
+                org 0x82cc
+
+                db 0x00, 0xa0, 0x12, 0x07
                 db 0x47, 0x20, 0x2f, 0x20, 0x00
 
 
@@ -2690,12 +2696,12 @@ Pre_game_animations:
 
 
                 assert($ = 0xa806)
-Xa806:
+Store_high_score:
                 ld c, 0xbd
-                ld hl, Hiscores_first_score_endptr
+                ld hl, Hiscores_first_score + 8
 
 1               ld b, 8
-                ld de, Uscore_endptr
+                ld de, Uscore_ascii + 8
                 xor a
                 ld (smc_La8c9), a
 
@@ -2726,7 +2732,7 @@ Xa806:
                 ld de, 0x81ee
                 lddr
 
-                ; the hiscore will be stored here
+                ; the hiscore will be stored now
 .skip_move      ld hl, Uscore_ascii
                 pop de
                 ld c, 8
@@ -2739,10 +2745,11 @@ Xa806:
                 xor a
                 call Clear_screen
                 call Xa861
-                ld hl, 0x82cc
-                ld a, 0x2d
+                ld hl, name_buffer + 10
+                ld a, '-' ; 0x2d
                 ld b, 10
 
+                ; replace '-' with space for some reason
 6               dec hl
                 cp (hl)
                 jr nz, .skip_space
@@ -2750,7 +2757,7 @@ Xa806:
 .skip_space     djnz 6b
 
                 pop de
-                ld c, 10
+                ld c, 10 ; and move the name to the place
                 ldir
                 ret
 
