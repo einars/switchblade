@@ -87,8 +87,6 @@ X97a3 equ Set_bit5_of_10h
 
 L79ff equ 0x79ff ; modified when extra or bonus full?
 
-La6ec equ 0xa6ec
-
 X8e95 equ 0x8e95
 Xa652 equ 0xa652
 
@@ -121,9 +119,7 @@ smc_L9be9 equ 0x9be9
 smc_L8b85 equ 0x8b85 ; 5d + column
 smc_L8b86 equ 0x8b86 ; 5d + column
 smc_L8b88 equ 0x8b88 ; 5d + column
-
-
-Xa806 equ 0xa806
+smc_La8c9 equ 0xa8c8+1
 
 X8c0a equ 0x8c0a
 X8bc8 equ 0x8bc8
@@ -145,3 +141,4 @@ L9163 equ 0x9163
 L90a6 equ 0x90a6
 L926e equ 0x926e
 
+Xa861 equ 0xa861
