@@ -355,10 +355,11 @@ txt_no_placeholder:
                 db 0
 
                 org 0x8119
+Hiscore_entry_size equ 0x1d
 Hiscores:
                 db 0x14, 0x14, 0x07, 0x47
                 db "00100400"
-Hiscores_first_name_ptr equ $
+Hiscores_first_score_endptr equ $
                 db 4, "JEFF C    ", BR, BR
                 db "00094010", 4, "LINDA     ", BR, BR
                 db "00089050", 4, "SIMES     ", BR, BR
@@ -2691,10 +2692,10 @@ Pre_game_animations:
                 assert($ = 0xa806)
 Xa806:
                 ld c, 0xbd
-                ld hl, Hiscores_first_name_ptr
+                ld hl, Hiscores_first_score_endptr
 
 1               ld b, 8
-                ld de, 0x6663
+                ld de, Uscore_endptr
                 xor a
                 ld (smc_La8c9), a
 
@@ -2710,21 +2711,23 @@ Xa806:
                 ld a, c
                 sub 0x15 ; 21 dec
                 ld c, a
-                cp 0xeb ; 235 dec
-                ret z
+                cp 0xeb ; 0xbd - 0x15 x 10 — final score?
+                ret z   ; score too small
                 jr 1b
 
 
 4               push hl
                 ld a, c
                 or a
-                jr z, .skip_move
+                jr z, .skip_move ; the last place?
 
+                ; move the remaining scores down
                 ld hl, 0x81d9
                 ld de, 0x81ee
                 lddr
 
-.skip_move      ld hl, 0x665b
+                ; the hiscore will be stored here
+.skip_move      ld hl, Uscore_ascii
                 pop de
                 ld c, 8
                 ldir

@@ -68,6 +68,7 @@ Uscore_text     equ 0x6657 ; printable text starts here — 4 bytes print header
                 ; db 0, 0, 7, 0x47
 Uscore_ascii    equ 0x665b
                 ; db ?,?,?,?,?,?,?,?, 8 bytes ASCII
+Uscore_endptr   equ Uscore_ascii + 8
                 ; db 7 — tab
 Ulives_ascii    equ 0x6664
                 ; db ?, ?
