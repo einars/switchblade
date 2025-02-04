@@ -34,7 +34,7 @@ Q5c45:
                 ld a, 0xff
                 call VQ5fc0
                 
-                call Store_high_score
+                call Hiscore.Screen
 
 J5c4d
                 ld a, 0x80
@@ -46,7 +46,7 @@ J5c4d
                 ; animations finished, fire pressed
 
                 ; the actual game will probably start here
-                ld hl, Hiscores + 13 ; 0x8126 hiscores, pointing to first name?
+                ld hl, Hiscore.first_score_ptr + 9
                 ld bc, 0x0a0a
 
 1               push bc
@@ -56,7 +56,6 @@ J5c4d
                 add hl, bc
                 pop bc
                 djnz 1b
-
                 jr L5c93
 
 X5c68:          ld de, 0x8213
@@ -83,8 +82,8 @@ X5c68:          ld de, 0x8213
                 ld bc, 0x140f
                 jr nc, do_stuff
 
-L5c93           ld bc, 0x0300
 
+L5c93           ld bc, 0x0300
 do_stuff:       ld (L69df), bc
                 nop
                 nop
@@ -199,8 +198,7 @@ Entry:          call Joystuff
                 add a, 0x14 ; 20
                 djnz 3b
 
-                ;0x700c 30 words
-                ; HL = X01_table
+                ;build Hiscore.Cursor_positions 6x5 table
                 ld c, 5
                 ld de, 0x0e34
 5               ld b, 6
