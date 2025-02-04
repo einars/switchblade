@@ -176,6 +176,10 @@ pregame_flag_01: db 0xb6
 pregame_flag_02: db 0
 
 
+                ; six flags, compared in 8f01
+                ; to memory at 6bdd
+                assert($ == 0x76d2)
+some_pattern_6b:
                 db 0x7b
                 db 0x5d
                 db 0x3a
@@ -1783,43 +1787,52 @@ X8ea3:
 
 
                 assert($ == 0x8eb5)
-X8eb5:
-                ; get something from 0x70xx -based array
+X8eb5:          ; mul20_something
+                ; HL=7560 -> HL=7006 / A=0E -> A = 0x86
+                ; HL=7858 -> HL=7005 / A=0F -> A = 0x73
                 ld a, h
                 rra
                 rra
                 rra
-                and 0x1f
-                ld h, 0x70
+                and 0x1f ; A = H/8
+                ld h, 0x70 ; 0x7000 - multiplication table by 0x14, 20 dec, bytes
                 srl l
                 srl l
                 srl l
-                srl l
-                add a, (hl)
+                srl l    ; L = L / 16
+                add a, (hl) ; A = H//8 + 20 * (L // 16)
                 ret
 
-X8ec7
+X8ec7           ; divmod_20_something
+                ; seems to happen only on some hit
                 ld a, (VL69e2)
-X8eca equ $
+                ; example: A = 0x6F ; DE = 0x5850  ; A = 111 -> 88 / 80
+                ; example: A = 0x42 ; DE = 0x3030  ; A = 66  -> 48 / 48
+                ; example: A = 0x72 ; DE = 0x7050  ; A = 114 -> 112 / 80
+X8eca equ $     ; divmod_20
+                ; D = 16 * (A // 20)
+                ; E =  8 * (A % 20)
                 ld de, 0x14ff
 1               inc e
                 sub d
                 jr nc, 1b
+                ; E = A / 20
                 add a, d
+                ; A = A % 20
                 add a, a
                 add a, a
                 add a, a
-                ld d, a
+                ld d, a ; D = (A % 20) * 8
                 ld a, e
                 add a, a
                 add a, a
                 add a, a
                 add a, a
-                ld e, a
+                ld e, a ; E = (A // 20) * 16
                 ret
 
 
-                org 0x8edd
+                assert($ == 0x8edd)
 mul_h_e:
                 ld l, 0
                 ld d, l
@@ -1833,13 +1846,54 @@ mul_h_e:
 7               add hl, hl : jr nc, 8f : add hl, de
 8               ret
 
-                org 0x8f01
-                db 0xcd, 0x28, 0x8f, 0xcb, 0x46, 0xc8, 0x0c,   0x09, 0x7e, 0x09, 0xcb, 0x46, 0x4f, 0x3a, 0x1b
-                db 0x5d, 0x20, 0x0b, 0x17, 0xd0, 0x21, 0x01, 0x5d,   0x79, 0xbe, 0xc0, 0x16, 0x00, 0xc9, 0x17, 0xd8
-                db 0x18, 0xf3, 0xcd, 0x28, 0x8f, 0x36, 0x00, 0xc9,   0x3a, 0xdd, 0x6b, 0x21, 0xd2, 0x76, 0x01, 0x06
-                db 0x00, 0xed, 0xb1, 0x20, 0x04, 0x0e, 0x05, 0x09,   0xc9, 0xe1, 0xc9
 
-                ; 8f3b
+                assert($ == 0x8f01)
+X8f01:
+                call X8f22.entry
+                bit 0, (hl)
+                ret z
+                inc c
+                add hl,bc
+                ld a, (hl)
+                add hl, bc
+                bit 0,(hl)
+                ld c, a
+                ld a, (L5d1b) ; mach0[1b]
+                jr nz, 2f
+                rla
+                ret nc
+
+1               ld hl, L5d01  ; mach0[1]
+                ld a, c
+                cp (hl)
+                ret nz
+                ld d, 0
+                ret
+
+2               rla
+                ret c
+                jr 1b
+
+                
+
+X8f22           call .entry
+                ld (hl), 0
+                ret
+
+.entry          ld a, (VL6bdd) ; machE
+                ld hl, some_pattern_6b
+                ld bc, 6
+                cpir
+                jr nz, 3f
+                ld c, 5
+                add hl, bc ; will store 0 in (hl)
+                ret
+
+3               pop hl
+                ret               
+
+                assert($ == 0x8f3b)
+
 Q8f3b:
                 call Q8f75
                 ld l, 1

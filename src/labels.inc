@@ -47,6 +47,8 @@ L69de equ 0x69de
 L69df equ 0x69df
 L6bdd equ 0x6bdd
 L5d42 equ 0x5d42
+L5d01 equ 0x5d01
+L5d1b equ 0x5d1b
 L5d4a equ 0x5d4a
 L6640 equ 0x6640
 
@@ -78,6 +80,7 @@ VQ66bd equ 0x66bd
 VQ66b6 equ 0x66b6
 VQ6682 equ 0x6682
 VL69e2 equ 0x69e2
+VL6bdd equ 0x6bdd
 
 X9a4b equ X9a27.e_9a4b
 X9a89 equ X9a27.e_9a89
