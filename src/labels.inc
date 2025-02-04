@@ -108,7 +108,6 @@ smc_L7b63 equ 0x7b63
 ;smc_L8c76 equ Drawing_routine.pipe_b_param
 
 smc_L8b6b equ 0x8b6b
-smc_L8c13 equ 0x8c13
 smc_L8c1e equ 0x8c1e
 smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
@@ -116,18 +115,11 @@ smc_La56f equ 0xa56f
 smc_L9be9 equ 0x9be9
 
 ; X8b6a:
-smc_L8b85 equ 0x8b85 ; 5d + column
-smc_L8b86 equ 0x8b86 ; 5d + column
-smc_L8b88 equ 0x8b88 ; 5d + column
 
-X8c0a equ 0x8c0a
-X8bc8 equ 0x8bc8
 X8ea3 equ 0x8ea3
 
 Xa59b equ 0xa59b
 X8edd equ 0x8edd
-X8b6a equ 0x8b6a
-X8c51 equ 0x8c51
 X98f3 equ 0x98f3
 
 X965f equ 0x965f
@@ -140,3 +132,12 @@ L9163 equ 0x9163
 L90a6 equ 0x90a6
 L926e equ 0x926e
 
+; smc_L8b86 equ X8b6a.param_e
+; smc_L8b87 equ X8b6a.param_d
+; smc_L8b88 equ X8b6a.param_c
+
+; smc_L8c1e equ X8c0a.param_pos
+; smc_L8c13 equ X8c0a.n_lines
+
+; X8bc5 equ Weird_blit
+; X8bc8 equ Weird_blit.entry_de

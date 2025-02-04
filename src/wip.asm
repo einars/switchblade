@@ -1079,20 +1079,20 @@ Q89ce:          cp 0x4b
 
 Q89d2           call Q8a06
 Q89d5           ld a, b
-                ld hl, X8bc8
+                ld hl, Weird_blit.entry_de
 
 L89d9           ld (smc_processor), hl
                 call X8ea3
 L89df           ld b, 0
                 add hl, bc
                 ld a, 0x50
-                ld (smc_L8c1e), a
+                ld (X8c0a.param_pos), a
                 ld a, 0x0e
-                ld (smc_L8c13), a
+                ld (X8c0a.n_lines), a
 L89ec           ld b, 2
                 push de
                 push bc
-                call X8bc8 ; SMC!
+                call Weird_blit.entry_de
 smc_processor   equ $-2
                 pop bc
                 pop de
@@ -1301,7 +1301,7 @@ Q8a90:
 .set_e          ld e, a
 
                 add a, 0x5d
-                ld (smc_L8b86), a ; smc = E + 0x5d ; offset in buffer
+                ld (X8b6a.param_d), a ; smc = E + 0x5d ; offset in buffer
 
                 ld l, 0x20
                 ld a, (hl)
@@ -1341,13 +1341,13 @@ Q8a90:
                 ld a, (Drawing_routine.pipe_b_param)
                 add a, l
                 sub e
-                ld (smc_L8b88), a ; SMC = pipe_b_param + (mach[2b] - B || 0) - (mach[2a] - C || 0)
+                ld (X8b6a.param_c), a ; SMC = pipe_b_param + (mach[2b] - B || 0) - (mach[2a] - C || 0)
 .param_1+*      ld a, 0
                 ld l, 0
                 sub (hl)
                 neg
                 add a, 0x4a
-                ld (smc_L8b85), a
+                ld (X8b6a.param_e), a
 
                 push hl
                 ld l, 0x18
@@ -1405,30 +1405,256 @@ Q8a90:
                 jr nz, .loop2
                 ret
 
-                ; 8b6a
-
-                db 0x08, 0x2e, 0x16, 0x7e, 0x0f, 0x0f
-                db 0x47, 0x5f, 0x0f, 0x83, 0x5f, 0xed, 0x44, 0x32,   0x61, 0x8b, 0x08, 0x28, 0x07, 0x67, 0xcd, 0xdd
-                db 0x8e, 0xeb, 0xdd, 0x19, 0x11, 0x00, 0x00, 0x0e,   0x00, 0x3e, 0x4a, 0x93, 0x3d, 0xf2, 0xb7, 0x8b
-                db 0x3e, 0x50, 0x2e, 0x00, 0x32, 0x1e, 0x8c, 0x78,   0x87, 0x87, 0xcb, 0x18, 0xd6, 0x02, 0x95, 0xf5
-                db 0x6f, 0x83, 0x67, 0x3a, 0x27, 0x8d, 0xc6, 0x4a,   0x94, 0xf2, 0xae, 0x8b, 0x85, 0x6f, 0x7d, 0x32
-                db 0x13, 0x8c, 0xf1, 0xdd, 0xe5, 0xe1, 0xc9, 0x3c,   0x1e, 0x4a, 0x6f, 0xc6, 0x50, 0xcd, 0x94, 0x8b
-                db 0x3d, 0xf0, 0xfd, 0xe1, 0xc9, 0x11, 0x50, 0x5b,   0xc5, 0x06, 0x07, 0x7e, 0x07, 0x07, 0x07, 0xa0
-                db 0x12, 0x1c, 0x7e, 0x0f, 0x0f, 0xa0, 0x12, 0x1c,   0x7e, 0x23, 0x4e, 0xcb, 0x11, 0x17, 0xa0, 0x12
-                db 0x1c, 0x79, 0x07, 0x07, 0x07, 0xa0, 0x12, 0x1c,   0x79, 0x0f, 0x0f, 0xa0, 0x12, 0x1c, 0x7e, 0x23
-                db 0x4e, 0xcb, 0x11, 0x17, 0xcb, 0x11, 0x17, 0xa0,   0x12, 0x1c, 0x79, 0x07, 0x07, 0x07, 0xa0, 0x12
-
-                org 0x8c00
-                db 0x1c, 0x7e, 0xa0, 0x12, 0x1c, 0x23, 0xc1, 0x10,   0xbf, 0xc9, 0xd5, 0xc5, 0xcd, 0xc5, 0x8b, 0xf1
-                db 0xd1, 0xe5, 0x3e, 0x08, 0x08, 0x3e, 0xff, 0x26,   0x6f, 0xed, 0x73, 0x4d, 0x8c, 0x31, 0x50, 0x5b
-                db 0xf3, 0xc1, 0x3b, 0xfb, 0x68, 0xa6, 0xeb, 0xa6,   0xb1, 0x77, 0x2c, 0xeb, 0x08, 0x08, 0x68, 0x7e
-                db 0x69, 0xa6, 0xf3, 0xc1, 0x3b, 0xfb, 0x68, 0xa6,   0xeb, 0xa6, 0xb1, 0x77, 0x2c, 0xeb, 0x08, 0x3d
-                db 0x20, 0xeb, 0x68, 0x7e, 0x69, 0xa6, 0xeb, 0xa6,   0xb0, 0x77, 0x2c, 0xeb, 0x31, 0x00, 0x00, 0xe1
-                db 0xc9, 0xd5, 0xc5, 0xcd, 0xc5, 0x8b, 0x1d, 0xeb,   0xf1, 0xf5, 0x87, 0x87, 0x87, 0x47, 0x16, 0x7a
-                db 0x5e, 0x1a, 0x77, 0x2d, 0x10, 0xfa, 0x18, 0xa7
 
 
+X8b6a:
+                ex af, af
+                ld l, 0x16
+                ld a, (hl) ; mach[16]
+                rrca
+                rrca
+                ld b, a
+                ld e, a
+                rrca
+                add a, e
+                ld e, a
+                neg
+                ld (Q8a90.param_de), a
+                ex af, af
+                jr z, 1f
+                ld h, a
+                call mul_h_e
+                ex de, hl
+                add ix, de
+1
+.param_e  equ $+1
+.param_de equ $+1
+.param_d  equ $+2
+                ld de, 0
+.param_c  equ $+1
+                ld c, 0
+                ld a, 0x4a
+                sub e
+                dec a
+                jp p, .lx8bb7
+                ld a, 0x50
+                ld l, 0
 
+.reentry
+                ld (X8c0a.param_pos), a
+                ld a, b
+                add a, a
+                add a, a
+                rr b
+                sub 2
+                sub l
+
+                push af
+                ld l, a
+                add a, e
+                ld h, a
+                ld a, (Patch_and_blit.n_lines)
+                add a, 0x4a
+                sub h
+                jp p, 2f
+
+                add a, l
+                ld l, a
+
+2               ld a, l
+                ld (X8c0a.n_lines), a
+                pop af
+
+                push ix
+                pop hl
+                ret
+
+.lx8bb7         inc a
+                ld e, 0x4a
+                ld l,a 
+                add a, 0x50
+                call .reentry
+                dec a
+                ret p
+                pop iy
+                ret
+
+
+Weird_blit:     ld de, 0x5b50
+.entry_de       equ $
+
+1               push bc
+                ld b, 7
+                ld a, (hl)
+                rlca
+                rlca
+                rlca
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, (hl)
+                rrca
+                rrca
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, (hl)
+                inc hl
+                ld c, (hl)
+                rl c
+                rla
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, c
+                rlca
+                rlca
+                rlca
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, c
+                rrca
+                rrca
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, (hl)
+                inc hl
+                ld c, (hl)
+                rl c
+                rla
+                rl c
+                rla
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, c
+                rlca
+                rlca
+                rlca
+                and b
+                ld (de), a
+
+                inc e
+
+                ld a, (hl)
+                and b
+                ld (de), a
+
+                inc e
+
+                inc hl
+                pop bc
+                djnz 1b
+
+                ret
+
+
+
+
+X8c0a:
+                push de
+                push bc
+                call Weird_blit
+.entry_post_blit
+1               pop af
+                pop de
+                push hl
+.n_lines equ $+1
+                ld a, 8    ; AF' = line counter, initially 8
+                ex af, af
+                ld a, 0xff
+                ld h, 0x6f
+                ld (.stack), sp
+.param_pos equ $+1 ; SMC lower byte of 5b50
+                ld sp, 0x5b50
+
+                di : pop bc : dec sp : ei
+
+                ld l, b   ; B = mask
+                and (hl)  ; [HL] = byte
+                ex de, hl ; [DE] = another AND-MASK?
+                and (hl) 
+                or c      ; C = pattern
+                ld (hl), a ; put back
+                inc l
+                ex de, hl
+
+                ex af, af ; A = line counter
+
+2               ex af, af
+                ld l, b
+                ld a, (hl)
+                ld l, c
+                and (hl)
+
+                di : pop bc : dec sp : ei
+
+                ld l, b
+                and (hl)
+                ex de, hl
+                and (hl)
+                or c
+                ld (hl), a
+                inc l
+                ex de, hl
+                ex af, af
+                dec a
+                jr nz, 2b
+
+                ld l, b
+                ld a, (hl)
+                ld l, c
+                and (hl)
+                ex de, hl
+                and (hl)
+                or b
+                ld (hl), a
+                inc l
+                ex de, hl
+.stack+*        ld sp, 0
+                pop hl
+                ret
+
+
+X8c51:
+                push de
+                push bc
+                call Weird_blit
+                dec e
+                ex de, hl
+                pop af
+                push af
+                add a, a
+                add a, a
+                add a, a
+                ld b, a    ; B = a x 8
+                ld d, 0x7a
+
+1               ld e, (hl)
+                ld a, (de)
+                ld (hl), a
+                dec l
+                djnz 1b
+                jr X8c0a.entry_post_blit
+
+
+
+
+                ; org 0x8c68
                 include "drawing.inc"
 
                 org 0x8dfe
