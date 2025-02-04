@@ -119,7 +119,6 @@ smc_L9be9 equ 0x9be9
 smc_L8b85 equ 0x8b85 ; 5d + column
 smc_L8b86 equ 0x8b86 ; 5d + column
 smc_L8b88 equ 0x8b88 ; 5d + column
-smc_La8c9 equ 0xa8c8+1
 
 X8c0a equ 0x8c0a
 X8bc8 equ 0x8bc8
@@ -141,4 +140,5 @@ L9163 equ 0x9163
 L90a6 equ 0x90a6
 L926e equ 0x926e
 
-Xa861 equ 0xa861
+Xa8e2 equ 0xa8e2
+Xa91b equ 0xa91b

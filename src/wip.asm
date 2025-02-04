@@ -384,12 +384,12 @@ unref_Sloppy:
                 org 0x8225
                 db 0xb8, 0x1e, 0x07, 0x47, 0x2a, 0x26, 0 ; ??
 
-                org 0x822c
+txt_Well_done
                 db 0x14, 0, 6, 0x46
                 db "WELL DONE! YOU HAVE A HIGH SCORE", BR, BR, 5
                 db "PLEASE ENTER YOUR NAME", 0
 
-                org 0x826a
+txt_Well_done_pt_2
                 db 0x3c, 0x14
                 db 0x07, 0x47
                 db "A B C D E F", BR, BR
@@ -398,22 +398,25 @@ unref_Sloppy:
                 db "S T U V W X", BR, BR
                 db "Y Z !   < +", 0
 
-                org 0x82ae
-                db 0x74, 0x26, 0x47, 7, 0x22, 0x23, 0x24, BR
+txt_Well_done_selector
+                ; selector square
+                db 0x74, 0x26, 0x47, 7
+                db 0x22, 0x23, 0x24, BR
                 db 0x25, 0x01, 0x25, BR
                 db 0x27, 0x28, 0x29, 0
 
                 org 0x82be
 
+txt_name_buffer:
                 db 0x96, 0x14, 0x07, 0x04
 
 name_buffer:    ; 10 bytes of name, possibly
                 db 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0x00, 0x00, 0x00, 0x00
+                db 0
 
-                org 0x82cc
-
-                db 0x00, 0xa0, 0x12, 0x07
-                db 0x47, 0x20, 0x2f, 0x20, 0x00
+txt_maybe_cursor
+                db 0xa0, 0x12, 7, 0x47
+                db " / ", 0
 
 
                 ; 82d5
@@ -2703,7 +2706,7 @@ Store_high_score:
 1               ld b, 8
                 ld de, Uscore_ascii + 8
                 xor a
-                ld (smc_La8c9), a
+                ld (Hiscore_entry.current_letter), a
 
 2               dec hl
                 dec de
@@ -2744,7 +2747,7 @@ Store_high_score:
                 ld (int_enable), a
                 xor a
                 call Clear_screen
-                call Xa861
+                call Hiscore_entry
                 ld hl, name_buffer + 10
                 ld a, '-' ; 0x2d
                 ld b, 10
@@ -2761,17 +2764,100 @@ Store_high_score:
                 ldir
                 ret
 
-                assert($ == 0xa861)
 
-                db 0x06, 0x0a, 0x21, 0xc2, 0x82, 0x36, 0x2d,   0x23, 0x10, 0xfb, 0x21, 0x04, 0x05, 0x22, 0x00
-                db 0x5d, 0x21, 0xa0, 0x12, 0x22, 0xcd, 0x82, 0x21,   0x2c, 0x82, 0xcd, 0x6e, 0x83, 0xcd, 0x7b, 0x83
-                db 0xcd, 0x7b, 0x83, 0x2e, 0x0a, 0xcd, 0x30, 0x83,   0x2d, 0x20, 0xfa, 0x21, 0xbe, 0x82, 0xcd, 0x6e
-                db 0x83, 0xcd, 0x7b, 0x83, 0xcd, 0x29, 0x85, 0x28,   0x08, 0xcd, 0x0e, 0x85, 0xdc, 0xe2, 0xa8, 0x18
-                db 0xf3, 0x01, 0x00, 0x80, 0xcd, 0x33, 0x83, 0xcd,   0x1b, 0xa9, 0xfe, 0x1a, 0x38, 0x13, 0x0e, 0x21
-                db 0x28, 0x12, 0x0d, 0xfe, 0x1b, 0x28, 0x0d, 0xfe,   0x1c, 0xc0, 0x0e, 0x2d, 0x1e, 0xff, 0x53, 0x18
-                db 0x07, 0xc6, 0x41, 0x4f, 0x1e, 0x01, 0x16, 0x0a,   0x3e, 0x01, 0x47, 0x21, 0xc2, 0x82, 0x85, 0x6f
-                db 0x71, 0x78, 0x83, 0xba, 0x28, 0xb5, 0x32, 0xc9,   0xa8, 0x21, 0xce, 0x82, 0x7b, 0x87, 0x86, 0x77
-                db 0x18, 0xa9, 0x21, 0x00, 0x5d, 0x7b, 0x86, 0xf8,   0xfe, 0x05, 0xc8, 0x5f, 0x2c, 0x7a, 0x86, 0xf8
+                assert($ == 0xa861)
+Hiscore_entry:          
+                ; clean name buffer
+                ld b, 10
+                ld hl, name_buffer
+.c              ld (hl), '-' : inc hl : djnz .c
+
+                ld hl, 0x0504
+                ld (0x5d00), hl ; something weird
+                ld hl, 0x12a0   ; 4768 dec
+                ld (0x82cd), hl
+                ld hl, txt_Well_done
+                call Print.Text
+                call Print.String_alt ; txt_Well_done_pt_2
+                call Print.String_alt ; txt_Well_done_selector
+
+                ld l, 10
+.delay          call Delay : dec l : jr nz, .delay
+
+.redraw_name
+                ld hl, txt_name_buffer
+                call Print.Text
+                call Print.String_alt ; txt_maybe_cursor
+
+.joy_loop       call Joystick_read
+                jr z, .joy_done
+
+                call Joystick_parse
+                call c, Xa8e2 ; probably advance cursor
+                jr .joy_loop
+
+.joy_done       ld bc, 0x8000
+                call Delay_custom
+
+                call Xa91b ; probably get letter at cursor
+
+                cp 0x1a
+                jr c, 7f
+
+                ld c, 0x21
+                jr z, 8f
+                dec c
+                cp 0x1b
+                jr z, 8f
+                cp 0x1c
+                ret nz
+
+                ld c, '-'
+                ld e, 0xff
+                ld d, e
+                jr .store_letter
+
+7               add a, 0x41
+                ld c, a
+
+8               ld e, 1
+                ld d, 10
+
+.store_letter
+                ; store char into name_buffer
+                ; c = character
+                ; e = +1 / -1
+                ; d = limit (10 or -1)
+.current_letter equ $ + 1
+                ld a, 1 ; smc current_letter, reset to 0 by caller
+                ld b, a 
+                ld hl, name_buffer
+                add a, l
+                ld l, a
+                ld (hl), c
+
+                ld a, b
+                add a, e
+                cp d ; last letter?
+                jr z, .redraw_name
+
+                ; advance cursor
+                ld (.current_letter), a
+                ld hl, txt_maybe_cursor + 1
+                ld a, e
+                add a, a
+                add a, (hl)
+                ld (hl), a
+                jr .redraw_name
+
+
+
+
+
+
+                assert($ == 0xa8e2)
+
+                db 0x21, 0x00, 0x5d, 0x7b, 0x86, 0xf8,   0xfe, 0x05, 0xc8, 0x5f, 0x2c, 0x7a, 0x86, 0xf8
                 db 0xfe, 0x06, 0xc8, 0x77, 0x2d, 0x73, 0x2a, 0xae,   0x82, 0x22, 0xeb, 0x80, 0x21, 0xeb, 0x80, 0xcd
 
                 org 0xa900
