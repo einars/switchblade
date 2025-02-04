@@ -142,7 +142,9 @@ L926e equ 0x926e
 X9ca7 equ 0x9ca7
 L906c equ 0x906c
 L9225 equ 0x9225
-L91b8 equ 0x91b8
 Xa6b1 equ 0xa6b1
+L911a equ 0x911a
+X9137 equ 0x9137
+La59b equ 0xa59b
 
 L9b53 equ 0x9b53 ; next

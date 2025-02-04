@@ -2112,15 +2112,15 @@ L918c
                 ld l, 0x3a
                 ld c, (hl)
                 inc l
-                ld b, (hl) ; bc = mach[3a:3b]
+                ld b, (hl) ; bc = M[3a:3b]
 
-                ld a, (bc) ; a = *[ mach[3a:3b] ]
+                ld a, (bc) ; a = *[ M[3a:3b] ]
                 inc bc
-                ld (hl), b ; inc mach[3a:3b]
+                ld (hl), b ; inc M[3a:3b]
                 dec l
                 ld (hl), c
                 ld l, 0x23
-                ld (hl), a ; *mach[23] = a
+                ld (hl), a ; *M[23] = a
                 jp L9b53
 
                 assert ($ == 0x919c)
@@ -2139,16 +2139,30 @@ X919c:
                 jp nz, L918c
                 ld l, 2
                 bit 5, (hl)
-                jr nz, L91b8
+                jr nz, 1f
                 set 5, (hl)
                 jp L9b53
 
+1               xor a
+                ld l, 0x39
+                or (hl) ; a = M[39]
+                jp nz, L911a
+
+                ld l, 2
+                ld (hl), 0 ; M[2] = 0
+                ld l, 0x1c
+                ld a, (hl)
+                cp 0x48
+                jr nz, 2f
+
+                xor a
+                ld (U0f), a ; interesting
+
+2               call X9137
+                jp La59b
 
 
-
-                db 0xaf, 0x2e, 0x39, 0xb6, 0xc2, 0x1a, 0x91, 0x2e
-                db 0x02, 0x36, 0x00, 0x2e, 0x1c, 0x7e, 0xfe, 0x48,   0x20, 0x04, 0xaf, 0x32, 0x51, 0x66, 0xcd, 0x37
-                db 0x91, 0xc3, 0x9b, 0xa5, 0x35, 0x20, 0x04, 0x2e,   0x02, 0xcb, 0xee, 0x11, 0xfc, 0x00, 0xc3, 0x56
+                db 0x35, 0x20, 0x04, 0x2e,   0x02, 0xcb, 0xee, 0x11, 0xfc, 0x00, 0xc3, 0x56
                 db 0x9b, 0x7e, 0xfe, 0x02, 0x20, 0x08, 0x2e, 0x1b,   0x7e, 0xed, 0x44, 0x77, 0x2e, 0x33, 0x35, 0x28
                 db 0x10, 0xc3, 0x8c, 0x91, 0x35, 0x28, 0x0a, 0x2e,   0x02, 0xcb, 0x66, 0xc4, 0xca, 0x9d, 0xc3, 0x8c
 
