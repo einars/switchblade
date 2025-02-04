@@ -138,3 +138,8 @@ L926e equ 0x926e
 
 ; X8bc5 equ Weird_blit
 ; X8bc8 equ Weird_blit.entry_de
+
+X9ca7 equ 0x9ca7
+L906c equ 0x906c
+X919c equ 0x919c
+L9225 equ 0x9225
