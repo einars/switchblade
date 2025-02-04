@@ -77,6 +77,7 @@ VQ66c8 equ 0x66c8
 VQ66bd equ 0x66bd
 VQ66b6 equ 0x66b6
 VQ6682 equ 0x6682
+VL69e2 equ 0x69e2
 
 X9a4b equ X9a27.e_9a4b
 X9a89 equ X9a27.e_9a89
@@ -87,7 +88,6 @@ X97a3 equ Set_bit5_of_10h
 
 L79ff equ 0x79ff ; modified when extra or bonus full?
 
-X8e95 equ 0x8e95
 Xa652 equ 0xa652
 
 Xa569 equ 0xa569
@@ -95,8 +95,6 @@ X8855 equ 0x8855
 La59e equ 0xa59e
 Xa58a equ 0xa58a
 X9ba2 equ 0x9ba2
-
-X8e98 equ 0x8e98
 
 J872b equ 0x872b
 J9087 equ 0x9087
@@ -113,10 +111,6 @@ smc_L9a59 equ 0x9a59
 smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
 smc_L9be9 equ 0x9be9
-
-; X8b6a:
-
-X8ea3 equ 0x8ea3
 
 Xa59b equ 0xa59b
 X8edd equ 0x8edd

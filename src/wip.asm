@@ -1264,7 +1264,7 @@ Q8a90:
                 jr z, 1f
 
                 res 1, (hl)     ; mach[20].1 = off
-                call X8e95
+                call Bounds_check_m20
                 jr nz, 2f
 
                 ld l, 2
@@ -1280,7 +1280,7 @@ Q8a90:
                 ld (hl), 0
                 jp Xa59b
 
-1               call X8e95
+1               call Bounds_check_m20
                 ret z
 
                 ld l, 0
@@ -1698,14 +1698,14 @@ X8e2b:
                 cp 0x25
                 jp z, J872b
                 ld a, (L69dd)
-                call X8e98
+                call Bounds_check
                 jr z, .leave
 
                 ld l, 0
                 ld a, (hl)
-                cp 0xa8
+                cp 0xa8    ; 168
                 jr c, 1f
-                cp 0xc8
+                cp 0xc8    ; 200
                 jr c, .leave
 
 1               ld bc, Q898c ; callback
@@ -1749,12 +1749,74 @@ Search_nonzero_at_30:
                 xor a
                 ret
 
-                ; 8e95
-                db 0x2e, 0x20, 0x7e,   0x11, 0x30, 0xc0, 0x6f, 0xa2, 0xba, 0xc8, 0x7d
-                db 0xa3, 0xbb, 0xc9, 0x3d, 0x26, 0x00, 0x6f, 0xd5,   0x29, 0x29, 0x29, 0x5d, 0x54, 0x29, 0x19, 0x11
-                db 0x04, 0xd1, 0x19, 0xd1, 0xc9, 0x7c, 0x1f, 0x1f,   0x1f, 0xe6, 0x1f, 0x26, 0x70, 0xcb, 0x3d, 0xcb
-                db 0x3d, 0xcb, 0x3d, 0xcb, 0x3d, 0x86, 0xc9, 0x3a,   0xe2, 0x69, 0x11, 0xff, 0x14, 0x1c, 0x92, 0x30
-                db 0xfc, 0x82, 0x87, 0x87, 0x87, 0x57, 0x7b, 0x87,   0x87, 0x87, 0x87, 0x5f, 0xc9
+Bounds_check_m20:          ; bounds check?
+                ld l, 0x20
+                ld a, (hl)
+Bounds_check equ $
+                ld de, 0xc030 ; 192 : 48
+                ld l, a
+                and d
+                cp d
+                ret z
+                ld a, l
+                and e ; 0x30
+                cp e
+                ret
+
+X8ea3:
+                dec a
+                ld h, 0
+                ld l, a
+                push de
+                add hl, hl
+                add hl, hl
+                add hl, hl ; (A-1) * 8
+                ld e, l
+                ld d, h
+                add hl, hl ; (A-1) * 16
+                add hl, de ; (A-1) * 24
+
+                ld de, 0xd104
+                add hl, de
+                pop de     ; 0xD104 + (A-1) * 24
+                ret
+
+
+                assert($ == 0x8eb5)
+X8eb5:
+                ; get something from 0x70xx -based array
+                ld a, h
+                rra
+                rra
+                rra
+                and 0x1f
+                ld h, 0x70
+                srl l
+                srl l
+                srl l
+                srl l
+                add a, (hl)
+                ret
+
+X8ec7
+                ld a, (VL69e2)
+X8eca equ $
+                ld de, 0x14ff
+1               inc e
+                sub d
+                jr nc, 1b
+                add a, d
+                add a, a
+                add a, a
+                add a, a
+                ld d, a
+                ld a, e
+                add a, a
+                add a, a
+                add a, a
+                add a, a
+                ld e, a
+                ret
 
 
                 org 0x8edd
