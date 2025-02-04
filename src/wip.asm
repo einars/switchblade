@@ -444,17 +444,17 @@ maybe_sound_to_play
 
 IM2_handler
                 push hl, de, bc, af, ix, iy
-int_enable+*    ld a, 1
+.int_enable+*   ld a, 1
                 or a
-                call z, Im2_optional ; only when actually playing game
+                call z, .optional ; only when actually playing game
                 call Im2_always
                 pop iy, ix, af, bc, de, hl
                 ei
                 reti
-Im2_optional:
-int_counter+*   ld hl, 0
+.optional:
+.counter+*      ld hl, 0
                 inc hl
-                ld (int_counter), hl
+                ld (.counter), hl
 
                 ld h, 0x5d
                 ld b, 10
@@ -1803,13 +1803,14 @@ X8eb5:          ; mul20_something
                 add a, (hl) ; A = H//8 + 20 * (L // 16)
                 ret
 
-X8ec7           ; divmod_20_something
-                ; seems to happen only on some hit
+                ; 8ec7
+divmod_20_something:
                 ld a, (VL69e2)
                 ; example: A = 0x6F ; DE = 0x5850  ; A = 111 -> 88 / 80
                 ; example: A = 0x42 ; DE = 0x3030  ; A = 66  -> 48 / 48
                 ; example: A = 0x72 ; DE = 0x7050  ; A = 114 -> 112 / 80
-X8eca equ $     ; divmod_20
+divmod_20 equ $
+                ; output:
                 ; D = 16 * (A // 20)
                 ; E =  8 * (A % 20)
                 ld de, 0x14ff
@@ -2159,7 +2160,7 @@ X919c:
                 ld (U0f), a ; interesting
 
 2               call X9137
-                jp La59b
+                jp Xa59b
 
                 org 0x91d4
 
@@ -2483,7 +2484,7 @@ Q9b71:
                 ld l, 0x22
                 ld (hl), d ; mach[22] = D
                 call Q9bb6
-                ld a, (int_enable) ; game started perhaps
+                ld a, (IM2_handler.int_enable) ; game started perhaps
                 or a
                 ret nz
 
@@ -2782,21 +2783,154 @@ Store_a_to_1a1d:
                 db 0xfe, 0x54, 0x3a, 0xdd, 0x6b, 0x3d, 0x07, 0x6f,   0xc9, 0x3a, 0xff, 0x6d, 0x4f, 0x21, 0x00, 0x00
                 db 0x3a, 0x1b, 0x5d, 0x17, 0x38, 0x01, 0x6c, 0x7d,   0xc6, 0x14, 0x6f, 0x26, 0x67, 0x7e, 0xe6, 0xfc
                 db 0x57, 0xa1, 0xc0, 0x7a, 0xb1, 0x32, 0xff, 0x6d,   0xaf, 0xc9, 0xcd, 0x5d, 0xa5, 0xeb, 0xed, 0xa0
-                db 0xed, 0xa0, 0xcd, 0x59, 0xa5, 0xeb, 0xed, 0xa0,   0xed, 0xa0, 0xc9, 0x3a, 0xff, 0x6d, 0x4f, 0x3a
-                db 0xdd, 0x6a, 0xb7, 0xc8, 0x47, 0xdd, 0x2a, 0xde,   0x6a, 0xed, 0x5b, 0xfe, 0x6e, 0xc5, 0xcb, 0x12
-                db 0xcb, 0x13, 0xd5, 0xd4, 0xbf, 0xa5, 0xdd, 0x23,   0xdd, 0x23, 0xd1, 0xc1, 0x10, 0xef, 0xc9, 0xdd
-                db 0x6e, 0x01, 0x26, 0x67, 0x79, 0xa6, 0xc8, 0x21,   0xdb, 0x68, 0x7d, 0x80, 0x6f, 0xaf, 0xb6, 0xc0
-                db 0xc5, 0xeb, 0x06, 0x07, 0x21, 0x02, 0x5e, 0xcd,   0x2c, 0x9f, 0xc1, 0xd8, 0x78, 0x12, 0x08, 0xe5
-                db 0xdd, 0x7e, 0x01, 0xcd, 0xca, 0x8e, 0x42, 0x4b,   0xc5, 0xdd, 0x7e, 0x00, 0xcd, 0x52, 0xa6, 0xfe
-                db 0x20, 0x01, 0x03, 0x1f, 0x38, 0x07, 0xfe, 0x23,   0x30, 0x12, 0x01, 0x04, 0x3f, 0xeb, 0x11, 0xbf
+                db 0xed, 0xa0, 0xcd, 0x59, 0xa5, 0xeb, 0xed, 0xa0,   0xed, 0xa0, 0xc9
 
-                org 0xa600
-                db 0x65, 0xed, 0xa0, 0xed, 0xa0, 0xeb, 0x11, 0xb8,   0x65, 0x71, 0x2c, 0x70, 0xc1, 0xe1, 0x2e, 0x00
-                db 0xe5, 0xdd, 0x7e, 0x00, 0xcd, 0x5d, 0xa6, 0x08,   0x1e, 0x29, 0x12, 0xdd, 0x7e, 0x00, 0x17, 0x38
-                db 0x04, 0xfe, 0x40, 0x38, 0x0b, 0xcd, 0x32, 0xa6,   0xe1, 0x2e, 0x0d, 0xa6, 0x2e, 0x28, 0x77, 0xc9
-                db 0xe1, 0xc9, 0x06, 0x0f, 0x2a, 0x73, 0x84, 0x5c,   0x55, 0x19, 0x3a, 0x74, 0x84, 0x85, 0x5f, 0x3a
-                db 0x73, 0x84, 0x84, 0x57, 0x29, 0x29, 0x19, 0x29,   0x29, 0x29, 0x19, 0x22, 0x73, 0x84, 0x7d, 0x10
-                db 0xe3, 0xc9, 0xe6, 0x7f, 0x26, 0x72, 0x6f, 0xcb,   0x15, 0x5e, 0x2c, 0x56, 0xc9
+                assert($ == 0xa59b)
+
+Xa59b:
+                ld a, (L6dff)
+.ent_a59e
+                ld c, a
+                ld a, (machD + 0xdd) ; D[dd] = times
+                or a
+                ret z
+                ld b, a
+                ld ix, (machD + 0xde)
+                ld de, (L6efe)
+
+1               push bc
+                rl d
+                rl e
+                push de
+                call nc, Xa5bf
+                inc ix
+                inc ix
+                pop de
+                pop bc
+                djnz 1b
+                ret
+
+Xa5bf:          ld l, (ix + 1)
+                ld h, 0x67 ; MA
+                ld a, c
+                and (hl)
+                ret z
+
+                ld hl, machB + 0xdb ; some 8-byte buffer
+                ld a, l
+                add a, b
+                ld l, a
+                xor a
+                or (hl)
+                ret nz
+
+                push bc
+                ex de, hl
+                ld b, 7
+                ld hl, mach1 + 2
+                call X9f2c
+                pop bc
+                ret c
+
+                ld a, b
+                ld (de), a
+                ex af, af
+                push hl
+                ld a, (ix + 1)
+                call divmod_20
+                ld b, d
+                ld c, e
+                push bc
+                ld a, (ix+0)
+                call Fetch_word_from_72xx_buffer
+                cp 0x20
+                ld bc, 0x1f03
+                jr c, 1f
+                cp 0x23
+                jr nc, 2f
+
+                ld bc, 0x3f04
+
+1               ; store into mach8 + 0xbf: *DE, *DE++, C, B
+                ex de, hl
+                ld de, mach8 + 0xbf
+                ldi
+                ldi
+                ex de, hl
+                ld de, mach8 + 0xb8
+                ld (hl), c
+                inc l
+                ld (hl), b
+
+2               pop bc
+                pop hl
+                ld l, 0
+
+                push hl
+                ld a, (ix)
+                call Xa65d
+                ex af, af
+                ld e, 0x29
+                ld (de), a
+                ld a, (ix)
+                rla
+                jr c, 3f
+                cp 0x40
+                jr c, 4f
+3               call Xa632
+                pop hl
+
+                ld l, 0x0d
+                and (hl)
+                ld l, 0x28
+                ld (hl), a ; M[28] = A & M[d]
+                ret
+
+4               pop hl
+                ret
+
+
+Xa632:
+                ld b, 15
+
+1               ld hl, (IM2_handler.counter)
+                ld e, h
+                ld d, l
+                add hl, de
+                ; HL = counter * 2
+                ld a, (IM2_handler.counter + 1)
+                add a, l
+                ld e, a
+                ld a, (IM2_handler.counter + 0)
+                add a, h
+                ld d, a ; DE = counter * 3
+
+                add hl, hl ; HL = counter * 4
+                add hl, hl ; HL = counter * 8
+                add hl, de ; HL = counter * 11
+
+                add hl, hl ; HL = counter * 22
+                add hl, hl ; HL = counter * 44
+                add hl, hl ; HL = counter * 88
+                add hl, de ; HL = counter * 91?
+                ld (IM2_handler.counter), hl
+                ld a, l
+                djnz 1b
+                ret
+
+Fetch_word_from_72xx_buffer:
+                ; fetch word from 72xx word buffer into DE
+                and 0x7f
+                ld h, 0x72
+                ld l, a
+                rl l
+                ld e, (hl)
+                inc l
+                ld d, (hl)
+                ret
+
+
+
 
                 org 0xa65d
 Qa65d
@@ -2948,7 +3082,7 @@ Pre_game_animations:
                 ld (hl), a
 
                 inc a
-                ld (int_enable) , a
+                ld (IM2_handler.int_enable) , a
 
 .mode_ptr+*     ld hl, Pre_game_color_modes
                 ld a, l

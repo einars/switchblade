@@ -52,11 +52,11 @@ X9a27:
 
                 jr z, 2f
                 ld d, 0x60
-                call X9a89
+                call .ent_9a89
                 jr 2f
 
 1               ld d, 0x66
-                call X9a89
+                call .ent_9a89
                 
 2               ld de, 0x6602
                 ld a, (de) ; mach9[2]
@@ -81,7 +81,8 @@ X9a27:
                 ret nz
                 jr .entry2
 
-.e_9a89:        ld e, 2
+.ent_9a89
+                ld e, 2
                 ld a, (de)
                 rra
                 ret nc

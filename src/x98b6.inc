@@ -2,7 +2,7 @@
 X98b6:
                 ld hl, maybe_sound_to_play
                 ld (hl), 8
-                call Xa652
+                call Fetch_word_from_72xx_buffer
                 ex de, hl
                 inc hl
                 cp 7

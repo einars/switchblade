@@ -133,7 +133,7 @@ do_stuff:       ld (L69df), bc
                 ld a, 7
 2               call Clear_some_attrs
                 xor a
-                ld (int_enable), a
+                ld (IM2_handler.int_enable), a
                 jp J8dfe
 
 

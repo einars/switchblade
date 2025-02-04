@@ -83,13 +83,10 @@ VL69e2 equ 0x69e2
 VL6bdd equ 0x6bdd
 
 X9a4b equ X9a27.e_9a4b
-X9a89 equ X9a27.e_9a89
 
 ; -- 
 
 L79ff equ 0x79ff ; modified when extra or bonus full?
-
-Xa652 equ 0xa652
 
 Xa569 equ 0xa569
 X8855 equ 0x8855
@@ -113,7 +110,6 @@ smc_La56e equ 0xa56e
 smc_La56f equ 0xa56f
 smc_L9be9 equ 0x9be9
 
-Xa59b equ 0xa59b
 X8edd equ 0x8edd
 X98f3 equ 0x98f3
 
@@ -143,7 +139,9 @@ L9225 equ 0x9225
 Xa6b1 equ 0xa6b1
 L911a equ 0x911a
 X9137 equ 0x9137
-La59b equ 0xa59b
 X9698 equ 0x9698
+L6dff equ 0x6dff
+X9f2c equ 0x9f2c
+L6efe equ 0x6efe
 
 ;L9b53 equ X9b4a.ent_9b53

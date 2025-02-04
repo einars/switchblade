@@ -49,7 +49,7 @@ Screen:
                 inc de
                 push de
                 ld a, 1
-                ld (int_enable), a
+                ld (IM2_handler.int_enable), a
                 xor a
                 call Clear_screen
                 call Hiscore.Enter
