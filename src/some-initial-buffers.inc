@@ -194,7 +194,7 @@
                 ld a, (hl)
                 rra
                 jr nc, 1f
-                call Set_bit5_of_10h
+                call Set_bit5_of_M10
                 call VQ66bd
 
 1               pop af

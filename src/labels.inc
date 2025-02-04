@@ -85,8 +85,6 @@ VL6bdd equ 0x6bdd
 X9a4b equ X9a27.e_9a4b
 X9a89 equ X9a27.e_9a89
 
-X97a3 equ Set_bit5_of_10h
-
 ; -- 
 
 L79ff equ 0x79ff ; modified when extra or bonus full?
@@ -146,5 +144,6 @@ Xa6b1 equ 0xa6b1
 L911a equ 0x911a
 X9137 equ 0x9137
 La59b equ 0xa59b
+X9698 equ 0x9698
 
-L9b53 equ 0x9b53 ; next
+;L9b53 equ X9b4a.ent_9b53
