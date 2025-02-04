@@ -21,7 +21,9 @@ Mask_table      equ 0x6f00 ; generated 256 bytes mapping of byte -> mask = ~(ori
 Mult20_table    equ 0x7000 ; 12 bytes of x mult 20
                 ; db 00, 14, 28, 3c, 50, 64, 78, 8c, a0, b4, c8, dc
 
-X01_table       equ 0x700c ; 5 rows of 6 elements of some addresses? offsets?
+Hiscore_cursor_positions equ 0x700c
+                ; 5 rows of 6 elements of screen cursor ptrs
+                ; for hiscore entry
                 ; dw 1234, 1634, 1a34, 1e34, 2234, 2634
                 ; dw 1244, 1644, 1a44, 1e44, 2244, 2644
                 ; dw 1254, 1654, 1a54, 1e54, 2254, 2654
@@ -410,11 +412,12 @@ txt_Well_done_selector
 txt_name_buffer:
                 db 0x96, 0x14, 0x07, 0x04
 
-name_buffer:    ; 10 bytes of name, possibly
-                db 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0x00, 0x00, 0x00, 0x00
+name_buffer:    ; 10 bytes of name
+                db 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                 db 0
 
 txt_maybe_cursor
+                ; cursor on the bottom of hiscore entry
                 db 0xa0, 0x12, 7, 0x47
                 db " / ", 0
 
@@ -2764,6 +2767,7 @@ Store_high_score:
                 ldir
                 ret
 
+Hiscore_cursor_pos equ 0x5d00
 
                 assert($ == 0xa861)
 Hiscore_entry:          
@@ -2772,10 +2776,10 @@ Hiscore_entry:
                 ld hl, name_buffer
 .c              ld (hl), '-' : inc hl : djnz .c
 
-                ld hl, 0x0504
-                ld (0x5d00), hl ; something weird
-                ld hl, 0x12a0   ; 4768 dec
-                ld (0x82cd), hl
+                ld hl, 0x0504 ; to the end?
+                ld (Hiscore_cursor_pos), hl
+                ld hl, 0x12a0
+                ld (txt_maybe_cursor), hl
                 ld hl, txt_Well_done
                 call Print.Text
                 call Print.String_alt ; txt_Well_done_pt_2
@@ -2793,7 +2797,7 @@ Hiscore_entry:
                 jr z, .joy_done
 
                 call Joystick_parse
-                call c, Xa8e2 ; probably advance cursor
+                call c, Hiscore_advance_and_redraw_cursor
                 jr .joy_loop
 
 .joy_done       ld bc, 0x8000
@@ -2853,16 +2857,56 @@ Hiscore_entry:
 
 
 
-
-
                 assert($ == 0xa8e2)
 
-                db 0x21, 0x00, 0x5d, 0x7b, 0x86, 0xf8,   0xfe, 0x05, 0xc8, 0x5f, 0x2c, 0x7a, 0x86, 0xf8
-                db 0xfe, 0x06, 0xc8, 0x77, 0x2d, 0x73, 0x2a, 0xae,   0x82, 0x22, 0xeb, 0x80, 0x21, 0xeb, 0x80, 0xcd
+Hiscore_advance_and_redraw_cursor:
+                ; DE: offset
+                ;  D — x +1/-1
+                ;  E - y +1/-1
+                ;  return if out of bounds
+                ld hl, Hiscore_cursor_pos
+                ld a, e
+                add a, (hl)
+                ret m
+                cp 5
+                ret z
+                ld e, a
+                inc l
+                ld a, d
+                add a, (hl)
+                ret m
+                cp 6
+                ret z
+                ld (hl), a
+                dec l
+                ld (hl), e
 
-                org 0xa900
-                db 0x7b, 0x83, 0xcd, 0x1b, 0xa9, 0x87, 0xc6, 0x0c,   0x6f, 0x26, 0x70, 0x5e, 0x2c, 0x56, 0xed, 0x53
-                db 0xae, 0x82, 0x21, 0xae, 0x82, 0xcd, 0x7b, 0x83,   0xc3, 0x30, 0x83, 0xed, 0x4b, 0x00, 0x5d, 0x61
+                ld hl, (txt_Well_done_selector)
+                ld (txt_square), hl
+                ld hl, txt_square
+                call Print.String_alt
+                call Xa91b
+
+                add a, a
+                add a, 12
+                ld l, a
+
+                ld h, 0x70
+                ;HL = pointer to word[] Hiscore_cursor_positions @ 0x700c
+                ld e, (hl)
+                inc l
+                ld d, (hl)
+                ld (txt_Well_done_selector), de
+                ld hl, txt_Well_done_selector
+                call Print.String_alt
+                jp Delay
+
+
+                assert($ == 0xa91b)
+
+                
+
+                db 0xed, 0x4b, 0x00, 0x5d, 0x61
                 db 0x1e, 0x06, 0xcd, 0xdd, 0x8e, 0x78, 0x85, 0xc9,   0x12, 0xb0, 0x90, 0x30, 0xd8, 0x31, 0x8c, 0xa0
                 db 0xc9, 0x14, 0x4a, 0x52, 0x50, 0x02, 0x64, 0xb2,   0x78, 0xb5, 0x7c, 0x69, 0x12, 0xa5, 0x12, 0xa9
                 db 0x12, 0xad, 0x12, 0xb1, 0x51, 0x3c, 0x52, 0x60,   0x63, 0xb8, 0x5d, 0xa7, 0x45, 0xac, 0x49, 0x68
