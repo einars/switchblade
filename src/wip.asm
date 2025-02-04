@@ -2877,7 +2877,7 @@ Xa5bf:          ld l, (ix + 1)
                 jr c, 3f
                 cp 0x40
                 jr c, 4f
-3               call Xa632
+3               call Randomize_counter
                 pop hl
 
                 ld l, 0x0d
@@ -2890,29 +2890,30 @@ Xa5bf:          ld l, (ix + 1)
                 ret
 
 
-Xa632:
+Randomize_counter:
                 ld b, 15
+                ; thoroughly randomize counter? why 15 times though?
+                ; happens only when enemies will appear on screen
 
 1               ld hl, (IM2_handler.counter)
-                ld e, h
+                ld e, h ; swapped digits
                 ld d, l
                 add hl, de
-                ; HL = counter * 2
                 ld a, (IM2_handler.counter + 1)
                 add a, l
                 ld e, a
                 ld a, (IM2_handler.counter + 0)
                 add a, h
-                ld d, a ; DE = counter * 3
+                ld d, a 
 
-                add hl, hl ; HL = counter * 4
-                add hl, hl ; HL = counter * 8
-                add hl, de ; HL = counter * 11
+                add hl, hl
+                add hl, hl
+                add hl, de
 
-                add hl, hl ; HL = counter * 22
-                add hl, hl ; HL = counter * 44
-                add hl, hl ; HL = counter * 88
-                add hl, de ; HL = counter * 91?
+                add hl, hl
+                add hl, hl
+                add hl, hl
+                add hl, de
                 ld (IM2_handler.counter), hl
                 ld a, l
                 djnz 1b
@@ -2936,7 +2937,7 @@ Fetch_word_from_72xx_buffer:
 Qa65d
                 ; something to do with logo animation
                 ; initially
-                ; hl = mach0
+                ; hl = M0
                 ; bc = 0x4804
                 ; de = VL65ca
                 ; a = 0x24
