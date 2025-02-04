@@ -141,5 +141,8 @@ L926e equ 0x926e
 
 X9ca7 equ 0x9ca7
 L906c equ 0x906c
-X919c equ 0x919c
 L9225 equ 0x9225
+L91b8 equ 0x91b8
+Xa6b1 equ 0xa6b1
+
+L9b53 equ 0x9b53 ; next
