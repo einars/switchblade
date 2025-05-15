@@ -1,7 +1,6 @@
                 org 0x8c68
 
 Drawing_routine:
-                ; intro time func
                 ld a, (logo_row_ish)
                 ld e, a
                 ld a, (logo_col_ish)
@@ -10,8 +9,12 @@ Drawing_routine:
 
                 ld h, 0x5d ; high(mach0)
                 ld bc, 0x004a ; smc B
+                ; B = char line to draw the letter (e.g 7)
+                ; C = ?? e.g BC = 074A
 .pipe_b_param   equ $-1
                 call Patch_and_blit
+
+                ; the next routine puts prepared sprite on screen
 
                 ld hl, Blit_char
                 dec a ; A = bytes_to_move to screen. 1? Blit_char, otherwise, Blit_line
@@ -40,9 +43,13 @@ Drawing_routine:
 .loop           ld c, d
                 push bc
 
+                ; this call actually puts prepared sprite on screen
 .cb_char_or_line equ $+1
                 call 0 ; sic: smc obvs. Either Blit_char or Blit_line
 
+                ; on return — DE = 8 lines down
+
+                ; move one more pixel line down over char boundary in a cool way
                 ld a, e
                 add a, 0x20
                 ld e, a
@@ -53,9 +60,12 @@ Drawing_routine:
                 ret
 
 Blit_line:
+                ; move sprite from 6f08 to the screen
                 ; height = 1 char / 8 lines
                 ; masked at the beginning / end character
                 ; via .mask_1 and .mask_2
+                ; this function gets patched
+
                 ld bc, 0x08ff
 
 .loop           push de
@@ -101,6 +111,7 @@ Blit_char:
 
                 org 0x8ce5
 
+                ; probably prepares some sprite for display
 Patch_and_blit:
                 ; take a part of the Blitter_codes,
                 ; choose starting point and end point from Blitter_patches

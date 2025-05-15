@@ -1484,6 +1484,8 @@ X8b6a:
                 ret
 
 
+                ; three-bit strip into the 5b50 buffer
+                ; rol 3, rol 2, rol1 + rol1 next
 Weird_blit:     ld de, 0x5b50
 .entry_de       equ $
 
@@ -2030,7 +2032,12 @@ Q8fdd:
                 ld a, 0x4f
                 jr leave_this
 
-Q9000:          rra
+Q9000:         
+                ; A = 0x40
+                ; HL = M0
+                ; M0[16] = 20
+                ; --> A = 4, B=12 C=8, E=0x80
+                rra
                 rra
                 rra
                 and 0x1f
@@ -2048,10 +2055,11 @@ Q9000:          rra
                 rra
                 and 0x1f
                 cp 0x16
-                jr c, leave_this
+                jr c, 1f
                 set 4, e
                 ld a, 0x15
-leave_this      ld b, a
+
+1               ld b, a
                 inc a
                 sub c
                 ret
@@ -3150,6 +3158,7 @@ Pre_game_animations:
 3               ld a, (Patch_and_blit.n_lines)
                 add a, e
 
+                ; clean up the prepared sprite position at mach
                 ; now fill gfx square A (width) x C (lines) at hl with 0
 
 4               push hl
